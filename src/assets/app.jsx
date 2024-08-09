@@ -2,7 +2,7 @@ import {useState} from "react";
 
 export function Main({Content, StateHook}) {
     const style = {
-        gridTemplateRows: "10vh auto",
+        gridTemplateRows: "10% auto",
         gridTemplateColumns: "100%",
         display: "grid",
         width: "100vw",

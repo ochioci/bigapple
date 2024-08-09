@@ -2,11 +2,11 @@ export function HomepageContent () {
     const style = {
         gridRow: 2,
         display: "grid",
-        gridTemplateRows: "40% 40% 20%",
+        gridTemplateRows: "20% 60% 40%",
         gridTemplateColumns: "1fr"
     }
     return <div style={style}>
-        <Title gridRow={1}></Title>
+        <Title gridRow={2}></Title>
     </div>
 }
 
