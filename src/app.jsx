@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export function Main({Content}) {
+export function Main({Content, StateHook}) {
     const style = {
         gridTemplateRows: "10vh auto",
         gridTemplateColumns: "100%",
@@ -11,12 +11,12 @@ export function Main({Content}) {
     }
 
     return <div style={style}>
-        <TopBar></TopBar>
+        <TopBar StateHook={StateHook}></TopBar>
         <Content></Content>
     </div>
 }
 
-function TopBar() {
+function TopBar({StateHook}) {
     const style = {
         backgroundColor: "blue",
         width: "100vw",
@@ -38,15 +38,18 @@ function TopBar() {
     }
     return <div style={style}>
         {entries.map((text) =>
-            <TopBarEntry link={text[1]} style={entryStyle} text={text[0]} key={text} />
+            <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text} />
         )}
     </div>
 }
 
-function TopBarEntry({link ,style, text}) {
+function TopBarEntry({StateHook, link ,style, text}) {
+    // console.log(StateHook)
 
-    function handleClick () {
-        // contentHook()
+    function handleClick (e) {
+        // console.log(StateHook)
+        e.preventDefault();
+        StateHook(link);
     }
 
     return <a onClick={handleClick} href={link} style={style}>{text}</a>
