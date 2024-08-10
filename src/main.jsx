@@ -20,6 +20,16 @@ createRoot(document.getElementById('root')).render(
 //make everything secure
 //lmao
 
+//TODO: Next stuff to do
+//Implement distinction between admin and non-admin users, as well as types of users
+//Implement portal for viewing contact messages
+//Update contact messages to use user email instead of user input email
+//Implement Registration unique user validation
+
+//TODO: Next feature to do:
+//Implement scheduling portal
+
+
 function App() {
     const [State, StateHook] = useState("home")
     const [AuthState, AuthHook] = useState("---")
