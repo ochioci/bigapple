@@ -17,24 +17,23 @@ app.use(session({
 const db = new sqlite3.Database('./app.db');
 db.run("CREATE TABLE IF NOT EXISTS messages([message] TEXT, [email] TEXT)")
 db.run("CREATE TABLE IF NOT EXISTS estates([location] TEXT, [availability] TEXT)")
-db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT [lastname] TEXT [email] TEXT [hashedPassword] TEXT)")
+db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT)")
 
 
 
 //TODO: Implement login SQL, build login page,
-app.post('/login', (req, res) => {
-    // Validate user credentials
-    if (true) {
-        req.session.userId = userId; // Set session identifier
-        res.json({ message: "success", user: req.session.userId });
-    } else {
-        res.json({ message: "login failed"});
-    }
+app.post('/register', (req, res) => {
+    res.json({ message: "success"});
+    let firstname = req.body.firstname
+    let lastname = req.body.lastname
+    let email = req.body.email
+    let password = req.body.password
+    db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`, [firstname, lastname, email, password])
+    console.log(req.body);
 });
 
 
 app.post("/contactAPI", jsonParser, (req, res) => {
-    console.log(req.body, Object.keys(req.body));
     res.json({ message: "success"});
     let m = req.body.message
     let e = req.body.email
@@ -42,23 +41,15 @@ app.post("/contactAPI", jsonParser, (req, res) => {
 });
 
 app.get("/getMessages", jsonParser, (req, res) => {
-    // console.log(req.body, Object.keys(req.body));
-
-    // console.log("!!!")
     let rows = []
     db.all("SELECT * FROM messages",
         (error, row) => {
-            // console.log(row);
-            // rows.push(row);
             row.forEach((r) => {
-                // console.log(r);
                 rows.push(r)
             })
             res.json({"messsage": "success", "rows": rows})
         }
     );
-    // console.log(rows)
-
 })
 
 app.listen(PORT, () => {

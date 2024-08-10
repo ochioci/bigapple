@@ -12,7 +12,7 @@ export function Main({Content, StateHook}) {
 
     return <div style={style}>
         <TopBar StateHook={StateHook}></TopBar>
-        <Content></Content>
+        <Content StateHook={StateHook}></Content>
     </div>
 }
 
@@ -30,7 +30,9 @@ function TopBar({StateHook}) {
         ["Home", "home"],
         ["About us", "aboutus"],
         ["Get involved", "getinvolved"],
-        ["Contact", "contact"]
+        ["Contact", "contact"],
+        ["Register", "register"],
+        ["Login", "login"]
     ]
     const entryStyle = {
         color: "White",
