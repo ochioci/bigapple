@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthHook}) {
-    console.log(AuthHook)
+    // console.log(AuthHook)
     const [reqState, reqHook] = useState("waiting")
     const style = {
         gridRow: 2,
@@ -43,8 +43,25 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
     }
 
     function logout () {
-        AuthHook("---")
-        LoginHook("Log in")
+
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    AuthHook("---")
+                    LoginHook("Log in")
+                } else {
+                    console.log("failure")
+                    reqHook("waiting")
+                }
+            }
+        };
+        req.open("POST", "/logout", true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send()
+
+
     }
 
     if (LoginState === "Log out") {

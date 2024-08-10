@@ -18,6 +18,10 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/logout": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })

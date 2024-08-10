@@ -15,6 +15,11 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
+//TODO: THINGS TO DO BEFORE PRODUCTION:
+//do secure session only
+//make everything secure
+//lmao
+
 function App() {
     const [State, StateHook] = useState("home")
     const [AuthState, AuthHook] = useState("---")

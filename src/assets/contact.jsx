@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export function ContactContent() {
+export function ContactContent({StateHook}) {
     const [reqState, reqHook] = useState("waiting")
     const style = {
         gridRow: 2,
@@ -14,6 +14,20 @@ export function ContactContent() {
         let message = e.target[0].value
         let email = e.target[1].value
         let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    console.log("sent message!")
+                    reqHook("done")
+                } else {
+                    console.log("failure")
+                    reqHook("waiting")
+                    StateHook("login")
+                }
+            }
+        };
+
         reqHook("sending")
 
         req.open("POST", "/contactAPI", true);
