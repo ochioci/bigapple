@@ -1,6 +1,7 @@
 import {useState} from "react";
 
-export function Main({Content, StateHook}) {
+export function Main({Content, StateHook, AuthHook, AuthState}) {
+    const [loginState, loginHook] = useState("Log in");
     const style = {
         gridTemplateRows: "10% auto",
         gridTemplateColumns: "100%",
@@ -11,12 +12,12 @@ export function Main({Content, StateHook}) {
     }
 
     return <div style={style}>
-        <TopBar StateHook={StateHook}></TopBar>
-        <Content StateHook={StateHook}></Content>
+        <TopBar LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
+        <Content LoginHook={loginHook} LoginState={loginState} StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
     </div>
 }
 
-function TopBar({StateHook}) {
+function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook}) {
     const style = {
         backgroundColor: "blue",
         width: "100vw",
@@ -24,7 +25,7 @@ function TopBar({StateHook}) {
         gridRow: 1,
         display: "flex",
         alignItems: "center",
-        justifyContent: "flexStart",
+        justifyContent: "space-evenly",
     }
     const entries = [
         ["Home", "home"],
@@ -32,7 +33,7 @@ function TopBar({StateHook}) {
         ["Get involved", "getinvolved"],
         ["Contact", "contact"],
         ["Register", "register"],
-        ["Login", "login"]
+        [LoginState, "login"]
     ]
     const entryStyle = {
         color: "White",
@@ -42,6 +43,7 @@ function TopBar({StateHook}) {
         {entries.map((text) =>
             <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text} />
         )}
+        <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook} style={entryStyle}></TopBarAuthStatus>
     </div>
 }
 
@@ -55,4 +57,11 @@ function TopBarEntry({StateHook, link ,style, text}) {
     }
 
     return <a onClick={handleClick} href={link} style={style}>{text}</a>
+}
+
+function TopBarAuthStatus({StateHook, AuthState, AuthHook, style}) {
+    if (AuthState=== "---") {
+        return <div style={style}>Not logged in</div>
+    }
+    return <div style={style}>{"Logged in as: " + AuthState}</div>
 }

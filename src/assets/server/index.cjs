@@ -35,6 +35,7 @@ app.post('/register', (req, res) => {
 });
 
 
+//LOGIN API
 app.post('/login', jsonParser, (req, res) => {
 
     let e = req.body.email
@@ -46,12 +47,14 @@ app.post('/login', jsonParser, (req, res) => {
             res.json({message: "failure"})
         } else {
             console.log("success!")
-            res.json({message: "success"})
+
+            res.json({message: "success", loginName: row.firstname})
         }
         // console.log(e, p)
     })
 
 })
+//
 
 
 app.post("/contactAPI", jsonParser, (req, res) => {

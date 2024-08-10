@@ -17,19 +17,20 @@ createRoot(document.getElementById('root')).render(
 
 function App() {
     const [State, StateHook] = useState("home")
+    const [AuthState, AuthHook] = useState("---")
     // console.log(StateHook)
     if (State == "aboutus") {
-        return <Main StateHook ={StateHook} Content={AboutUsContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={AboutUsContent}></Main>
     } else if (State=="getinvolved") {
-        return <Main StateHook ={StateHook} Content={GetInvolvedContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={GetInvolvedContent}></Main>
     } else if (State=="contact") {
-        return <Main StateHook ={StateHook} Content={ContactContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState}  StateHook ={StateHook} Content={ContactContent}></Main>
     } else if (State=="register") {
-        return <Main StateHook ={StateHook} Content={RegisterContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState}  StateHook ={StateHook} Content={RegisterContent}></Main>
     } else if (State=="login") {
-        return <Main StateHook ={StateHook} Content={LoginContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={LoginContent}></Main>
     }else {
-        return <Main StateHook ={StateHook} Content={HomepageContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={HomepageContent}></Main>
     }
 }
 

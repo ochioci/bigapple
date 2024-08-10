@@ -1,6 +1,7 @@
 import {useState} from "react";
 
-export function LoginContent({StateHook}) {
+export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthHook}) {
+    console.log(AuthHook)
     const [reqState, reqHook] = useState("waiting")
     const style = {
         gridRow: 2,
@@ -16,8 +17,10 @@ export function LoginContent({StateHook}) {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
-                let message = JSON.parse(req.response).message
-                if (message === "success") {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    AuthHook(response.loginName)
+                    LoginHook("Log out");
                     console.log("success!")
                     StateHook("home")
                 } else {
@@ -39,13 +42,23 @@ export function LoginContent({StateHook}) {
         StateHook("home")
     }
 
-    if (reqState == "done") {
+    function logout () {
+        AuthHook("---")
+        LoginHook("Log in")
+    }
+
+    if (LoginState === "Log out") {
+        return <div>
+            <button onClick={logout}>Log out</button>
+        </div>
+    }
+    else if (reqState === "done") {
         return <div>
             Successfully Logged In
             <button onClick={reset}>Go to homepage</button>
         </div>
     }
-    else if (reqState == "sending") {
+    else if (reqState === "sending") {
         return <div>
             Waiting
         </div>
