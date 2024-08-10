@@ -21,7 +21,9 @@ db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [ema
 
 
 
-//TODO: Implement login SQL, build login page,
+//TODO: Implement registration unique email check
+//TODO: Implement login session stuff
+//TODO:: Implement password hashing
 app.post('/register', (req, res) => {
     res.json({ message: "success"});
     let firstname = req.body.firstname
@@ -31,6 +33,25 @@ app.post('/register', (req, res) => {
     db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`, [firstname, lastname, email, password])
     console.log(req.body);
 });
+
+
+app.post('/login', jsonParser, (req, res) => {
+
+    let e = req.body.email
+    let p = req.body.password
+    db.get("SELECT * FROM users WHERE (email=$email AND hashedPassword=$password) ", {$email: e, $password: p}, (err, row) => {
+        console.log(row)
+        if (row === undefined) {
+            console.log("login failed")
+            res.json({message: "failure"})
+        } else {
+            console.log("success!")
+            res.json({message: "success"})
+        }
+        // console.log(e, p)
+    })
+
+})
 
 
 app.post("/contactAPI", jsonParser, (req, res) => {

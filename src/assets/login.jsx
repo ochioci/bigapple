@@ -14,6 +14,18 @@ export function LoginContent({StateHook}) {
         let email = e.target[0].value
         let password = e.target[1].value
         let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let message = JSON.parse(req.response).message
+                if (message === "success") {
+                    console.log("success!")
+                    StateHook("home")
+                } else {
+                    console.log("failure")
+                    reqHook("waiting")
+                }
+            }
+        };
         reqHook("sending")
 
         req.open("POST", "/login", true);
