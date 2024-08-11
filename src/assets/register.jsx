@@ -16,12 +16,24 @@ export function RegisterContent({StateHook}) {
         let email = e.target[2].value
         let password = e.target[3].value
         let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    reqHook("done")
+                    reset()
+                } else {
+                    console.log("failure")
+                    reqHook("failure")
+                }
+            }
+        };
         reqHook("sending")
 
         req.open("POST", "/register", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password}))
-        reqHook("done")
+
         return false;
     }
 
@@ -38,6 +50,22 @@ export function RegisterContent({StateHook}) {
     else if (reqState == "sending") {
         return <div>
             Waiting
+        </div>
+    } else if (reqState=="failure") {
+        return <div  onSubmit={formSubmit} style={style}>
+            <div>Register</div>
+            <form action="/register" method="POST">
+                <label>First Name</label>
+                <input type={"text"}/>
+                <label>Last Name</label>
+                <input type={"text"}/>
+                <label>Email</label>
+                <input type={"text"}/>
+                <label>Password</label>
+                <input type={"text"}/>
+                <button type="submit">Send</button>
+            </form>
+            Email already in use.
         </div>
     }
     else{

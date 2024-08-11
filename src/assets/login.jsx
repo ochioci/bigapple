@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthHook}) {
+export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthHook, entries, entriesHook}) {
     // console.log(AuthHook)
     const [reqState, reqHook] = useState("waiting")
     const style = {
@@ -21,6 +21,12 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                 if (response.message === "success") {
                     AuthHook(response.loginName)
                     LoginHook("Log out");
+                    entriesHook([["Home", "home"],
+                        ["About us", "aboutus"],
+                        ["Get involved", "getinvolved"],
+                        ["Contact", "contact"],
+                        ["Log out", "login"],])
+
                     console.log("success!")
                     StateHook("home")
                 } else {
@@ -51,6 +57,12 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                 if (response.message === "success") {
                     AuthHook("---")
                     LoginHook("Log in")
+                    entriesHook([["Home", "home"],
+                        ["About us", "aboutus"],
+                        ["Get involved", "getinvolved"],
+                        ["Contact", "contact"],
+                        ["Log in", "login"],
+                        ["Register", "register"],])
                 } else {
                     console.log("failure")
                     reqHook("waiting")

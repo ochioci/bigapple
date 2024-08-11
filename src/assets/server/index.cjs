@@ -31,16 +31,28 @@ db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [ema
 
 
 
-//TODO: Implement registration unique email check
 //TODO: Implement login session stuff
 //TODO:: Implement password hashing
 app.post('/register', (req, res) => {
-    res.json({ message: "success"});
+
     let firstname = req.body.firstname
     let lastname = req.body.lastname
     let email = req.body.email
     let password = req.body.password
-    db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`, [firstname, lastname, email, password])
+
+    db.get(`SELECT * FROM users WHERE email = $email`, {$email: email.toString()}, (err, row) => {
+        console.log(row)
+        console.log(req.body.email.toString())
+        if (row===undefined) {
+            res.json({ message: "success"});
+            console.log("registration success")
+            db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`, [firstname, lastname, email, password])
+        } else {
+            res.json({message: "failure"})
+            console.log("registration failure")
+        }
+    })
+
     // console.log(req.body);
 });
 

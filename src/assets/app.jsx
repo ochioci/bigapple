@@ -10,14 +10,22 @@ export function Main({Content, StateHook, AuthHook, AuthState}) {
         height: "100vh",
         margin: 0
     }
+    let [entries, entriesHook] = useState([
+        ["Home", "home"],
+        ["About us", "aboutus"],
+        ["Get involved", "getinvolved"],
+        ["Contact", "contact"],
+        [loginState, "login"],
+        ["Register", "register"]
+    ])
 
     return <div style={style}>
-        <TopBar LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
-        <Content LoginHook={loginHook} LoginState={loginState} StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
+        <TopBar entries={entries} LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
+        <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState} StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
     </div>
 }
 
-function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook}) {
+function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries}) {
     const style = {
         backgroundColor: "blue",
         width: "100vw",
@@ -27,14 +35,7 @@ function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook}) {
         alignItems: "center",
         justifyContent: "space-evenly",
     }
-    const entries = [
-        ["Home", "home"],
-        ["About us", "aboutus"],
-        ["Get involved", "getinvolved"],
-        ["Contact", "contact"],
-        ["Register", "register"],
-        [LoginState, "login"]
-    ]
+
     const entryStyle = {
         color: "White",
         marginRight: "5%"
