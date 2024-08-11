@@ -1,5 +1,5 @@
 import {useState} from "react";
-
+import {Calendar} from "./calendar.jsx"
 export function GetInvolvedContent () {
 
     const style = {
@@ -36,6 +36,7 @@ export function GetInvolvedContent () {
 
 function HaveFruit() {
     return <div>
+        <Calendar></Calendar>
         Property owner placeholder page
     </div>
 }
