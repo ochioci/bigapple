@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export function Main({Content, StateHook, AuthHook, AuthState}) {
+export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const [loginState, loginHook] = useState("Log in");
     const style = {
         gridTemplateRows: "10% auto",

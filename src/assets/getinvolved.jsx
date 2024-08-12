@@ -35,7 +35,13 @@ export function GetInvolvedContent () {
 }
 
 function HaveFruit() {
-    return <div>
+    const style = {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
+    }
+    return <div style={style}>
         <Calendar></Calendar>
         Property owner placeholder page
     </div>
