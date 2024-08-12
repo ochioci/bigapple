@@ -2,12 +2,12 @@ import {StrictMode, useState} from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import {Main} from './assets/app.jsx'
-import {AboutUsContent} from './assets/aboutus.jsx'
-import {HomepageContent} from './assets/homepage.jsx'
-import {GetInvolvedContent} from "./assets/getinvolved.jsx";
-import {ContactContent} from "./assets/contact.jsx"
-import {RegisterContent} from "./assets/register.jsx";
-import {LoginContent} from "./assets/login.jsx";
+import {AboutUsContent} from './assets/info/aboutus.jsx'
+import {HomepageContent} from './assets/info/homepage.jsx'
+import {GetInvolvedContent} from "./assets/actions/getinvolved.jsx";
+import {ContactContent} from "./assets/actions/contact.jsx"
+import {RegisterContent} from "./assets/accounts/register.jsx";
+import {LoginContent} from "./assets/accounts/login.jsx";
 //
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')).render(
 //TODO: Next stuff to do
 //Implement distinction between admin and non-admin users, as well as types of users
 //Implement portal for viewing contact messages
-//Update contact messages to use user email instead of user input email
+//Update contact messages to use accounts email instead of accounts input email
 
 //TODO: Next feature to do:
 //Implement scheduling portal

@@ -16,10 +16,10 @@ app.use(session({
 
 const requireAuth = (req, res, next) => {
     if (req.session.email !== undefined) {
-        // console.log("user authenticated, continue")
+        // console.log("accounts authenticated, continue")
         next(); // User is authenticated, continue to next middleware
     } else {
-        // console.log("user not authenticated, failure")
+        // console.log("accounts not authenticated, failure")
         res.json({message: "failure"})
     }
 }

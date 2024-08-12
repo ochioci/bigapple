@@ -20,6 +20,13 @@ export function Calendar() {
     function submit() {
         console.log(sd)
     }
+
+    function reset() {
+        sdHook([])
+    }
+
+
+
     return <>
         <div style={style}>
 
@@ -31,6 +38,7 @@ export function Calendar() {
             })}
         </div>
         <button onClick={submit}>Submit</button>
+        <button onClick={reset}>Reset</button>
     </>
 
 }
@@ -52,7 +60,7 @@ function CalendarColumn({dates, sd, sdHook}) {
 function CalendarCell({date, sd, sdHook, key2}) {
     const [, forceUpdate] = useReducer(x => x + 1, 0); //do not fuck with this
     let d  = new Date(Date.now())
-    let style = {color: "black", backgroundColor: "white"}
+    let style = {color: "black", backgroundColor: "white", cursor: "pointer"}
     if (date.getTime() < d.getTime()) {
         style.color = "grey"
     }
@@ -63,8 +71,7 @@ function CalendarCell({date, sd, sdHook, key2}) {
             let a = sd
             a.push(key2)
             sdHook(a)
-             //THIS IS REALLY IMPORTANT. COMPONENT DOES NOT RERENDER ON CLICK IF U DONT DO THIS
-            //
+
         } else if (sd.indexOf(key2) > -1) {
             let a = sd
             a = a.filter(item => {
@@ -74,13 +81,15 @@ function CalendarCell({date, sd, sdHook, key2}) {
 
         }
         forceUpdate()
+        //THIS IS REALLY IMPORTANT. COMPONENT DOES NOT RERENDER ON CLICK IF U DONT DO THIS
 
     }
     let isSelected = (sd.indexOf(key2) > -1);
     if (isSelected) {
         let style = {
             backgroundColor: "blue",
-            color: "white"
+            color: "white",
+            cursor: "pointer"
         }
         return <div onClick={selectThis} style={style}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
     }

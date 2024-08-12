@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Calendar} from "./calendar.jsx"
+import {Calendar} from "../components/calendar.jsx"
 export function GetInvolvedContent () {
 
     const style = {
