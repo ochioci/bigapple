@@ -1,6 +1,6 @@
 import {useReducer, useState} from "react";
 
-export function Calendar() {
+export function Calendar({inputHook}) {
     let datesByDayOfWeek = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
     let cd = new Date(Date.now())
     cd.setDate(cd.getDate()-cd.getDay())
@@ -18,11 +18,13 @@ export function Calendar() {
     }
 
     function submit() {
+        inputHook(sd)
         console.log(sd)
     }
 
     function reset() {
         sdHook([])
+        inputHook([])
     }
 
 
@@ -32,7 +34,7 @@ export function Calendar() {
 
             {Object.keys(datesByDayOfWeek).map(day => {
                 {
-                    return <CalendarColumn sd={sd} sdHook={sdHook} key={day}
+                    return <CalendarColumn inputHook={inputHook} sd={sd} sdHook={sdHook} key={day}
                                            dates={datesByDayOfWeek[day]}></CalendarColumn>
                 }
             })}
@@ -43,7 +45,7 @@ export function Calendar() {
 
 }
 
-function CalendarColumn({dates, sd, sdHook}) {
+function CalendarColumn({dates, sd, sdHook, inputHook}) {
     const style = {
         borderLeft: "1px solid grey",
         borderRight: "1px solid grey",
@@ -52,12 +54,12 @@ function CalendarColumn({dates, sd, sdHook}) {
     return <div style={style}>
         {dates[0].toDateString().slice(0, 3)}
         {dates.map(d => {
-            return <CalendarCell sd={sd} sdHook={sdHook} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
+            return <CalendarCell inputHook={inputHook} sd={sd} sdHook={sdHook} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
         })}
     </div>
 }
 
-function CalendarCell({date, sd, sdHook, key2}) {
+function CalendarCell({date, sd, sdHook, key2, inputHook}) {
     const [, forceUpdate] = useReducer(x => x + 1, 0); //do not fuck with this
     let d  = new Date(Date.now())
     let style = {color: "black", backgroundColor: "white", cursor: "pointer"}
@@ -65,18 +67,24 @@ function CalendarCell({date, sd, sdHook, key2}) {
         style.color = "grey"
     }
 
+
     function selectThis() {
+        inputHook(sd)
+        setTimeout(() => {inputHook(sd)}, 100);
         if (date.getTime() > d.getTime() && sd.indexOf(key2) === -1) {
             // style.backgroundColor = "blue"
             let a = sd
             a.push(key2)
+            inputHook(a)
             sdHook(a)
+
 
         } else if (sd.indexOf(key2) > -1) {
             let a = sd
             a = a.filter(item => {
                 return item !== key2
             })
+            inputHook(a)
             sdHook(a)
 
         }

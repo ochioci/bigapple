@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
+import {Calendar} from "../../components/calendar.jsx";
 
 export function EstatesMenu({StateHook}) {
     const [emenuState, emenuHook] = useState("loading")
     const [elist, elistHook] = useState(true)
     const [eItems, eHook] = useState([])
-
+    const [calendarVal, calendarHook] = useState([])
 
     useEffect(() => {
         let req = new XMLHttpRequest();
@@ -32,7 +33,8 @@ export function EstatesMenu({StateHook}) {
         e.preventDefault();
         let name = e.target[0].value
         let location = e.target[1].value
-        let availability = e.target[2].value
+        let availability = calendarVal.join(', ')
+        console.log(availability)
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -62,10 +64,9 @@ export function EstatesMenu({StateHook}) {
                 <input type={"text"}/>
                 <label>Location</label>
                 <input type={"text"}/>
-                <label>Availability</label>
-                <input type={"text"}/>
                 <button type="submit">Add</button>
             </form>
+            <Calendar inputHook={calendarHook}></Calendar>
             {eItems.map((item, index) => {
                 return <div key={index}>{item.name} {item.estateID}</div>
             })}
