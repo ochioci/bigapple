@@ -76,13 +76,13 @@ export function EstatesMenu({StateHook}) {
             <div>Select Days of Availability: </div>
             <Calendar inputHook={calendarHook}></Calendar>
             {eItems.map((item, index) => {
-                return <EstateView key={index} estateInfo={item}></EstateView>
+                return <EstateView updateState={elist} triggerUpdate={elistHook} key={index} estateInfo={item}></EstateView>
             })}
         </div>
     }
 }
 
-function EstateView({estateInfo}) {
+function EstateView({estateInfo, triggerUpdate, updateState}) {
     const style = {
         border: "3px solid black",
         borderRadius: "3px",
@@ -92,17 +92,32 @@ function EstateView({estateInfo}) {
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
-        <PickupMenu availability={estateInfo.availability}></PickupMenu>
+        <PickupMenu updateState={updateState} triggerUpdate={triggerUpdate} estateInfo={estateInfo}></PickupMenu>
         <div>ID: {estateInfo.estateID}</div>
     </div>
 }
 
-function PickupMenu({availability}) {
+function PickupMenu({estateInfo, triggerUpdate, updateState}) {
     let [open, openHook] = useState(false)
-    let av = availability.split(",")
+    let av = estateInfo.availability.split(",")
     let info = av
     let infoHook = (e) => {
         console.log(e) //TODO:: DO BACKEND STUFF HERE
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    console.log("updated estate")
+                    triggerUpdate(!updateState)
+                } else {
+                    console.log("failure")
+                }
+            }
+        };
+        req.open("POST", "/updateEstate", true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({"name": estateInfo.name, "location": estateInfo.location, "availability": info.join(','), "estateID": estateInfo.estateID}))
     }
     if (open) {
         return <div onClick={toggle}>Availability: {info.map((item, index) => {

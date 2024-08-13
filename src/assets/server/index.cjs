@@ -39,6 +39,16 @@ db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [ema
 //Table "Dropoffs"
 //      -Columns: Dropoff email, pickup email, pickup primary key, dropoff location, manifest of goods dropped off
 
+app.post('/updateEstate', requireAuth, jsonParser, (req, res) => {
+    db.run(`UPDATE estates SET name=$name, location=$location, availability=$availability WHERE ownerID=$userID AND estateID=$estateID`, {
+        $name: req.body.name,
+        $location: req.body.location,
+        $availability: req.body.availability,
+        $userID: req.session.userID,
+        $estateID: req.body.estateID
+    })
+    res.json({message: "success"})
+})
 
 app.get('/checkLogin', requireAuth, (req, res) => {
     db.get(`SELECT * FROM users WHERE userID = $userID`, {$userID: req.session.userID}, (err, row) => {
