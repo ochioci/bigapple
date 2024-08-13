@@ -40,6 +40,17 @@ db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [ema
 //      -Columns: Dropoff email, pickup email, pickup primary key, dropoff location, manifest of goods dropped off
 
 
+app.get('/checkLogin', requireAuth, (req, res) => {
+    db.get(`SELECT * FROM users WHERE userID = $userID`, {$userID: req.session.userID}, (err, row) => {
+        if (row === undefined) {
+            console.log(req.session.userID, row)
+            res.json({message: "success", loggedIn: false})
+        } else {
+            res.json({message: "success", loggedIn: true, name: row.firstname})
+        }
+    })
+})
+
 app.post('/register', (req, res) => {
 
     let firstname = req.body.firstname

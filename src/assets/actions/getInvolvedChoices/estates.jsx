@@ -66,10 +66,26 @@ export function EstatesMenu({StateHook}) {
                 <input type={"text"}/>
                 <button type="submit">Add</button>
             </form>
+            <div>Select Days of Availability: </div>
             <Calendar inputHook={calendarHook}></Calendar>
             {eItems.map((item, index) => {
-                return <div key={index}>{item.name} {item.estateID}</div>
+                return <EstateView key={index} estateInfo={item}></EstateView>
             })}
         </div>
     }
+}
+
+function EstateView({estateInfo}) {
+    const style = {
+        border: "3px solid black",
+        borderRadius: "3px",
+        padding: "1%",
+        margin: "1%",
+    }
+    return <div style={style}>
+        <div>Name: {estateInfo.name}</div>
+        <div>Location: {estateInfo.location}</div>
+        <div>Availability: {estateInfo.availability}</div>
+        <div>ID: {estateInfo.estateID}</div>
+    </div>
 }

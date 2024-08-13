@@ -17,10 +17,6 @@ export function Calendar({inputHook}) {
         display: "flex"
     }
 
-    function submit() {
-        inputHook(sd)
-        console.log(sd)
-    }
 
     function reset() {
         sdHook([])
@@ -39,7 +35,6 @@ export function Calendar({inputHook}) {
                 }
             })}
         </div>
-        <button onClick={submit}>Submit</button>
         <button onClick={reset}>Reset</button>
     </>
 
