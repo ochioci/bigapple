@@ -99,31 +99,48 @@ function EstateView({estateInfo}) {
 
 function PickupMenu({availability}) {
     let [open, openHook] = useState(false)
+    let av = availability.split(",")
+    let info = av
+    let infoHook = (e) => {
+        console.log(e) //TODO:: DO BACKEND STUFF HERE
+    }
     if (open) {
-        return <div onClick={toggle}>Availability: {availability.split(",").map((item, index) => {
-            return <PickupWindow key={index} pickupInfo={item}></PickupWindow>
+        return <div onClick={toggle}>Availability: {info.map((item, index) => {
+            return <PickupWindow key={index} index={index} pickupInfo={item} infoHook={infoHook} info={info}></PickupWindow>
         })}</div>
     } else {
         return <div onClick = {toggle} >{"Availability: ..."}</div>
     }
 
     function toggle (e) {
-        console.log(e.target.nodeName)
         if (e.target.nodeName !== "INPUT" && e.target.nodeName !== "BUTTON") {
             openHook(!open)
-            console.log("!!!")
         }
     }
 }
 
-function PickupWindow({pickupInfo}) {
+function PickupWindow({pickupInfo, index, infoHook, info}) {
     let dt = pickupInfo
     let [date, time] = [dt.slice(0, dt.indexOf("(")), dt.slice(dt.indexOf("(")+1, dt.length-1)]
-    let [startTime, endTime] = [time.slice(0,5), time.slice(6, 13)]
+    let [startTime, endTime] = [(time.slice(0,5)), time.slice(6, 13)]
+
+    function submit () {
+        let temp = info
+        console.log(temp)
+        temp[index] = temp[index].slice(0, temp[index].indexOf("(")) + "(" + startTime + "-" + endTime + ")"
+        console.log(temp[index])
+        infoHook(temp)
+    }
+
+    function deleteTime() {
+        let temp = info
+        //TODO:: figure out how to delete without deleting from list of nodes (index offset will cause array out of bounds)
+    }
+
     return <div>
         --{date}
-        <input type={'time'} defaultValue = {startTime} onChange={() => {}}/>
-        <input type={'time'} defaultValue = {endTime} onChange={() => {}}/>
-        <button>Submit</button> <button>Delete</button>
+        <input type={'time'} defaultValue = {startTime} onChange={(e) => {startTime = e.target.value;}} />
+        <input type={'time'} defaultValue = {endTime} onChange={(e) => {endTime = e.target.value;}}/>
+        <button onClick={submit}>Submit</button> <button onClick={deleteTime}>Delete</button>
     </div>
 }
