@@ -107,11 +107,23 @@ function PickupMenu({availability}) {
         return <div onClick = {toggle} >{"Availability: ..."}</div>
     }
 
-    function toggle () {
-        openHook(!open)
+    function toggle (e) {
+        console.log(e.target.nodeName)
+        if (e.target.nodeName !== "INPUT" && e.target.nodeName !== "BUTTON") {
+            openHook(!open)
+            console.log("!!!")
+        }
     }
 }
 
 function PickupWindow({pickupInfo}) {
-    return <div>--{pickupInfo}</div>
+    let dt = pickupInfo
+    let [date, time] = [dt.slice(0, dt.indexOf("(")), dt.slice(dt.indexOf("(")+1, dt.length-1)]
+    let [startTime, endTime] = [time.slice(0,5), time.slice(6, 13)]
+    return <div>
+        --{date}
+        <input type={'time'} defaultValue = {startTime} onChange={() => {}}/>
+        <input type={'time'} defaultValue = {endTime} onChange={() => {}}/>
+        <button>Submit</button> <button>Delete</button>
+    </div>
 }
