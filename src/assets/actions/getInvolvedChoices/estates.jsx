@@ -33,7 +33,10 @@ export function EstatesMenu({StateHook}) {
         e.preventDefault();
         let name = e.target[0].value
         let location = e.target[1].value
-        let availability = calendarVal.join(', ')
+        let availability = calendarVal;
+        availability = availability.map((item) => {
+            return (item + "(" + e.target[2].value + "-" + e.target[3].value + ")")
+        }).join(", ")
         console.log(availability)
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
@@ -64,6 +67,10 @@ export function EstatesMenu({StateHook}) {
                 <input type={"text"}/>
                 <label>Location</label>
                 <input type={"text"}/>
+                <label>Start hours:</label>
+                <input type={"time"} defaultValue={"08:00"}/>
+                <label>End hours:</label>
+                <input type={"time"} defaultValue={"20:00"}/>
                 <button type="submit">Add</button>
             </form>
             <div>Select Days of Availability: </div>
