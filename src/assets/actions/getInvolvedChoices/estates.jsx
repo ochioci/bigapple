@@ -36,7 +36,7 @@ export function EstatesMenu({StateHook}) {
         let availability = calendarVal;
         availability = availability.map((item) => {
             return (item + "(" + e.target[2].value + "-" + e.target[3].value + ")")
-        }).join(", ")
+        })
         // console.log(availability)
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
@@ -51,7 +51,7 @@ export function EstatesMenu({StateHook}) {
         };
         req.open("POST", "/addEstate", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({"name": name, "location": location, "availability": availability}))
+        req.send(JSON.stringify({"name": name, "location": location, "availability": availability.join(",")}))
 
         return false;
     }
@@ -100,7 +100,9 @@ function EstateView({estateInfo}) {
 function PickupMenu({availability}) {
     let [open, openHook] = useState(false)
     if (open) {
-        return <div onClick={toggle}>Availability: {availability}</div>
+        return <div onClick={toggle}>Availability: {availability.split(",").map((item, index) => {
+            return <PickupWindow key={index} pickupInfo={item}></PickupWindow>
+        })}</div>
     } else {
         return <div onClick = {toggle} >{"Availability: ..."}</div>
     }
@@ -108,4 +110,8 @@ function PickupMenu({availability}) {
     function toggle () {
         openHook(!open)
     }
+}
+
+function PickupWindow({pickupInfo}) {
+    return <div>--{pickupInfo}</div>
 }
