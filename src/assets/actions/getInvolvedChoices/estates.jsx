@@ -174,12 +174,23 @@ function PickupWindow({toDelete, setToDelete, pickupInfo, index, infoHook, info,
         infoHook(temp)
     }
 
+    function deleteTime() {
+        let temp  = info
+        temp.splice(index, 1)
+        infoHook(temp)
+    }
 
 
+    console.log(startTime, endTime)
+    if (startTime.length == 0 || endTime.length == 0) {
+        return <div>
+            No availability
+        </div>
+    }
     return <div>
         --{date}
         <input type={'time'} defaultValue = {startTime} onChange={(e) => {startTime = e.target.value;}} />
         <input type={'time'} defaultValue = {endTime} onChange={(e) => {endTime = e.target.value;}}/>
-        <button onClick={submit}>Submit</button> <button>Delete</button>
+        <button onClick={submit}>Submit</button> <button onClick={deleteTime}>Delete</button>
     </div>
 }
