@@ -115,12 +115,48 @@ function EstateView({estateInfo, triggerUpdate, updateState, toDelete, setToDele
         setToDelete(estateInfo.estateID)
         //TODO:: figure out how to delete without deleting from list of nodes (index offset will cause array out of bounds)
     }
+
+    const [addTimesState, addTimesHook] = useState(false)
+    function toggleAddTimes() {
+        addTimesHook(!addTimesState);
+    }
+
+    let at = <div><button onClick={toggleAddTimes}>Add times</button></div>
+    if (addTimesState) {
+        at = <div>
+            <button onClick={toggleAddTimes}>Add times...</button>
+            <Calendar updateOnSubmit={true} inputHook={
+                (toAdd) => {
+                    // let info = estateInfo.availability + "," + toAdd.join(",")
+                    // let req = new XMLHttpRequest();
+                    // req.onreadystatechange = () => {
+                    //     if (req.readyState === 4) {
+                    //         let response = JSON.parse(req.response)
+                    //         if (response.message === "success") {
+                    //             console.log("updated estate")
+                    //             triggerUpdate(!updateState)
+                    //         } else {
+                    //             console.log("failure")
+                    //         }
+                    //     }
+                    // };
+                    // req.open("POST", "/updateEstate", true);
+                    // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    // req.send(JSON.stringify({"name": estateInfo.name, "location": estateInfo.location, "availability": info, "estateID": estateInfo.estateID}))
+                    console.log(toAdd)
+                }
+            }></Calendar>
+        </div>
+    }
+
+
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
         <PickupMenu toDelete={toDelete} setToDelete={setToDelete} updateState={updateState} triggerUpdate={triggerUpdate} estateInfo={estateInfo}></PickupMenu>
         <div>ID: {estateInfo.estateID}</div>
         <button onClick={deleteEstate}>Delete</button>
+        {at}
     </div>
 }
 

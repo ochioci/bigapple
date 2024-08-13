@@ -1,6 +1,6 @@
 import {useReducer, useState} from "react";
 
-export function Calendar({inputHook}) {
+export function Calendar({inputHook, updateOnSubmit=false}) {
     let datesByDayOfWeek = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
     let cd = new Date(Date.now())
     cd.setDate(cd.getDate()-cd.getDay())
@@ -30,7 +30,7 @@ export function Calendar({inputHook}) {
 
             {Object.keys(datesByDayOfWeek).map(day => {
                 {
-                    return <CalendarColumn inputHook={inputHook} sd={sd} sdHook={sdHook} key={day}
+                    return <CalendarColumn updateOnSubmit={updateOnSubmit} inputHook={inputHook} sd={sd} sdHook={sdHook} key={day}
                                            dates={datesByDayOfWeek[day]}></CalendarColumn>
                 }
             })}
@@ -40,7 +40,7 @@ export function Calendar({inputHook}) {
 
 }
 
-function CalendarColumn({dates, sd, sdHook, inputHook}) {
+function CalendarColumn({dates, sd, sdHook, inputHook, updateOnSubmit}) {
     const style = {
         borderLeft: "1px solid grey",
         borderRight: "1px solid grey",
@@ -49,12 +49,12 @@ function CalendarColumn({dates, sd, sdHook, inputHook}) {
     return <div style={style}>
         {dates[0].toDateString().slice(0, 3)}
         {dates.map(d => {
-            return <CalendarCell inputHook={inputHook} sd={sd} sdHook={sdHook} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
+            return <CalendarCell updateOnSubmit={updateOnSubmit} inputHook={inputHook} sd={sd} sdHook={sdHook} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
         })}
     </div>
 }
 
-function CalendarCell({date, sd, sdHook, key2, inputHook}) {
+function CalendarCell({date, sd, sdHook, key2, inputHook, updateOnSubmit}) {
     const [, forceUpdate] = useReducer(x => x + 1, 0); //do not fuck with this
     let d  = new Date(Date.now())
     let style = {color: "black", backgroundColor: "white", cursor: "pointer"}
@@ -84,6 +84,7 @@ function CalendarCell({date, sd, sdHook, key2, inputHook}) {
 
         }
         forceUpdate()
+
         //THIS IS REALLY IMPORTANT. COMPONENT DOES NOT RERENDER ON CLICK IF U DONT DO THIS
 
     }
