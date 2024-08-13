@@ -14,13 +14,13 @@ export function EstatesMenu({StateHook}) {
             if (req.readyState === 4) {
                 let response = JSON.parse(req.response)
                 if (response.message == 'success') {
-                    console.log("success!")
+                    // console.log("success!")
                     eHook(response.rows)
                 } else {
-                    console.log("failure", response.message)
+                    // console.log("failure", response.message)
                     StateHook('login')
                 }
-                console.log(response)
+                // console.log(response)
             }
         };
         req.open("GET", "/getEstates", true);
@@ -37,7 +37,7 @@ export function EstatesMenu({StateHook}) {
         availability = availability.map((item) => {
             return (item + "(" + e.target[2].value + "-" + e.target[3].value + ")")
         }).join(", ")
-        console.log(availability)
+        // console.log(availability)
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -92,7 +92,20 @@ function EstateView({estateInfo}) {
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
-        <div>Availability: {estateInfo.availability}</div>
+        <PickupMenu availability={estateInfo.availability}></PickupMenu>
         <div>ID: {estateInfo.estateID}</div>
     </div>
+}
+
+function PickupMenu({availability}) {
+    let [open, openHook] = useState(false)
+    if (open) {
+        return <div onClick={toggle}>Availability: {availability}</div>
+    } else {
+        return <div onClick = {toggle} >{"Availability: ..."}</div>
+    }
+
+    function toggle () {
+        openHook(!open)
+    }
 }
