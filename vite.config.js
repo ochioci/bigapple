@@ -38,6 +38,10 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/deleteEstate": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })

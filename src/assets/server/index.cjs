@@ -50,6 +50,14 @@ app.post('/updateEstate', requireAuth, jsonParser, (req, res) => {
     res.json({message: "success"})
 })
 
+app.post('/deleteEstate', requireAuth, jsonParser, (req, res) => {
+    db.run(`DELETE FROM estates WHERE estateID = $estateID AND ownerID=$userID`, {
+        $userID: req.session.userID,
+        $estateID: req.body.estateID
+    })
+    res.json({message: "success"})
+})
+
 app.get('/checkLogin', requireAuth, (req, res) => {
     db.get(`SELECT * FROM users WHERE userID = $userID`, {$userID: req.session.userID}, (err, row) => {
         if (row === undefined) {

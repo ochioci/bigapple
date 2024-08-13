@@ -6,6 +6,28 @@ export function EstatesMenu({StateHook}) {
     const [elist, elistHook] = useState(true)
     const [eItems, eHook] = useState([])
     const [calendarVal, calendarHook] = useState([])
+    const [toDelete, setToDelete] = [[], (td) => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            emenuHook("loaded")
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message == 'success') {
+                    // console.log("success!")
+                    elistHook(!elist)
+                } else {
+                    console.log("failure", response.message)
+                    // StateHook('login')
+                }
+                // console.log(response)
+            }
+        };
+        req.open("POST", "/deleteEstate", true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({estateID: td}))
+    }]
+
+
 
     useEffect(() => {
         let req = new XMLHttpRequest();
@@ -76,28 +98,33 @@ export function EstatesMenu({StateHook}) {
             <div>Select Days of Availability: </div>
             <Calendar inputHook={calendarHook}></Calendar>
             {eItems.map((item, index) => {
-                return <EstateView updateState={elist} triggerUpdate={elistHook} key={index} estateInfo={item}></EstateView>
+                return <EstateView toDelete={toDelete} setToDelete={setToDelete} updateState={elist} triggerUpdate={elistHook} key={index} estateInfo={item}></EstateView>
             })}
         </div>
     }
 }
 
-function EstateView({estateInfo, triggerUpdate, updateState}) {
+function EstateView({estateInfo, triggerUpdate, updateState, toDelete, setToDelete}) {
     const style = {
         border: "3px solid black",
         borderRadius: "3px",
         padding: "1%",
         margin: "1%",
     }
+    function deleteEstate() {
+        setToDelete(estateInfo.estateID)
+        //TODO:: figure out how to delete without deleting from list of nodes (index offset will cause array out of bounds)
+    }
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
-        <PickupMenu updateState={updateState} triggerUpdate={triggerUpdate} estateInfo={estateInfo}></PickupMenu>
+        <PickupMenu toDelete={toDelete} setToDelete={setToDelete} updateState={updateState} triggerUpdate={triggerUpdate} estateInfo={estateInfo}></PickupMenu>
         <div>ID: {estateInfo.estateID}</div>
+        <button onClick={deleteEstate}>Delete</button>
     </div>
 }
 
-function PickupMenu({estateInfo, triggerUpdate, updateState}) {
+function PickupMenu({estateInfo, triggerUpdate, updateState, toDelete, setToDelete}) {
     let [open, openHook] = useState(false)
     let av = estateInfo.availability.split(",")
     let info = av
@@ -121,7 +148,7 @@ function PickupMenu({estateInfo, triggerUpdate, updateState}) {
     }
     if (open) {
         return <div onClick={toggle}>Availability: {info.map((item, index) => {
-            return <PickupWindow key={index} index={index} pickupInfo={item} infoHook={infoHook} info={info}></PickupWindow>
+            return <PickupWindow estateID={estateInfo.estateID} toDelete={toDelete} setToDelete={setToDelete} key={index} index={index} pickupInfo={item} infoHook={infoHook} info={info}></PickupWindow>
         })}</div>
     } else {
         return <div onClick = {toggle} >{"Availability: ..."}</div>
@@ -134,7 +161,7 @@ function PickupMenu({estateInfo, triggerUpdate, updateState}) {
     }
 }
 
-function PickupWindow({pickupInfo, index, infoHook, info}) {
+function PickupWindow({toDelete, setToDelete, pickupInfo, index, infoHook, info, estateID}) {
     let dt = pickupInfo
     let [date, time] = [dt.slice(0, dt.indexOf("(")), dt.slice(dt.indexOf("(")+1, dt.length-1)]
     let [startTime, endTime] = [(time.slice(0,5)), time.slice(6, 13)]
@@ -147,15 +174,12 @@ function PickupWindow({pickupInfo, index, infoHook, info}) {
         infoHook(temp)
     }
 
-    function deleteTime() {
-        let temp = info
-        //TODO:: figure out how to delete without deleting from list of nodes (index offset will cause array out of bounds)
-    }
+
 
     return <div>
         --{date}
         <input type={'time'} defaultValue = {startTime} onChange={(e) => {startTime = e.target.value;}} />
         <input type={'time'} defaultValue = {endTime} onChange={(e) => {endTime = e.target.value;}}/>
-        <button onClick={submit}>Submit</button> <button onClick={deleteTime}>Delete</button>
+        <button onClick={submit}>Submit</button> <button>Delete</button>
     </div>
 }
