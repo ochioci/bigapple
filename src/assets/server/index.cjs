@@ -15,7 +15,7 @@ app.use(session({
 }));
 
 const requireAuth = (req, res, next) => {
-    if (req.session.email !== undefined) {
+    if (req.session.userID !== undefined) {
         // console.log("accounts authenticated, continue")
         next(); // User is authenticated, continue to next middleware
     } else {
@@ -26,8 +26,8 @@ const requireAuth = (req, res, next) => {
 
 const db = new sqlite3.Database('./app.db');
 db.run("CREATE TABLE IF NOT EXISTS messages([message] TEXT, [email] TEXT)")
-db.run("CREATE TABLE IF NOT EXISTS estates([location] TEXT, [availability] TEXT)")
-db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT)")
+// db.run("CREATE TABLE IF NOT EXISTS estates([location] TEXT, [availability] TEXT, )")
+db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
 
 //PROPOSED DATABASE STRUCTURE:
 //  Table "estates" - stores all picking locations
@@ -87,7 +87,7 @@ app.post('/login', jsonParser, (req, res) => {
             res.json({message: "failure"})
         } else {
             // console.log("success!")
-            req.session.email = row.email;
+            req.session.userID = row.userID;
             // console.log("Session id: " + row.email)
             res.json({message: "success", loginName: row.firstname})
         }

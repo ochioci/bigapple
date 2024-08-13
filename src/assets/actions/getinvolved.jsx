@@ -1,5 +1,7 @@
 import {useState} from "react";
 import {Calendar} from "../components/calendar.jsx"
+import {EstatesMenu} from "./getInvolvedChoices/estates.jsx";
+
 export function GetInvolvedContent () {
 
     const style = {
@@ -16,9 +18,9 @@ export function GetInvolvedContent () {
     }
 
     if (getInvolvedState === "have") {
-        return <><HaveFruit>
-        </HaveFruit>
-            <button onClick={goBack}>Go Back</button></>
+        return <div><EstatesMenu>
+        </EstatesMenu>
+            <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "pick") {
         return <><PickFruit>
         </PickFruit>
