@@ -30,6 +30,10 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/checkLogin": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })

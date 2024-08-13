@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const [loginState, loginHook] = useState("Log in");
@@ -20,12 +20,35 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     ])
 
     return <div style={style}>
-        <TopBar entries={entries} LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
+        <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
         <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState} StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
     </div>
 }
 
-function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries}) {
+function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries, entriesHook}) {
+    useEffect( () => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    console.log(response)
+                    AuthHook(response.name)
+                    LoginHook("Log out");
+                    entriesHook([["Home", "home"],
+                        ["About us", "aboutus"],
+                        ["Get involved", "getinvolved"],
+                        ["Contact", "contact"],
+                        ["Log out", "login"],])
+                } else {
+                    console.log("not logged in")
+                }
+            }
+        };
+        req.open("GET", "/checkLogin", true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send()
+    }, [])
     const style = {
         backgroundColor: "blue",
         width: "100vw",
