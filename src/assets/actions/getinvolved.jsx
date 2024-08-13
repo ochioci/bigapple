@@ -2,7 +2,7 @@ import {useState} from "react";
 import {Calendar} from "../components/calendar.jsx"
 import {EstatesMenu} from "./getInvolvedChoices/estates.jsx";
 
-export function GetInvolvedContent () {
+export function GetInvolvedContent ({StateHook}) {
 
     const style = {
         gridRow: 2,
@@ -18,7 +18,7 @@ export function GetInvolvedContent () {
     }
 
     if (getInvolvedState === "have") {
-        return <div><EstatesMenu>
+        return <div><EstatesMenu StateHook={StateHook}>
         </EstatesMenu>
             <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "pick") {

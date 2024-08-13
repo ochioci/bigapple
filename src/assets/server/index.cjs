@@ -26,7 +26,7 @@ const requireAuth = (req, res, next) => {
 
 const db = new sqlite3.Database('./app.db');
 db.run("CREATE TABLE IF NOT EXISTS messages([message] TEXT, [email] TEXT)")
-// db.run("CREATE TABLE IF NOT EXISTS estates([location] TEXT, [availability] TEXT, )")
+db.run("CREATE TABLE IF NOT EXISTS estates([name] TEXT, [location] TEXT, [availability] TEXT, [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
 db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
 
 //PROPOSED DATABASE STRUCTURE:
@@ -114,6 +114,24 @@ app.get("/getMessages", jsonParser, (req, res) => {
             res.json({"messsage": "success", "rows": rows})
         }
     );
+})
+
+app.get("/getEstates", requireAuth, jsonParser, (req, res) => {
+    let rows = []
+    db.all("SELECT * FROM estates WHERE ownerID = $userID", {$userID: req.session.userID},
+        (error, row) => {
+            row.forEach((r) => {
+                rows.push(r)
+            })
+            res.json({"message": "success", "rows": rows})
+        }
+    );
+})
+// db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`
+app.post("/addEstate", requireAuth, jsonParser, (req, res) => {
+    db.get(`INSERT INTO estates (name, location, availability, ownerID) VALUES ($n, $l, $a, $o)`, {$n: req.body.name, $l: req.body.location, $a: req.body.availability, $o: req.session.userID }, (err, row) => {
+    })
+    res.json({message: "success"})
 })
 
 app.listen(PORT, () => {

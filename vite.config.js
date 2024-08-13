@@ -22,6 +22,14 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/getEstates": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/addEstate": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })
