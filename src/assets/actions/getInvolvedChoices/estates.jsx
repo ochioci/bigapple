@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Calendar} from "../../components/calendar.jsx";
+import {Collapsible} from "../../components/collapsible.jsx";
 
 export function EstatesMenu({StateHook}) {
     const [estates, setEstates] = useState([])
@@ -53,15 +54,21 @@ export function EstatesMenu({StateHook}) {
     }
 
     useEffect(() => {refresh()}, [])
-
-    return <div>
+    const style= {
+        border: "0.5vw solid black",
+        borderRadius: "0.25vw",
+        padding: "1vw",
+        margin: "1vw"
+    }
+    return <div style={style}>
+        <AddEstate estates={estates} setEstates={setEstates} refresh={refresh} doAdd={addEstate}></AddEstate>
+        <button onClick={refresh}>Refresh</button>
         {
             estates.map((item) => {
                 return <EstateView key={item.estateID} estateInfo={item} setEstates={setEstates} refresh={refresh} doUpdate={updateEstate}></EstateView>
             })
         }
-        <AddEstate estates={estates} setEstates={setEstates} refresh={refresh} doAdd={addEstate}></AddEstate>
-        <button onClick={refresh}>Refresh</button>
+
     </div>
 }
 
@@ -71,7 +78,13 @@ export function AddEstate({estates, setEstates, refresh, doAdd}) {
     const location = useRef("")
     const startTime = useRef("08:00")
     const endTime = useRef("20:00")
-    return <>
+    const style= {
+        border: "0.5vw solid black",
+        borderRadius: "0.25vw",
+        padding: "1vw",
+        margin: "1vw"
+    }
+    return <div style={style}>
         <Calendar selected={dates}></Calendar>
         <input type={"text"} placeholder={"name"} onChange={(e) => (name.current = e.target.value)}/>
         <input type={"text"} placeholder={"location"} onChange={(e) => (location.current = e.target.value)}/>
@@ -79,16 +92,26 @@ export function AddEstate({estates, setEstates, refresh, doAdd}) {
         <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
         <button onClick={() => {
             doAdd(name.current, location.current, dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
-        }}>Submit</button>
-    </>
+        }}>Add days</button>
+    </div>
 }
 
 
-function EstateView({estates, setEstates, estateInfo, refresh}) {
+function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
     // console.log(estateInfo)
-    return <div>
-        <div>{estateInfo.name}</div>
-        <div>{estateInfo.availability}</div>
-        <div>{estateInfo.estateID}</div>
+    const style= {
+        border: "0.5vw solid black",
+        borderRadius: "0.25vw",
+        padding: "1vw",
+        margin: "1vw"
+    }
+    return <div style={style}>
+        <div>Name: {estateInfo.name}</div>
+        <div>Location: {estateInfo.location}</div>
+        <div>ID: {estateInfo.estateID}</div>
+        <Collapsible title={"Availability"} Content={<div>{estateInfo.availability}</div>}>
+
+        </Collapsible>
+
     </div>
 }
