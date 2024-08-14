@@ -15,6 +15,7 @@ export function RegisterContent({StateHook}) {
         let lastname = e.target[1].value
         let email = e.target[2].value
         let password = e.target[3].value
+        let userRole = e.target[4].value
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -32,7 +33,7 @@ export function RegisterContent({StateHook}) {
 
         req.open("POST", "/register", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password}))
+        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "userRole": userRole}))
 
         return false;
     }
@@ -63,13 +64,20 @@ export function RegisterContent({StateHook}) {
                 <input type={"text"}/>
                 <label>Password</label>
                 <input type={"text"}/>
+                <label>Role</label>
+                <select>
+                    <option value={"Picker"}></option>
+                    <option value={"Shelter"}></option>
+                    <option value={"Estate"}></option>
+                    <option value={"Admin"}></option>
+                </select>
                 <button type="submit">Send</button>
             </form>
             Email already in use.
         </div>
     }
-    else{
-        return <div  onSubmit={formSubmit} style={style}>
+    else {
+        return <div onSubmit={formSubmit} style={style}>
             <div>Register</div>
             <form action="/register" method="POST">
                 <label>First Name</label>
@@ -80,6 +88,13 @@ export function RegisterContent({StateHook}) {
                 <input type={"text"}/>
                 <label>Password</label>
                 <input type={"text"}/>
+                <label>Role</label>
+                <select>
+                    <option value={"Picker"}>Picker</option>
+                    <option value={"Shelter"}>Shelter</option>
+                    <option value={"Estate"}>Estate</option>
+                    <option value={"Admin"}>Admin</option>
+                </select>
                 <button type="submit">Send</button>
             </form>
         </div>

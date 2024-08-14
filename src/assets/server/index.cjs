@@ -24,10 +24,19 @@ const requireAuth = (req, res, next) => {
     }
 }
 
+const requireEstate = (req, res, next) => {
+    if (req.session.userID !== undefined) {
+        if (req.session.role == "Estate") {
+            next()
+        }
+    }
+    res.json({message: "failure"})
+}
+
 const db = new sqlite3.Database('./app.db');
 db.run("CREATE TABLE IF NOT EXISTS messages([message] TEXT, [email] TEXT)")
 db.run("CREATE TABLE IF NOT EXISTS estates([name] TEXT, [location] TEXT, [availability] TEXT, [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
-db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
+db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [role] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
 
 //PROPOSED DATABASE STRUCTURE:
 //  Table "estates" - stores all picking locations
@@ -39,7 +48,7 @@ db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [ema
 //Table "Dropoffs"
 //      -Columns: Dropoff email, pickup email, pickup primary key, dropoff location, manifest of goods dropped off
 
-app.post('/updateEstate', requireAuth, jsonParser, (req, res) => {
+app.post('/updateEstate', requireEstate, jsonParser, (req, res) => {
     db.run(`UPDATE estates SET name=$name, location=$location, availability=$availability WHERE ownerID=$userID AND estateID=$estateID`, {
         $name: req.body.name,
         $location: req.body.location,
@@ -50,7 +59,7 @@ app.post('/updateEstate', requireAuth, jsonParser, (req, res) => {
     res.json({message: "success"})
 })
 
-app.post('/deleteEstate', requireAuth, jsonParser, (req, res) => {
+app.post('/deleteEstate', requireEstate, jsonParser, (req, res) => {
     db.run(`DELETE FROM estates WHERE estateID = $estateID AND ownerID=$userID`, {
         $userID: req.session.userID,
         $estateID: req.body.estateID
@@ -64,7 +73,7 @@ app.get('/checkLogin', requireAuth, (req, res) => {
             console.log(req.session.userID, row)
             res.json({message: "success", loggedIn: false})
         } else {
-            res.json({message: "success", loggedIn: true, name: row.firstname})
+            res.json({message: "success", loggedIn: true, name: row.firstname, role: row.role})
         }
     })
 })
@@ -75,6 +84,7 @@ app.post('/register', (req, res) => {
     let lastname = req.body.lastname
     let email = req.body.email
     let password = req.body.password
+    let role = req.body.userRole
 
     db.get(`SELECT * FROM users WHERE email = $email`, {$email: email.toString()}, (err, row) => {
         console.log(row)
@@ -82,7 +92,7 @@ app.post('/register', (req, res) => {
         if (row===undefined) {
             res.json({ message: "success"});
             console.log("registration success")
-            db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`, [firstname, lastname, email, password])
+            db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword, role) VALUES (?, ?, ?, ?, ?)`, [firstname, lastname, email, password, role])
         } else {
             res.json({message: "failure"})
             console.log("registration failure")
@@ -117,6 +127,7 @@ app.post('/login', jsonParser, (req, res) => {
         } else {
             // console.log("success!")
             req.session.userID = row.userID;
+            req.session.role = row.role;
             // console.log("Session id: " + row.email)
             res.json({message: "success", loginName: row.firstname})
         }
@@ -145,7 +156,7 @@ app.get("/getMessages", jsonParser, (req, res) => {
     );
 })
 
-app.get("/getEstates", requireAuth, jsonParser, (req, res) => {
+app.get("/getEstates", requireEstate, jsonParser, (req, res) => {
     let rows = []
     db.all("SELECT * FROM estates WHERE ownerID = $userID", {$userID: req.session.userID},
         (error, row) => {
@@ -157,7 +168,7 @@ app.get("/getEstates", requireAuth, jsonParser, (req, res) => {
     );
 })
 // db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`
-app.post("/addEstate", requireAuth, jsonParser, (req, res) => {
+app.post("/addEstate", requireEstate, jsonParser, (req, res) => {
     db.get(`INSERT INTO estates (name, location, availability, ownerID) VALUES ($n, $l, $a, $o)`, {$n: req.body.name, $l: req.body.location, $a: req.body.availability, $o: req.session.userID }, (err, row) => {
     })
     res.json({message: "success"})

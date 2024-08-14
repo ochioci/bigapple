@@ -229,9 +229,9 @@ function PickupWindow({toDelete, setToDelete, pickupInfo, index, infoHook, info,
             return;
         }
         let temp = info
-        console.log(temp)
+        // console.log(temp)
         temp[index] = temp[index].slice(0, temp[index].indexOf("(")) + "(" + startTime.current + "-" + endTime.current + ")"
-        console.log(temp[index])
+        // console.log(temp[index])
         infoHook(temp)
     }
 
