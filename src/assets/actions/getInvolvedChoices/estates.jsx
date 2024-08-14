@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Calendar} from "../../components/calendar.jsx";
 
 export function EstatesMenu({StateHook}) {
@@ -105,6 +105,7 @@ export function EstatesMenu({StateHook}) {
 }
 
 function EstateView({estateInfo, triggerUpdate, updateState, toDelete, setToDelete}) {
+    const newTimes = useRef([])
     const style = {
         border: "3px solid black",
         borderRadius: "3px",
@@ -121,31 +122,51 @@ function EstateView({estateInfo, triggerUpdate, updateState, toDelete, setToDele
         addTimesHook(!addTimesState);
     }
 
+
+
     let at = <div><button onClick={toggleAddTimes}>Add times</button></div>
+    let startTime = "08:00"
+    let endTime = "20:00"
+
+    function addDates() {
+        // console.log(newTimes.current)
+        // console.log(startTime, endTime)
+        let nt = newTimes.current.map( (item) => {return item + "(" + startTime + "-" + endTime + ")"}).join(",")
+        console.log(nt)
+
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    console.log("updated estate")
+                    triggerUpdate(!updateState)
+                } else {
+                    console.log("failure")
+                }
+            }
+        };
+        if (estateInfo.availability.length > 0) {
+            estateInfo.availability += ","
+        }
+        req.open("POST", "/updateEstate", true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({"name": estateInfo.name, "location": estateInfo.location, "availability": estateInfo.availability + nt, "estateID": estateInfo.estateID}))
+
+    }
+
     if (addTimesState) {
-        at = <div>
-            <button onClick={toggleAddTimes}>Add times...</button>
+        at = <div style={style}>
+            <button onClick={toggleAddTimes}>Close</button>
             <Calendar updateOnSubmit={true} inputHook={
                 (toAdd) => {
-                    // let info = estateInfo.availability + "," + toAdd.join(",")
-                    // let req = new XMLHttpRequest();
-                    // req.onreadystatechange = () => {
-                    //     if (req.readyState === 4) {
-                    //         let response = JSON.parse(req.response)
-                    //         if (response.message === "success") {
-                    //             console.log("updated estate")
-                    //             triggerUpdate(!updateState)
-                    //         } else {
-                    //             console.log("failure")
-                    //         }
-                    //     }
-                    // };
-                    // req.open("POST", "/updateEstate", true);
-                    // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                    // req.send(JSON.stringify({"name": estateInfo.name, "location": estateInfo.location, "availability": info, "estateID": estateInfo.estateID}))
-                    console.log(toAdd)
+                    newTimes.current = toAdd
+                    console.log(newTimes)
                 }
             }></Calendar>
+            <input type={"time"} defaultValue={"08:00"} onChange={(e) => {startTime = e.target.value}}/>
+            <input type={"time"} defaultValue={"20:00"} onChange={(e) => {endTime = e.target.value}}/>
+            <button onClick={addDates}>Add dates</button>
         </div>
     }
 
@@ -153,8 +174,9 @@ function EstateView({estateInfo, triggerUpdate, updateState, toDelete, setToDele
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
-        <PickupMenu toDelete={toDelete} setToDelete={setToDelete} updateState={updateState} triggerUpdate={triggerUpdate} estateInfo={estateInfo}></PickupMenu>
         <div>ID: {estateInfo.estateID}</div>
+        <PickupMenu toDelete={toDelete} setToDelete={setToDelete} updateState={updateState}
+                    triggerUpdate={triggerUpdate} estateInfo={estateInfo}></PickupMenu>
         <button onClick={deleteEstate}>Delete</button>
         {at}
     </div>
@@ -200,12 +222,15 @@ function PickupMenu({estateInfo, triggerUpdate, updateState, toDelete, setToDele
 function PickupWindow({toDelete, setToDelete, pickupInfo, index, infoHook, info, estateID}) {
     let dt = pickupInfo
     let [date, time] = [dt.slice(0, dt.indexOf("(")), dt.slice(dt.indexOf("(")+1, dt.length-1)]
-    let [startTime, endTime] = [(time.slice(0,5)), time.slice(6, 13)]
+    let [startTime, endTime] = [useRef(time.slice(0,5)), useRef(time.slice(6, 13))]
 
     function submit () {
+        if ((startTime.current.length !==5) || (endTime.current.length !== 5) || (date.length == 0)) {
+            return;
+        }
         let temp = info
         console.log(temp)
-        temp[index] = temp[index].slice(0, temp[index].indexOf("(")) + "(" + startTime + "-" + endTime + ")"
+        temp[index] = temp[index].slice(0, temp[index].indexOf("(")) + "(" + startTime.current + "-" + endTime.current + ")"
         console.log(temp[index])
         infoHook(temp)
     }
@@ -217,16 +242,16 @@ function PickupWindow({toDelete, setToDelete, pickupInfo, index, infoHook, info,
     }
 
 
-    console.log(startTime, endTime)
-    if (startTime.length == 0 || endTime.length == 0) {
+    // console.log(date)
+    if (startTime.current.length == 0 || endTime.current.length == 0 || date.length == 0) {
         return <div>
             No availability
         </div>
-    }
+}
     return <div>
         --{date}
-        <input type={'time'} defaultValue = {startTime} onChange={(e) => {startTime = e.target.value;}} />
-        <input type={'time'} defaultValue = {endTime} onChange={(e) => {endTime = e.target.value;}}/>
+        <input type={'time'} defaultValue = {startTime.current} onChange={(e) => {startTime.current = e.target.value;}} />
+        <input type={'time'} defaultValue = {endTime.current} onChange={(e) => {endTime.current = e.target.value;}}/>
         <button onClick={submit}>Submit</button> <button onClick={deleteTime}>Delete</button>
     </div>
 }
