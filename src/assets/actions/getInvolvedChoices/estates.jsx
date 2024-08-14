@@ -46,9 +46,18 @@ export function EstatesMenu({StateHook}) {
         let req = new XMLHttpRequest();
         req.open("POST", "/addEstate", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        console.log(name, location, availability);
         req.send(JSON.stringify({
             name, location, availability: availability.join(",")
+        }))
+        return req
+    }
+
+    const deleteEstate = (estateID) => {
+        let req = new XMLHttpRequest();
+        req.open("POST", "/deleteEstate", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({
+            estateID: estateID
         }))
         return req
     }
@@ -71,7 +80,7 @@ export function EstatesMenu({StateHook}) {
 
         {estates.map((item) => {
             return <Collapsible initState={true} key={item.estateID}title={item.name + " estate"} Content={
-                <EstateView key={item.estateID} estateInfo={item} setEstates={setEstates} refresh={refresh}
+                <EstateView key={item.estateID} doDelete={deleteEstate} estateInfo={item} setEstates={setEstates} refresh={refresh}
                             doUpdate={updateEstate}></EstateView>
             }></Collapsible>
         })}
@@ -104,7 +113,7 @@ export function AddEstate({estates, setEstates, refresh, doAdd}) {
 }
 
 
-function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
+function EstateView({estates, setEstates, estateInfo, refresh, doUpdate, doDelete}) {
     // console.log(estateInfo)
     const style= {
         border: "0.5vw solid black",
@@ -144,6 +153,9 @@ function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
             <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
             <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
         </>}></Collapsible>
+        <button onClick={() => {
+            doDelete(estateInfo.estateID).onreadystatechange = refresh
+        }}>Delete</button>
     </div>
 }
 
