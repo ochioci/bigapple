@@ -1,6 +1,7 @@
 import {useEffect, useReducer, useRef, useState} from "react";
 import {Calendar} from "../../components/calendar.jsx";
 import {Collapsible} from "../../components/collapsible.jsx";
+import {MapView} from "../../components/map.jsx";
 
 export function EstatesMenu({StateHook}) {
     const [estates, setEstates] = useState([])
@@ -69,6 +70,9 @@ export function EstatesMenu({StateHook}) {
         padding: "1vw",
         margin: "1vw"
     }
+
+
+
     return <div style={style}>
         <Collapsible initState={true} Content={<>
             <AddEstate estates={estates} setEstates={setEstates} refresh={refresh} doAdd={addEstate}></AddEstate>
@@ -79,11 +83,17 @@ export function EstatesMenu({StateHook}) {
         <button onClick={refresh}>Refresh</button>
 
         {estates.map((item) => {
-            return <Collapsible initState={true} key={item.estateID}title={item.name + " estate"} Content={
-                <EstateView key={item.estateID} doDelete={deleteEstate} estateInfo={item} setEstates={setEstates} refresh={refresh}
+            return <Collapsible initState={true} key={item.estateID} title={item.name + " estate"} Content={
+                <EstateView key={item.estateID} doDelete={deleteEstate} estateInfo={item} setEstates={setEstates}
+                            refresh={refresh}
                             doUpdate={updateEstate}></EstateView>
             }></Collapsible>
         })}
+
+
+
+
+
 
     </div>
 }
@@ -100,14 +110,16 @@ export function AddEstate({estates, setEstates, refresh, doAdd}) {
         padding: "1vw",
         margin: "1vw"
     }
+    const [selectedPlace, setSelectedPlace] = useState(null)
     return <div style={style}>
         <Calendar selected={dates}></Calendar>
         <input type={"text"} placeholder={"name"} onChange={(e) => (name.current = e.target.value)}/>
-        <input type={"text"} placeholder={"location"} onChange={(e) => (location.current = e.target.value)}/>
+        {/*<input type={"text"} placeholder={"location"} onChange={(e) => (location.current = e.target.value)}/>*/}
         <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
         <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
+        <MapView selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace}></MapView>
         <button onClick={() => {
-            doAdd(name.current, location.current, dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
+            doAdd(name.current, (selectedPlace !== null) ? selectedPlace.formatted_address : "", dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
         }}>Add days</button>
     </div>
 }

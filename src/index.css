@@ -2,3 +2,10 @@ body {
     margin: 0
 }
 
+.pac-target-input {
+    width: 20vw;
+    height: 3vh;
+    align-self: center;
+    left: 0;
+    top: 0;
+}
