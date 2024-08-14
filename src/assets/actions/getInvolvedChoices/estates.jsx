@@ -113,18 +113,37 @@ function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
         margin: "1vw"
     }
     let [dates, datesHook] = useState(estateInfo.availability.split(",").map((d, index) => {return [d, index]}))
+    const datesToAdd = useRef([])
+    const startTime = useRef("08:00");
+    const endTime = useRef("20:00");
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
         <div>ID: {estateInfo.estateID}</div>
         <Collapsible onClick={refresh} title={"Availability"} Content={
             dates.map((date) => {
-                return <DateView key={date[1]} estates={estates} estateInfo={estateInfo} setEstates={setEstates} datesList={dates} datesHook={datesHook} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
-            })
-        }>
+                return <div key={Math.random()}><DateView key={date[1]} estates={estates} estateInfo={estateInfo} setEstates={setEstates} datesList={dates} datesHook={datesHook} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
+                </div>
+            })}>
 
         </Collapsible>
-
+        <Collapsible  title={"Add dates"} Content={<>
+            <Calendar selected={datesToAdd}></Calendar>
+            <button onClick={
+                () => {
+                    let av = dates.map((item) => {return item[0]}).concat(datesToAdd.current.map((item) => {
+                        return item + "(" + startTime.current + "-" + endTime.current + ")"
+                    }))
+                    let av2 = av.map((d, index) => {return [d, index]})
+                    console.log(av)
+                    console.log(av2)
+                    doUpdate(estateInfo.name, estateInfo.location, av.join(","), estateInfo.estateID)
+                    datesHook(av2)
+                }
+            }>Submit</button>
+            <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
+            <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
+        </>}></Collapsible>
     </div>
 }
 
