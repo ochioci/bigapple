@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useReducer, useRef, useState} from "react";
 import {Calendar} from "../../components/calendar.jsx";
 import {Collapsible} from "../../components/collapsible.jsx";
 
@@ -61,13 +61,20 @@ export function EstatesMenu({StateHook}) {
         margin: "1vw"
     }
     return <div style={style}>
-        <AddEstate estates={estates} setEstates={setEstates} refresh={refresh} doAdd={addEstate}></AddEstate>
+        <Collapsible initState={true} Content={<>
+            <AddEstate estates={estates} setEstates={setEstates} refresh={refresh} doAdd={addEstate}></AddEstate>
+        </>} title={"Add Estate"}>
+
+        </Collapsible>
+        <br/>
         <button onClick={refresh}>Refresh</button>
-        {
-            estates.map((item) => {
-                return <EstateView key={item.estateID} estateInfo={item} setEstates={setEstates} refresh={refresh} doUpdate={updateEstate}></EstateView>
-            })
-        }
+
+        {estates.map((item) => {
+            return <Collapsible initState={true} key={item.estateID}title={item.name + " estate"} Content={
+                <EstateView key={item.estateID} estateInfo={item} setEstates={setEstates} refresh={refresh}
+                            doUpdate={updateEstate}></EstateView>
+            }></Collapsible>
+        })}
 
     </div>
 }
@@ -105,13 +112,59 @@ function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
         padding: "1vw",
         margin: "1vw"
     }
+    let dates = estateInfo.availability.split(",").map((d, index) => {return [d, index]})
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
         <div>ID: {estateInfo.estateID}</div>
-        <Collapsible title={"Availability"} Content={<div>{estateInfo.availability}</div>}>
+        <Collapsible onClick={refresh} title={"Availability"} Content={
+            dates.map((date) => {
+                return <DateView key={date[1]} estates={estates} estateInfo={estateInfo} setEstates={setEstates} datesList={dates} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
+            })
+        }>
 
         </Collapsible>
 
     </div>
+}
+
+function DateView({estates, setEstates, estateInfo, datesList, refresh, doUpdate, date, lookupKey}) {
+    const style= {
+        border: "0.5vw solid black",
+        borderRadius: "0.25vw",
+        padding: "1vw",
+        margin: "1vw"
+    }
+    const [s, su] = useState(false)
+    let p = date.indexOf("(")
+    const day = useRef(date.slice(0, p) || "")
+    const startTime = useRef(date.slice(p+1, p+6) || "")
+    const endTime = useRef(date.slice(p+7, p+12) || "")
+    if ((day.current.length == 0) || (startTime.current.length < 5) || (endTime.current.length < 5) || datesList.length==0) {
+        return <div style={{display: "None"}}></div>
+    }
+    return <div style={style}>
+        <input type={"date"} defaultValue={new Date(day.current).toLocaleDateString("en-CA")}/>
+        <input type={"time"} defaultValue={startTime.current} onChange={(e) => {
+            startTime.current = e.target.value
+        }}/>
+        <input type={"time"} defaultValue={endTime.current} onChange={(e) => {
+            endTime.current = e.target.value
+        }}/>
+        <button onClick={() => {
+            if ((day.current.length == 0) || (startTime.current.length < 5) || (endTime.current.length < 5)) {
+                return
+            }
+            let temp = datesList.filter((item) => {
+                return item[1] !== lookupKey
+            })
+            temp.push([day.current + "(" + startTime.current + "-" + endTime.current + ")", -1])
+            // console.log(temp)
+            doUpdate(estateInfo.name, estateInfo.location, temp.map((item) => {
+                return item[0]
+            }).join(","), estateInfo.estateID).onreadystatechange = refresh
+        }}>Update
+        </button>
+    </div>
+
 }
