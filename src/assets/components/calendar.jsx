@@ -1,11 +1,10 @@
-import {useReducer, useState} from "react";
+import {useReducer, useRef, useState} from "react";
 
-export function Calendar({inputHook, updateOnSubmit=false}) {
+export function Calendar({selected}) {
     let datesByDayOfWeek = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
     let cd = new Date(Date.now())
     cd.setDate(cd.getDate()-cd.getDay())
     let dates = []
-    const [sd, sdHook] = useState([]);
     for (let i = 0; i < 35; i++) {
         let t = new Date();
         t.setDate(cd.getDate() + (i));
@@ -18,10 +17,6 @@ export function Calendar({inputHook, updateOnSubmit=false}) {
     }
 
 
-    function reset() {
-        sdHook([])
-        inputHook([])
-    }
 
 
 
@@ -30,17 +25,19 @@ export function Calendar({inputHook, updateOnSubmit=false}) {
 
             {Object.keys(datesByDayOfWeek).map(day => {
                 {
-                    return <CalendarColumn updateOnSubmit={updateOnSubmit} inputHook={inputHook} sd={sd} sdHook={sdHook} key={day}
+                    return <CalendarColumn selected={selected}  key={day}
                                            dates={datesByDayOfWeek[day]}></CalendarColumn>
                 }
             })}
         </div>
-        <button onClick={reset}>Reset</button>
+        <button onClick={() => {
+            selected.current = []
+        }}>Reset</button>
     </>
 
 }
 
-function CalendarColumn({dates, sd, sdHook, inputHook, updateOnSubmit}) {
+function CalendarColumn({dates, selected}) {
     const style = {
         borderLeft: "1px solid grey",
         borderRight: "1px solid grey",
@@ -49,53 +46,36 @@ function CalendarColumn({dates, sd, sdHook, inputHook, updateOnSubmit}) {
     return <div style={style}>
         {dates[0].toDateString().slice(0, 3)}
         {dates.map(d => {
-            return <CalendarCell updateOnSubmit={updateOnSubmit} inputHook={inputHook} sd={sd} sdHook={sdHook} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
+            return <CalendarCell selected={selected} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
         })}
     </div>
 }
 
-function CalendarCell({date, sd, sdHook, key2, inputHook, updateOnSubmit}) {
-    const [, forceUpdate] = useReducer(x => x + 1, 0); //do not fuck with this
+function CalendarCell({date, key2, selected}) {
+
+    const [isSelected, setSelected] = useState(false)
+
     let d  = new Date(Date.now())
     let style = {color: "black", backgroundColor: "white", cursor: "pointer"}
     if (date.getTime() < d.getTime()) {
         style.color = "grey"
     }
-
-
-    function selectThis() {
-        inputHook(sd)
-        setTimeout(() => {inputHook(sd)}, 100);
-        if (date.getTime() > d.getTime() && sd.indexOf(key2) === -1) {
-            // style.backgroundColor = "blue"
-            let a = sd
-            a.push(key2)
-            inputHook(a)
-            sdHook(a)
-
-
-        } else if (sd.indexOf(key2) > -1) {
-            let a = sd
-            a = a.filter(item => {
-                return item !== key2
-            })
-            inputHook(a)
-            sdHook(a)
-
-        }
-        forceUpdate()
-
-        //THIS IS REALLY IMPORTANT. COMPONENT DOES NOT RERENDER ON CLICK IF U DONT DO THIS
-
-    }
-    let isSelected = (sd.indexOf(key2) > -1);
     if (isSelected) {
-        let style = {
-            backgroundColor: "blue",
-            color: "white",
-            cursor: "pointer"
-        }
-        return <div onClick={selectThis} style={style}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
+        style.backgroundColor = "blue"
+        style.color = "white"
     }
-    return <div onClick={selectThis} style={style}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
+
+    const toggleSelect = () => {
+        if (isSelected) {
+            selected.current = selected.current.filter((item) => {
+                return (item !== key2)
+            })
+
+        } else {
+            selected.current.push(key2)
+        }
+        setSelected(!isSelected)
+    }
+
+    return <div onClick={toggleSelect} style={style}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
 }

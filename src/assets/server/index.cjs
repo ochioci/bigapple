@@ -28,9 +28,13 @@ const requireEstate = (req, res, next) => {
     if (req.session.userID !== undefined) {
         if (req.session.role == "Estate") {
             next()
+        } else {
+            res.json({message: "failure"})
         }
+    } else {
+        res.json({message: "failure"})
     }
-    res.json({message: "failure"})
+
 }
 
 const db = new sqlite3.Database('./app.db');
