@@ -15,23 +15,6 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-//TODO: THINGS TO DO BEFORE PRODUCTION:
-//do secure session only
-//research session hijacking
-//make everything secure
-//lmao
-//make sure email inputs are valid
-//we can do client side tbh
-//Implement password hashing
-
-//TODO: Next stuff to do
-//Implement distinction between admin and non-admin users, as well as types of users
-//Implement portal for viewing contact messages
-//Update contact messages to use accounts email instead of accounts input email
-
-//TODO: Next feature to do:
-//Implement scheduling portal
-
 
 
 function App() {

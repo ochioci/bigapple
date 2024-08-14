@@ -42,15 +42,6 @@ db.run("CREATE TABLE IF NOT EXISTS messages([message] TEXT, [email] TEXT)")
 db.run("CREATE TABLE IF NOT EXISTS estates([name] TEXT, [location] TEXT, [availability] TEXT, [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
 db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [role] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
 
-//PROPOSED DATABASE STRUCTURE:
-//  Table "estates" - stores all picking locations
-//      -Columns: Location, primary key, owner email, availability dates, manfiest of available goods
-
-// Table "Pickups"
-//      -Columns: Pickup email, estate primary key, date/time window, primary key, manifest of goods picked up
-
-//Table "Dropoffs"
-//      -Columns: Dropoff email, pickup email, pickup primary key, dropoff location, manifest of goods dropped off
 
 app.post('/updateEstate', requireEstate, jsonParser, (req, res) => {
     db.run(`UPDATE estates SET name=$name, location=$location, availability=$availability WHERE ownerID=$userID AND estateID=$estateID`, {

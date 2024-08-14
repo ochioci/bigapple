@@ -1,0 +1,15 @@
+Checklist:
+-Security:
+    -Update session secret key
+    -Run session in secure mode
+    -Update proxies to secure mode
+    -Implement password hashing
+    -Pentest for SQL injection
+    -Pentest for request forgery
+
+-QOL:
+    - Implement input validation
+    - Implement error popup API
+
+-Bugs:
+    -Test bad request handling
