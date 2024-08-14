@@ -112,14 +112,14 @@ function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
         padding: "1vw",
         margin: "1vw"
     }
-    let dates = estateInfo.availability.split(",").map((d, index) => {return [d, index]})
+    let [dates, datesHook] = useState(estateInfo.availability.split(",").map((d, index) => {return [d, index]}))
     return <div style={style}>
         <div>Name: {estateInfo.name}</div>
         <div>Location: {estateInfo.location}</div>
         <div>ID: {estateInfo.estateID}</div>
         <Collapsible onClick={refresh} title={"Availability"} Content={
             dates.map((date) => {
-                return <DateView key={date[1]} estates={estates} estateInfo={estateInfo} setEstates={setEstates} datesList={dates} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
+                return <DateView key={date[1]} estates={estates} estateInfo={estateInfo} setEstates={setEstates} datesList={dates} datesHook={datesHook} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
             })
         }>
 
@@ -128,14 +128,14 @@ function EstateView({estates, setEstates, estateInfo, refresh, doUpdate}) {
     </div>
 }
 
-function DateView({estates, setEstates, estateInfo, datesList, refresh, doUpdate, date, lookupKey}) {
+function DateView({estates, setEstates, estateInfo, datesList, refresh, doUpdate, date, lookupKey, datesHook}) {
     const style= {
         border: "0.5vw solid black",
         borderRadius: "0.25vw",
         padding: "1vw",
         margin: "1vw"
     }
-    const [s, su] = useState(false)
+
     let p = date.indexOf("(")
     const day = useRef(date.slice(0, p) || "")
     const startTime = useRef(date.slice(p+1, p+6) || "")
@@ -158,12 +158,27 @@ function DateView({estates, setEstates, estateInfo, datesList, refresh, doUpdate
             let temp = datesList.filter((item) => {
                 return item[1] !== lookupKey
             })
-            temp.push([day.current + "(" + startTime.current + "-" + endTime.current + ")", -1])
+            temp.push([day.current + "(" + startTime.current + "-" + endTime.current + ")", Math.random()])
+            // console.log(temp)
+            doUpdate(estateInfo.name, estateInfo.location, temp.map((item) => {
+                return item[0]
+            }).join(","), estateInfo.estateID).onreadystatechange = refresh //this shit is genius
+            datesHook(temp)
+        }}>Update
+        </button>
+        <button onClick={() => {
+            if ((day.current.length == 0) || (startTime.current.length < 5) || (endTime.current.length < 5)) {
+                return
+            }
+            let temp = datesList.filter((item) => {
+                return item[1] !== lookupKey
+            })
             // console.log(temp)
             doUpdate(estateInfo.name, estateInfo.location, temp.map((item) => {
                 return item[0]
             }).join(","), estateInfo.estateID).onreadystatechange = refresh
-        }}>Update
+            datesHook(temp)
+        }}>Delete
         </button>
     </div>
 
