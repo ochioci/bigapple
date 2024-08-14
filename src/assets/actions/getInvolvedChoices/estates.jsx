@@ -78,7 +78,7 @@ export function AddEstate({estates, setEstates, refresh, doAdd}) {
         <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
         <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
         <button onClick={() => {
-            doAdd(name.current, location.current, dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"}))
+            doAdd(name.current, location.current, dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
         }}>Submit</button>
     </>
 }
