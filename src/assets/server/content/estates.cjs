@@ -32,7 +32,7 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
     })
 // db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`
     app.post("/addEstate", requireEstate, jsonParser, (req, res) => {
-        console.log(req.body)
+        // console.log(req.body)
         db.get(`INSERT INTO estates (name, location, availability, ownerID) VALUES ($n, $l, $a, $o)`, {$n: req.body.name, $l: req.body.location, $a: req.body.availability, $o: req.session.userID }, (err, row) => {
         })
         res.json({message: "success"})

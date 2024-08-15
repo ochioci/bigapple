@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Calendar} from "../components/calendar.jsx"
 import {EstateBookings} from "./getInvolvedChoices/estates.jsx";
+import {DropoffBookings} from "./getInvolvedChoices/dropoffs.jsx";
 
 export function GetInvolvedContent ({StateHook}) {
 
@@ -25,9 +26,8 @@ export function GetInvolvedContent ({StateHook}) {
         </PickFruit>
             <button onClick={goBack}>Go Back</button></>
     } else if (getInvolvedState === "get") {
-        return <><GetFruit>
-        </GetFruit>
-            <button onClick={goBack}>Go Back</button></>
+        return <div><DropoffBookings StateHook={StateHook}></DropoffBookings>
+            <button onClick={goBack}>Go Back</button></div>
     } else {
         return <div style={style}>
             <GetInvolvedChoices getInvolvedHook={getInvolvedHook}></GetInvolvedChoices>
