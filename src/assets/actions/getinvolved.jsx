@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {Calendar} from "../components/calendar.jsx"
-import {EstatesMenu} from "./getInvolvedChoices/estates.jsx";
+import {EstateBookings} from "./getInvolvedChoices/estates.jsx";
 
 export function GetInvolvedContent ({StateHook}) {
 
@@ -18,8 +18,7 @@ export function GetInvolvedContent ({StateHook}) {
     }
 
     if (getInvolvedState === "have") {
-        return <div><EstatesMenu StateHook={StateHook}>
-        </EstatesMenu>
+        return <div><EstateBookings StateHook={StateHook}></EstateBookings>
             <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "pick") {
         return <><PickFruit>

@@ -42,6 +42,22 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/getDropoffs": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/addDropoff": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/updateDropoff": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/deleteDropoff": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })
