@@ -42,6 +42,10 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/selectEstates": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
       "/getDropoffs": {
         target: "http://localhost:3001",
         secure: false,

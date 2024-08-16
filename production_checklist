@@ -11,6 +11,8 @@ Checklist:
     - Implement input validation
     - Implement error popup API
     - Implement registration email check
+    - Handle booking conflicts
+    - Email notifications
 
 -Bugs:
     -Test bad request handling

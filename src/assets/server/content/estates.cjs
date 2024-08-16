@@ -37,6 +37,16 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         })
         res.json({message: "success"})
     })
+
+    app.get("/selectEstates", requireAuth, jsonParser, (req, res) => {
+        let rows = []
+        db.all("SELECT * FROM estates", (err, row) => {
+            row.forEach((r) => {
+                rows.push(r)
+            })
+            res.json({"message": "success", "rows": rows})
+        })
+    })
 }
 
 module.exports = {initEstatesAPI}
