@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Collapsible} from "./collapsible.jsx";
+import {LocationView} from "./map.jsx";
 const style= {
     border: "0.5vw solid black",
     borderRadius: "0.25vw",
@@ -73,7 +74,9 @@ function TransferView({confirmTransfer, updateTransfer, transferInfo, deleteTran
         <br/>
         Drop off at: {thisDropoff.name}
         <br/>
-        Location: {thisDropoff.location}
+        Location:
+        <LocationView location={thisDropoff.location}></LocationView>
+        {/*{thisDropoff.location}*/}
         <br/>
         Confirmed: {transferInfo.isConfirmed}
     </div>

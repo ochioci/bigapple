@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {Calendar} from "./calendar.jsx";
 import {Collapsible} from "./collapsible.jsx";
-import {MapView} from "./map.jsx";
+import {LocationSelection} from "./map.jsx";
 
 
 export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addBooking, deleteBooking, bookings, setBookings}) {
@@ -58,9 +58,11 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
         {/*<input type={"text"} placeholder={"location"} onChange={(e) => (location.current = e.target.value)}/>*/}
         <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
         <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
-        <MapView selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace}></MapView>
+        <LocationSelection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace}></LocationSelection>
         <button onClick={() => {
-            doAdd(name.current, (selectedPlace !== null) ? selectedPlace.formatted_address : "", dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
+            doAdd(name.current, (selectedPlace !== null) ? (
+                selectedPlace.geometry.location.lat() + "," + selectedPlace.geometry.location.lng()
+            ) : "0,0", dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
         }}>Add days</button>
     </div>
 }

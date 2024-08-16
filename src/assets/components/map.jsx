@@ -1,50 +1,48 @@
-// import {AdvancedMarker, APIProvider, Map, Marker, useMap, useMarkerRef} from "@vis.gl/react-google-maps";
-// import {useEffect} from "react";
-
-//
-// export function MapView({locRef}) {
-//     const style = {
-//         width: "40vw",
-//         height: "40vh",
-//         background: "red"
-//     }
-//
-//
-//     return <div style={style}>
-//         <APIProvider apiKey={API_KEY}>
-//             <Map mapId={"0"} style={style} defaultZoom={12} defaultCenter={{lat: 53.54992, lng: 10.00678}}>
-//                 <AdvancedMarker onDragEnd={
-//                     (e) => {
-//                         console.log(e.latLng.lat(), e.latLng.lng())
-//                         locRef.current = e.latLng.lat() + "," + e.latLng.lng()
-//                     }
-//                 } draggable={true} position={{lat: 53.54992, lng: 10.00678}} />
-//             </Map>
-//         </APIProvider>
-//     </div>
-// }
-
 import { useState, useEffect, useRef } from "react";
 import '../../index.css'
 import {
-    APIProvider,
-    ControlPosition,
-    MapControl,
-    AdvancedMarker,
-    Map,
-    useMap,
-    useMapsLibrary,
-    useAdvancedMarkerRef,
+    APIProvider, ControlPosition, MapControl, AdvancedMarker, Map, useMap, useMapsLibrary, useAdvancedMarkerRef, Marker,
 } from "@vis.gl/react-google-maps";
 const API_KEY = globalThis.GOOGLE_MAPS_API_KEY ?? "AIzaSyA7_v5dWYunLhct5AUUHHlHIJ92Py3CpKc"
-export function MapView({selectedPlace, setSelectedPlace}) {
+const style={
+    width: "40vw",
+    height: "40vh",
+    zIndex: 100,
+}
+export function LocationView ({location}) {
+    console.log(location)
+    let lat = parseFloat(location.split(",")[0])
+    let lng = parseFloat(location.split(",")[1])
+    try {
+        return (
+            <APIProvider
+                apiKey={API_KEY}
+                style={style}
+            >
+                <Map
+                    mapId={"abc123"}
+                    style={style}
+                    defaultZoom={3}
+                    defaultCenter={{ lat: lat, lng: lng }}
+                    gestureHandling={"greedy"}
+                    disableDefaultUI={true}
+                >
+                    <Marker position={{lat, lng}} />
+                </Map>
+            </APIProvider>
+        );
+    } catch {
+        return <div>
+            {Location}
+        </div>
+    }
+
+}
+
+export function LocationSelection({selectedPlace, setSelectedPlace}) {
     // const [selectedPlace, setSelectedPlace] = useState(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
-    const style={
-        width: "40vw",
-        height: "40vh",
-        zIndex: 100,
-    }
+
     return (
         <APIProvider
             apiKey={API_KEY}
@@ -95,7 +93,7 @@ const PlaceAutocomplete = ({ onPlaceSelect }) => {
         if (!places || !inputRef.current) return;
 
         const options = {
-            fields: ["geometry", "name", "formatted_address"],
+            fields: ["geometry", "name", "formatted_address", "geometry.location"],
         };
 
         setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
@@ -105,6 +103,7 @@ const PlaceAutocomplete = ({ onPlaceSelect }) => {
 
         placeAutocomplete.addListener("place_changed", () => {
             onPlaceSelect(placeAutocomplete.getPlace());
+            console.log(placeAutocomplete.getPlace().geometry.location.lat() + "," + placeAutocomplete.getPlace().geometry.location.lng());
         });
     }, [onPlaceSelect, placeAutocomplete]);
     return (
