@@ -8,8 +8,19 @@ const style={
     width: "40vw",
     height: "40vh",
     zIndex: 100,
+    border: "3px solid black",
+    // borderRadius: "50%",
+    // overflow: "hidden"
 }
 export function LocationView ({location}) {
+    const style={
+        width: "20vw",
+        height: "20vh",
+        zIndex: 100,
+        border: "3px solid black",
+        borderRadius: "50%",
+        overflow: "hidden"
+    }
     console.log(location)
     let lat = parseFloat(location.split(",")[0])
     let lng = parseFloat(location.split(",")[1])

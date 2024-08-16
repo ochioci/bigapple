@@ -17,6 +17,7 @@ Checklist:
     - Prevent double booking
     - Improve time display
     - Prevent booking of dropoff prior to pickup
+    - Location input validation (very important)
 
 -Bugs:
     -Test bad request handling
