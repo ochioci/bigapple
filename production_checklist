@@ -18,11 +18,16 @@ Checklist:
     - Improve time display
     - Prevent booking of dropoff prior to pickup
     - Location input validation (very important)
+    - Rather than display precise location, display approximate location for unconfirmed bookings
+    - Allow estates/shelters to provide instructions to pickers
+    - Direct communication between connected parties
 
 -Bugs:
     -Test bad request handling
     -If registration fails, dropdown is populated with empty entries
     -(Only happens sometimes) Clicking "Go back" on transfer menu then re-entering menu can cause crash (Maybe fixed?)
     - Entering estate menu as picker crashes program (Maybe fixed)
-    - Estates with no timeslots still have option to book
+    - Estates with no timeslots still have option to book (Maybe fixed)
 
+-Latent client demands (Client description):
+    - Nothing too big yet? Just make it look nice

@@ -35,7 +35,7 @@ export function BookingSelection({confirmBooking, dropoffs, setDropoffs, refresh
 
 function MyTransfers({estates, confirmTransfer, updateTransfer, transfers, setTransfers, deleteBooking, refreshBooking, dropoffs, setDropoffs, refreshDropoffs}) {
     // console.log(transfers)
-    console.log(estates)
+    // console.log(estates)
     return <div>
         My Dropoffs:{
         transfers.map((transfer, index) => {
@@ -46,7 +46,7 @@ function MyTransfers({estates, confirmTransfer, updateTransfer, transfers, setTr
 }
 
 function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, deleteTransfer, refreshTransfers, dropoffs, setDropoffs, refreshDropoffs}) {
-    console.log(transferInfo)
+    // console.log(transferInfo)
     let thisDropoff = dropoffs.filter((d) => {return d.dropoffID == transferInfo.dropoffID})[0]
     let thisEstate = estates.filter((d) => {return d.estateID == transferInfo.estateID})[0]
     if (transferInfo.dropoffID == -1 || thisDropoff === undefined) {
@@ -70,7 +70,7 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
     }
 
 
-    console.log(transferInfo)
+    // console.log(transferInfo)
     // console.log(thisDropoff)
     return <div style={style}>
     {transferInfo.window}
@@ -113,13 +113,17 @@ function EntrySelection({refreshTransfers, bookingInfo, addBooking}) {
 }
 
 function WindowSelection({refreshTransfers, info, addBooking, bookingInfo}) {
+    if (info.length < 10) {
+        return <></>
+    }
+
     return <div style={style}>{info} <button onClick={() => {
         let a = addBooking(info, bookingInfo.estateID, -1)
         if (a !== undefined) {
             a.onreadystatechange = refreshTransfers
         }
 
-        console.log("Booking: ", info)
+        // console.log("Booking: ", info)
     }}> Book </button></div>
 }
 
@@ -138,7 +142,7 @@ function DropoffSelection({dropoffs, setDropoffs, refreshDropoffs, updateTransfe
 }
 
 function DropoffView({refreshDropoffs, dropoffInfo, updateTransfer, transferInfo, refreshTransfers}) {
-    console.log(dropoffInfo)
+    // console.log(dropoffInfo)
     return <div style={style}>
         Name: {dropoffInfo.name}
         <br/>

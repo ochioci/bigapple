@@ -5,7 +5,7 @@ import {
 } from "@vis.gl/react-google-maps";
 const API_KEY = globalThis.GOOGLE_MAPS_API_KEY ?? "AIzaSyA7_v5dWYunLhct5AUUHHlHIJ92Py3CpKc"
 const style={
-    width: "40vw",
+    width: "40vh",
     height: "40vh",
     zIndex: 100,
     border: "3px solid black",
@@ -14,17 +14,21 @@ const style={
 }
 export function LocationView ({location}) {
     const style={
-        width: "20vw",
+        width: "20vh",
         height: "20vh",
         zIndex: 100,
         border: "3px solid black",
         borderRadius: "50%",
         overflow: "hidden"
     }
-    console.log(location)
+    // console.log(location)
     let lat = parseFloat(location.split(",")[0])
     let lng = parseFloat(location.split(",")[1])
-    try {
+    if (lat == undefined || lng == undefined) {
+        return <div>{location}</div>
+    }
+
+
         return (
             <APIProvider
                 apiKey={API_KEY}
@@ -42,11 +46,7 @@ export function LocationView ({location}) {
                 </Map>
             </APIProvider>
         );
-    } catch {
-        return <div>
-            {Location}
-        </div>
-    }
+
 
 }
 
@@ -114,7 +114,7 @@ const PlaceAutocomplete = ({ onPlaceSelect }) => {
 
         placeAutocomplete.addListener("place_changed", () => {
             onPlaceSelect(placeAutocomplete.getPlace());
-            console.log(placeAutocomplete.getPlace().geometry.location.lat() + "," + placeAutocomplete.getPlace().geometry.location.lng());
+            // console.log(placeAutocomplete.getPlace().geometry.location.lat() + "," + placeAutocomplete.getPlace().geometry.location.lng());
         });
     }, [onPlaceSelect, placeAutocomplete]);
     return (
