@@ -82,6 +82,10 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/confirmTransfer": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })

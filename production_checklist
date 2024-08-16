@@ -21,4 +21,6 @@ Checklist:
 -Bugs:
     -Test bad request handling
     -If registration fails, dropdown is populated with empty entries
+    -(Only happens sometimes) Clicking "Go back" on transfer menu then re-entering menu can cause crash (Maybe fixed?)
+    - Entering estate menu as picker crashes program (Maybe fixed)
 

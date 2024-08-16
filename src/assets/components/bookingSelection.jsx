@@ -9,14 +9,14 @@ const style= {
 }
 //refresh refreshes estates
 //refreshBooking refreshes booking
-export function BookingSelection({dropoffs, setDropoffs, refreshDropoffs, StateHook, refresh, refreshBooking, updateBooking, addBooking, deleteBooking, bookings, setBookings, transfers, setTransfers}) {
+export function BookingSelection({confirmBooking, dropoffs, setDropoffs, refreshDropoffs, StateHook, refresh, refreshBooking, updateBooking, addBooking, deleteBooking, bookings, setBookings, transfers, setTransfers}) {
     useEffect(() => {refresh()}, [])
     useEffect(() => {refreshBooking()}, [])
     useEffect(() => {refreshDropoffs()}, [])
     // useEffect(() => {refreshBooking()}, [])
     // console.log(bookings)
     return <div style={style}>
-        <MyTransfers updateTransfer={updateBooking} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} transfers={transfers} setTransfers={transfers} deleteBooking={deleteBooking} refreshBooking={refreshBooking}></MyTransfers>
+        <MyTransfers confirmTransfer={confirmBooking} updateTransfer={updateBooking} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} transfers={transfers} setTransfers={transfers} deleteBooking={deleteBooking} refreshBooking={refreshBooking}></MyTransfers>
 
         <div>
             Available Estates:
@@ -32,20 +32,21 @@ export function BookingSelection({dropoffs, setDropoffs, refreshDropoffs, StateH
     </div>
 }
 
-function MyTransfers({updateTransfer, transfers, setTransfers, deleteBooking, refreshBooking, dropoffs, setDropoffs, refreshDropoffs}) {
+function MyTransfers({confirmTransfer, updateTransfer, transfers, setTransfers, deleteBooking, refreshBooking, dropoffs, setDropoffs, refreshDropoffs}) {
     // console.log(transfers)
     return <div>
         My Dropoffs:{
         transfers.map((transfer, index) => {
-            return <TransferView updateTransfer={updateTransfer} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} transferInfo={transfer} key={index} deleteTransfer={deleteBooking} refreshTransfers={refreshBooking}></TransferView>
+            return <TransferView confirmTransfer={confirmTransfer} updateTransfer={updateTransfer} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} transferInfo={transfer} key={index} deleteTransfer={deleteBooking} refreshTransfers={refreshBooking}></TransferView>
         })
     }
     </div>
 }
 
-function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTransfers, dropoffs, setDropoffs, refreshDropoffs}) {
+function TransferView({confirmTransfer, updateTransfer, transferInfo, deleteTransfer, refreshTransfers, dropoffs, setDropoffs, refreshDropoffs}) {
     // console.log(dropoffs)
-    if (transferInfo.dropoffID == -1) {
+    let thisDropoff = dropoffs.filter((d) => {return d.dropoffID == transferInfo.dropoffID})[0]
+    if (transferInfo.dropoffID == -1 || thisDropoff === undefined) {
         return <div style={style}>{transferInfo.window}
         <button onClick={() => {
             deleteTransfer(transferInfo.transferID).onreadystatechange = refreshTransfers
@@ -56,7 +57,7 @@ function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTran
         </div>
     }
 
-    let thisDropoff = dropoffs.filter((d) => {return d.dropoffID == transferInfo.dropoffID})[0]
+
     console.log(transferInfo)
     // console.log(thisDropoff)
     return <div style={style}>
@@ -66,7 +67,7 @@ function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTran
         }}>Delete</button>
         <button onClick={
             () => {
-                console.log("confirm transfer")
+                confirmTransfer(transferInfo.transferID).onreadystatechange = refreshTransfers
             }
         }>Confirm</button>
         <br/>

@@ -108,9 +108,20 @@ export function TransferBookings ({StateHook, goBack}) {
         return req
     }
 
+    const confirmTransfer = (transferID) => {
+        let req = new XMLHttpRequest();
+        req.open("POST", "/confirmTransfer", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({
+            transferID
+        }))
+        return req
+    }
+
 
 
     return <BookingSelection
+        confirmBooking={confirmTransfer}
         StateHook={StateHook}
         refresh={refreshEstates}
         refreshBooking={refresh}

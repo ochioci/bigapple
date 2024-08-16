@@ -43,6 +43,7 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
             $userID: req.session.userID,
             $transferID: req.body.transferID
         })
+        res.json({message: "success"})
     })
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
