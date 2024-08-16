@@ -8,13 +8,15 @@ Checklist:
     -Pentest for request forgery
 
 -Features:
-    - Implement input validation
+    - Implement input validation on all fields
     - Implement error popup API
     - Implement registration email check
     - Handle booking conflicts
     - Email notifications
     - Sorting of dynamic lists
     - Prevent double booking
+    - Improve time display
+    - Prevent booking of dropoff prior to pickup
 
 -Bugs:
     -Test bad request handling

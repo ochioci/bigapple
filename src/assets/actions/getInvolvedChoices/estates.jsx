@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 
-export function EstateBookings({StateHook}) {
+export function EstateBookings({StateHook, goBack}) {
     const [estates, setEstates] = useState([])
 
     const refresh = () => {
@@ -12,7 +12,7 @@ export function EstateBookings({StateHook}) {
 
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    StateHook("login")
+                    goBack()
                     return
                 }
                 // console.log(response.rows)

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 
-export function DropoffBookings({StateHook}) {
+export function DropoffBookings({StateHook, goBack}) {
     const [dropoffs, setDropoffs] = useState([])
 
     const refresh = () => {
@@ -12,7 +12,7 @@ export function DropoffBookings({StateHook}) {
 
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    StateHook("login")
+                    goBack()
                     return
                 }
                 // console.log(response.rows)

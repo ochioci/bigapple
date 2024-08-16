@@ -2,7 +2,7 @@ import {useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 import {BookingSelection} from "../../components/bookingSelection.jsx";
 
-export function TransferBookings ({StateHook}) {
+export function TransferBookings ({StateHook, goBack}) {
     const [transfers, setTransfers] = useState([])
     const [estates, setEstates] = useState([])
     const [dropoffs, setDropoffs] = useState([])
@@ -15,7 +15,7 @@ export function TransferBookings ({StateHook}) {
 
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    StateHook("login")
+                    goBack()
                     return
                 }
                 // console.log(response.rows)
@@ -107,6 +107,8 @@ export function TransferBookings ({StateHook}) {
         req.send(JSON.stringify({}));
         return req
     }
+
+
 
     return <BookingSelection
         StateHook={StateHook}
