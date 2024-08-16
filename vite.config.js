@@ -58,6 +58,22 @@ export default defineConfig({
         target: "http://localhost:3001",
         secure: false,
       },
+      "/getTransfers": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/addTransfer": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/updateTransfer": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/deleteTransfer": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
     },
   },
 })
