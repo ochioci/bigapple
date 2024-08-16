@@ -87,11 +87,14 @@ export function TransferBookings ({StateHook}) {
     return <BookingSelection
         StateHook={StateHook}
         refresh={refreshEstates}
+        refreshBooking={refresh}
         updateBooking={updateTransfer}
         addBooking={addTransfer}
         deleteBooking={deleteTransfer}
         bookings={estates}
         setBookings={setEstates}
+        transfers={transfers}
+        setTransfers={setTransfers}
     >
 
     </BookingSelection>

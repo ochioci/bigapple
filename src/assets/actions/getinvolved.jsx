@@ -23,8 +23,8 @@ export function GetInvolvedContent ({StateHook}) {
         return <div><EstateBookings StateHook={StateHook}></EstateBookings>
             <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "pick") {
-        return <><TransferBookings StateHook={StateHook}></TransferBookings>
-            <button onClick={goBack}>Go Back</button></>
+        return <div><TransferBookings StateHook={StateHook}></TransferBookings>
+            <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "get") {
         return <div><DropoffBookings StateHook={StateHook}></DropoffBookings>
             <button onClick={goBack}>Go Back</button></div>

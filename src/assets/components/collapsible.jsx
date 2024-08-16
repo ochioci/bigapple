@@ -10,7 +10,7 @@ export function Collapsible ({onClick=(() => {}), Content, title, initState=fals
         }
     }
     const style = {
-        display: "block"
+        display: "inline"
     }
     if (isOpen) {
         return <div style={style}>
