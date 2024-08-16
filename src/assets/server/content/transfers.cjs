@@ -33,9 +33,16 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
 // db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`
     app.post("/addTransfer", requireTransfer, jsonParser, (req, res) => {
         // console.log(req.body)
-        db.get(`INSERT INTO transfers (window, estateID, dropoffID, userID) VALUES ($n, $l, $a, $o)`, {$n: req.body.window, $l: req.body.estateID, $a: req.body.dropoffID, $o: req.session.userID }, (err, row) => {
+        db.get(`INSERT INTO transfers (window, estateID, dropoffID, userID, isConfirmed) VALUES ($n, $l, $a, $o, 0)`, {$n: req.body.window, $l: req.body.estateID, $a: req.body.dropoffID, $o: req.session.userID }, (err, row) => {
         })
         res.json({message: "success"})
+    })
+
+    app.post("/confirmTransfer", requireTransfer, jsonParser, (req, res) => {
+        db.get(`UPDATE transfers SET isConfirmed=1 WHERE userID = $userID AND transferID = $transferID`, {
+            $userID: req.session.userID,
+            $transferID: req.body.transferID
+        })
     })
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")

@@ -44,7 +44,7 @@ function MyTransfers({updateTransfer, transfers, setTransfers, deleteBooking, re
 }
 
 function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTransfers, dropoffs, setDropoffs, refreshDropoffs}) {
-    console.log(dropoffs)
+    // console.log(dropoffs)
     if (transferInfo.dropoffID == -1) {
         return <div style={style}>{transferInfo.window}
         <button onClick={() => {
@@ -57,16 +57,24 @@ function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTran
     }
 
     let thisDropoff = dropoffs.filter((d) => {return d.dropoffID == transferInfo.dropoffID})[0]
-    console.log(thisDropoff)
+    console.log(transferInfo)
+    // console.log(thisDropoff)
     return <div style={style}>
         {transferInfo.window}
         <button onClick={() => {
             deleteTransfer(transferInfo.transferID).onreadystatechange = refreshTransfers
         }}>Delete</button>
+        <button onClick={
+            () => {
+                console.log("confirm transfer")
+            }
+        }>Confirm</button>
         <br/>
         Drop off at: {thisDropoff.name}
         <br/>
         Location: {thisDropoff.location}
+        <br/>
+        Confirmed: {transferInfo.isConfirmed}
     </div>
 }
 
@@ -124,7 +132,7 @@ function DropoffView({refreshDropoffs, dropoffInfo, updateTransfer, transferInfo
         return (
             <WindowSelection refreshTransfers={() => {}} bookingInfo={dropoffInfo} addBooking={(e) => {
                 updateTransfer(transferInfo.window, transferInfo.transferID, dropoffInfo.dropoffID, transferInfo.estateID).onreadystatechange= refreshTransfers
-            }} key={index} style={style} info={dropoffInfo.availability}></WindowSelection>
+            }} key={index} style={style} info={window}></WindowSelection>
         )
     })}></Collapsible>
     </div>
