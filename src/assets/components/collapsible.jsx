@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export function Collapsible ({onClick=(() => {}), Content, title, initState=false}) {
+export function Collapsible ({onClick=(() => {}), Content, title, initState=false, style={display: "inline"}}) {
     const [isOpen, setOpen] = useState(initState)
 
     function toggle () {
@@ -9,9 +9,9 @@ export function Collapsible ({onClick=(() => {}), Content, title, initState=fals
             onClick()
         }
     }
-    const style = {
-        display: "inline"
-    }
+    // const style = {
+    //     display: "inline"
+    // }
     if (isOpen) {
         return <div style={style}>
             <button onClick={toggle}>{title + " v"}</button>

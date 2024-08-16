@@ -4,7 +4,8 @@ const style= {
     border: "0.5vw solid black",
     borderRadius: "0.25vw",
     padding: "1vw",
-    margin: "1vw"
+    margin: "1vw",
+    display: "block"
 }
 //refresh refreshes estates
 //refreshBooking refreshes booking
@@ -16,10 +17,13 @@ export function BookingSelection({dropoffs, setDropoffs, refreshDropoffs, StateH
     // console.log(bookings)
     return <div style={style}>
         <MyTransfers updateTransfer={updateBooking} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} transfers={transfers} setTransfers={transfers} deleteBooking={deleteBooking} refreshBooking={refreshBooking}></MyTransfers>
-       <div style={style}>
+
+        <div>
+            Available Estates:
+            <br/>
            {
                bookings.map((booking, index) => {
-                   return <Collapsible initState={true} key={index} title={booking.name} Content={
+                   return <Collapsible style={style} initState={true} key={index} title={booking.name} Content={
                        <EntrySelection refreshTransfers={refreshBooking} addBooking={addBooking} style={style} bookingInfo={booking}></EntrySelection>
                    }></Collapsible>
                })
@@ -30,7 +34,8 @@ export function BookingSelection({dropoffs, setDropoffs, refreshDropoffs, StateH
 
 function MyTransfers({updateTransfer, transfers, setTransfers, deleteBooking, refreshBooking, dropoffs, setDropoffs, refreshDropoffs}) {
     // console.log(transfers)
-    return <div> {
+    return <div>
+        My Dropoffs:{
         transfers.map((transfer, index) => {
             return <TransferView updateTransfer={updateTransfer} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} transferInfo={transfer} key={index} deleteTransfer={deleteBooking} refreshTransfers={refreshBooking}></TransferView>
         })
@@ -45,7 +50,7 @@ function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTran
             deleteTransfer(transferInfo.transferID).onreadystatechange = refreshTransfers
         }}>Delete</button>
             <Collapsible title={"Select dropoff"} Content = {
-                <DropoffSelection updateTransfer={updateTransfer} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} ></DropoffSelection>
+                <DropoffSelection refreshTransfers={refreshTransfers} transferInfo={transferInfo} updateTransfer={updateTransfer} dropoffs={dropoffs} setDropoffs={setDropoffs} refreshDropoffs={refreshDropoffs} ></DropoffSelection>
             }></Collapsible>
         </div>
     }
@@ -77,28 +82,45 @@ function EntrySelection({refreshTransfers, bookingInfo, addBooking}) {
 
 function WindowSelection({refreshTransfers, info, addBooking, bookingInfo}) {
     return <div style={style}>{info} <button onClick={() => {
-        addBooking(info, bookingInfo.estateID, -1).onreadystatechange = refreshTransfers
+        let a = addBooking(info, bookingInfo.estateID, -1)
+        if (a !== undefined) {
+            a.onreadystatechange = refreshTransfers
+        }
+
         console.log("Booking: ", info)
     }}> Book </button></div>
 }
 
-function DropoffSelection({dropoffs, setDropoffs, refreshDropoffs, updateTransfer}) {
-    console.log(dropoffs)
+function DropoffSelection({dropoffs, setDropoffs, refreshDropoffs, updateTransfer, transferInfo, refreshTransfers}) {
+    // console.log(dropoffs)
     return <div style={style}>
         {
+
             dropoffs.map((d, index) => {
                 return <div key={index}>
-                    <DropoffView dropoffInfo={d}></DropoffView>
+                    <DropoffView refreshTransfers={refreshTransfers} refreshDropoffs={refreshDropoffs} transferInfo={transferInfo} updateTransfer={updateTransfer} dropoffInfo={d}></DropoffView>
                 </div>
             })
         }
     </div>
 }
 
-function DropoffView({dropoffInfo}) {
-    return <div>
+function DropoffView({refreshDropoffs, dropoffInfo, updateTransfer, transferInfo, refreshTransfers}) {
+    console.log(dropoffInfo)
+    return <div style={style}>
         Name: {dropoffInfo.name}
         <br/>
-        Availability: {dropoffInfo.availability}
+        Availability:
+
+        {/*using the window selection for this is very hacky
+           we will need to replace these anonymous functions that do nothing
+        */}
+        <Collapsible style={{display: "inline"}} title={""} Content={dropoffInfo.availability.split(",").map((window, index) => {
+        return (
+            <WindowSelection refreshTransfers={() => {}} bookingInfo={dropoffInfo} addBooking={(e) => {
+                updateTransfer(transferInfo.window, transferInfo.transferID, dropoffInfo.dropoffID, transferInfo.estateID).onreadystatechange= refreshTransfers
+            }} key={index} style={style} info={dropoffInfo.availability}></WindowSelection>
+        )
+    })}></Collapsible>
     </div>
 }
