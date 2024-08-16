@@ -44,6 +44,7 @@ function MyTransfers({updateTransfer, transfers, setTransfers, deleteBooking, re
 }
 
 function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTransfers, dropoffs, setDropoffs, refreshDropoffs}) {
+    console.log(dropoffs)
     if (transferInfo.dropoffID == -1) {
         return <div style={style}>{transferInfo.window}
         <button onClick={() => {
@@ -55,13 +56,17 @@ function TransferView({updateTransfer, transferInfo, deleteTransfer, refreshTran
         </div>
     }
 
-    return <div>
+    let thisDropoff = dropoffs.filter((d) => {return d.dropoffID == transferInfo.dropoffID})[0]
+    console.log(thisDropoff)
+    return <div style={style}>
         {transferInfo.window}
         <button onClick={() => {
             deleteTransfer(transferInfo.transferID).onreadystatechange = refreshTransfers
         }}>Delete</button>
         <br/>
-        Dropoff: {transferInfo.dropoffID}
+        Drop off at: {thisDropoff.name}
+        <br/>
+        Location: {thisDropoff.location}
     </div>
 }
 
