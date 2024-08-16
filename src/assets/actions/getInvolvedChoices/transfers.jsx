@@ -5,6 +5,7 @@ import {BookingSelection} from "../../components/bookingSelection.jsx";
 export function TransferBookings ({StateHook}) {
     const [transfers, setTransfers] = useState([])
     const [estates, setEstates] = useState([])
+    const [dropoffs, setDropoffs] = useState([])
 
     const refreshEstates = () => {
         let req = new XMLHttpRequest();
@@ -84,10 +85,34 @@ export function TransferBookings ({StateHook}) {
         return req
     }
 
+    const getDropoffs = () => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+
+            if (req.readyState === 4) {
+
+                let response = JSON.parse(req.response);
+                if (response.message !== "success") {
+                    StateHook("login")
+                    return
+                }
+                // console.log(response.rows)
+                setDropoffs(response.rows)
+                console.log(dropoffs)
+                // console.log(response)
+            }
+        }
+        req.open("GET", "/selectDropoffs", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({}));
+        return req
+    }
+
     return <BookingSelection
         StateHook={StateHook}
         refresh={refreshEstates}
         refreshBooking={refresh}
+        refreshDropoffs={getDropoffs}
         updateBooking={updateTransfer}
         addBooking={addTransfer}
         deleteBooking={deleteTransfer}
@@ -95,6 +120,8 @@ export function TransferBookings ({StateHook}) {
         setBookings={setEstates}
         transfers={transfers}
         setTransfers={setTransfers}
+        dropoffs={dropoffs}
+        setDropoffs={setDropoffs}
     >
 
     </BookingSelection>

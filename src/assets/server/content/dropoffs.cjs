@@ -37,6 +37,18 @@ function initDropoffsAPI(app, db, requireAuth, requireDropoff, jsonParser) {
         })
         res.json({message: "success"})
     })
+
+    app.get("/selectDropoffs", requireAuth, jsonParser, (req, res) => {
+        let rows = []
+        db.all("SELECT * FROM dropoffs", (err, row) => {
+            row.forEach((r) => {
+                rows.push(r)
+            })
+            res.json({"message": "success", "rows": rows})
+        })
+    })
 }
+
+
 
 module.exports = {initDropoffsAPI}
