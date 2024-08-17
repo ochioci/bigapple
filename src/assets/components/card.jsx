@@ -1,4 +1,4 @@
-export function Card ({Content}) {
+export function Card ({Content, onClick=(()=>{})}) {
     const style = {
         border: "1vw solid #729C9E",
         borderRadius: "1vw",
@@ -9,5 +9,5 @@ export function Card ({Content}) {
         backgroundColor: "#DAE6EB",
         color: "#0d2c38"
     }
-    return <div style={style}> {Content}</div>
+    return <div onClick={onClick} style={style}> {Content}</div>
 }

@@ -92,3 +92,13 @@ body {
     font-family: "JustSansRegular";
     src: url("assets/resources/fonts/JustSansRegular.otf") format("opentype");
 }
+
+form input {
+    display: block;
+    margin: 0.5vh;
+    font-size: 20pt;
+}
+
+form label {
+    font-size: 20pt;
+}
