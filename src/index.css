@@ -12,10 +12,12 @@ body {
 
 .topbar {
     width: 100vw;
-    height: 100%;
+    /*height: 100%;*/
     grid-row: 1;
     display: flex;
     align-items: center;
+    position: absolute;
+    padding: 1vh;
     justify-content: space-evenly;
     font-family: "JustSansRegular";
     background-color: #588183;
@@ -33,6 +35,12 @@ body {
     }
 }
 
+.homepage {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
 .homepageBG {
     background: rgb(134,69,201);
     background: linear-gradient(#DAE6EB 10%, #0d2c38 20%, #729C9E 30%, #DAE6EB 40%, #0d2c38 50%, #729C9E 60%, #DAE6EB 70%, #0d2c38 80%, #729C9E 90%, #DAE6EB 100%);

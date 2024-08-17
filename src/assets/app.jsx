@@ -4,7 +4,6 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const style = {
         gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
-        display: "grid",
         width: "100vw",
         height: "100vh",
         margin: 0

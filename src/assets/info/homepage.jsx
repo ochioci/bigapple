@@ -2,7 +2,7 @@ import {Card} from "../components/card.jsx";
 
 export function HomepageContent () {
     const style = {
-        left: 0, right: 0, backgroundColor: null, margin: 0, padding: 0
+        left: 0, right: 0, backgroundColor: null, margin: 0, padding: 0, height: "100%"
     }
     return <><div style={style} className={"homepage"}>
         <Card Content={[<Heading key={1}></Heading>]}></Card>
