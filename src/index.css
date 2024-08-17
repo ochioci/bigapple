@@ -17,13 +17,30 @@ body {
     display: flex;
     align-items: center;
     position: absolute;
-    padding: 1vh;
     justify-content: space-evenly;
     font-family: "JustSansRegular";
     background-color: #588183;
 }
+.topbarEntry {
+    padding: 1vh;
+    /*animation: buttonHover 1s;*/
+    /*animation-direction: reverse;*/
+    /*animation-fill-mode: forwards;*/
+}
 
+.topbarEntry:hover {
+    animation: buttonHover 1.25s;
+    animation-fill-mode: forwards;
+}
 
+@keyframes buttonHover {
+    0% {
+        background-color: rgba(255,255,255,0);
+    }
+    100% {
+        background-color: rgba(255,255,255, 0.5);
+    }
+}
 
 @keyframes backgroundGradient{
     0% {

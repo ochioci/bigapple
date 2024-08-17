@@ -18,6 +18,7 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     ])
 
     return <div style={style}>
+        <div style={style} className={"homepageBG"}></div>
         <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
         <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState} StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
     </div>
@@ -72,7 +73,7 @@ function TopBarEntry({StateHook, link ,style, text}) {
         StateHook(link);
     }
 
-    return <a onClick={handleClick} href={link} style={style}>{text}</a>
+    return <a className={"topbarEntry"} onClick={handleClick} href={link} style={style}>{text}</a>
 }
 
 function TopBarAuthStatus({StateHook, AuthState, AuthHook, style}) {

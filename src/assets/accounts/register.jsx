@@ -4,9 +4,11 @@ export function RegisterContent({StateHook}) {
     const [reqState, reqHook] = useState("waiting")
     const style = {
         gridRow: 2,
-        display: "grid",
-        gridTemplateRows: "80% 20%",
-        gridTemplateColumns: "1fr"
+        display: "flex",
+        height: "100%",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center"
     }
 
     function formSubmit(e) {

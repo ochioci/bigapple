@@ -8,9 +8,10 @@ export function GetInvolvedContent ({StateHook}) {
 
     const style = {
         gridRow: 2,
-        display: "grid",
-        gridTemplateRows: "80% 20%",
-        gridTemplateColumns: "1fr"
+        display: "flex",
+        height: "100%",
+        width: "100%",
+        justifyContent: "center",
     }
 
     const [getInvolvedState, getInvolvedHook] = useState("choice");
