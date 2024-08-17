@@ -4,7 +4,7 @@ export function HomepageContent () {
     const style = {
         left: 0,
         right: 0,
-
+        backgroundColor: "rgb(205 235 242)",
         margin: 0,
         padding: 0
     }

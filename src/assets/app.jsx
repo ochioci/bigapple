@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
-
 export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const [loginState, loginHook] = useState("Log in");
     const style = {
-        gridTemplateRows: "10% auto",
+        gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
         display: "grid",
         width: "100vw",
@@ -50,20 +49,14 @@ function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries,
         req.send()
     }, [])
     const style = {
-        backgroundColor: "blue",
-        width: "100vw",
-        height: "100%",
-        gridRow: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-evenly",
+
     }
 
     const entryStyle = {
         color: "White",
         marginRight: "5%"
     }
-    return <div style={style}>
+    return <div className={"topbar"} style={style}>
         {entries.map((text) =>
             <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text} />
         )}
