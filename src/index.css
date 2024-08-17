@@ -9,3 +9,18 @@ body {
     left: 0;
     top: 0;
 }
+
+@font-face {
+    font-family: 'Geometos';
+    src: url("assets/resources/fonts/Geometos.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "JustSansBold";
+    src: url("assets/resources/fonts/JustSansBold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "JustSansRegular";
+    src: url("assets/resources/fonts/JustSansRegular.otf") format("opentype");
+}

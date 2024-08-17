@@ -1,24 +1,38 @@
+import {Card} from "../components/card.jsx";
+
 export function HomepageContent () {
     const style = {
-        gridRow: 2,
-        display: "grid",
-        gridTemplateRows: "20% 60% 40%",
-        gridTemplateColumns: "1fr"
+        left: 0,
+        right: 0,
+
+        margin: 0,
+        padding: 0
     }
     return <div style={style}>
-        <Title gridRow={2}></Title>
+        <Card Content={
+            [<Heading key={1}></Heading>]
+        }></Card>
     </div>
 }
 
 
 
-function Title ({gridRow}) {
+function Heading() {
     const style = {
         fontSize: "30pt",
-        display: "flex",
-        gridRow: gridRow,
-        justifyContent: "center",
-        alignItems: "center"
+        fontFamily: 'Geometos',
+
     }
-    return <div style={style}>The Great Big Apple</div>
+    return <div style={style}>The Big Wild Apple
+        <Tagline></Tagline>
+    </div>
+}
+
+function Tagline() {
+    const style = {
+        fontSize: "15pt",
+        fontFamily: "JustSansRegular",
+        marginLeft: "0.5vw"
+    }
+    return <div style={style}>{"Pick. Share. Nourish."}</div>
 }
