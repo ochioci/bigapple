@@ -148,6 +148,7 @@ form label {
     animation-fill-mode: forwards;
     width: fit-content;
     height:fit-content;
+    min-width: min(90vh, 90vw);
     /*animation-direction: ;*/
 }
 

@@ -9,38 +9,37 @@ export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addB
 
     useEffect(() => {refresh()}, [])
     const style= {
-        border: "0.5vw solid black",
-        borderRadius: "0.25vw",
         padding: "1vw",
         margin: "1vw",
+        minWidth: "min(100vh, 100vw)"
     }
 
 
 
     return <div style={{marginTop: "10vh"}}>
-        <Card Content={
+
             <div style={style}>
-                <Collapsible initState={true} Content={<>
+
+                <Card  Content={<>
                     <AddBooking title={title} id={id} bookings={bookings} setBookings={setBookings} refresh={refresh}
                                 doAdd={addBooking}></AddBooking>
-                </>} title={"Add " + title}>
+                </>}>
 
-                </Collapsible>
+                </Card>
                 <br/>
-                <button onClick={refresh}>Refresh</button>
 
                 {bookings.map((item) => {
-                    return <Collapsible initState={true} key={item[id]} title={item.name + " " + title} Content={
-                        <BookingView title={title} id={id} key={item[id]} doDelete={deleteBooking} bookingInfo={item}
+                    return <Card key={item[id]} Content={
+                        <BookingView title={item.name + " " + title} id={id} key={item[id]} doDelete={deleteBooking} bookingInfo={item}
                                      setBookings={setBookings}
                                      refresh={refresh}
                                      doUpdate={updateBooking}></BookingView>
-                    }></Collapsible>
+                    }></Card>
                 })}
 
 
             </div>
-        }></Card>
+
     </div>
 
 
@@ -52,8 +51,6 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
     const startTime = useRef("08:00")
     const endTime = useRef("20:00")
     const style = {
-        border: "0.5vw solid black",
-        borderRadius: "0.25vw",
         padding: "1vw",
         margin: "1vw"
     }
