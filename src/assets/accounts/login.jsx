@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Card} from "../components/card.jsx";
 
 export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthHook, entries, entriesHook}) {
     // console.log(AuthHook)
@@ -9,7 +10,8 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
         height: "100%",
         width: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        fontFamily: "JustSansRegular"
     }
 
     function formSubmit(e) {
@@ -79,32 +81,47 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
     }
 
     if (LoginState === "Log out") {
-        return <div>
-            <button onClick={logout}>Log out</button>
+        return <div style={style}>
+            <Card Content={"Log out"} onClick={logout}>
+
+            </Card>
         </div>
+        // return <div style={style}>
+        //     <button onClick={logout}>Log out</button>
+        // </div>
     }
     else if (reqState === "done") {
-        return <div>
+        return <div style={style}>
             Successfully Logged In
             <button onClick={reset}>Go to homepage</button>
         </div>
     }
     else if (reqState === "sending") {
-        return <div>
+        return <div style={style}>
             Waiting
         </div>
     }
     else{
-        return <div  onSubmit={formSubmit} style={style}>
-            <div>Login</div>
-            <form action="/login" method="POST">
-                <label>Email</label>
-                <input type={"text"}/>
-                <label>Password</label>
-                <input type={"text"}/>
-                <button type="submit">Send</button>
-            </form>
+        return <div style={style}>
+            <Card Content ={
+                <div onSubmit={formSubmit}>
+                    <div style={{fontSize: "30pt", fontFamily: "JustSansBold"}}>Login</div>
+                    <form action="/login" method="POST">
+                        <label>Email</label>
+                        <input type={"text"}/>
+                        <label>Password</label>
+                        <input type={"text"}/>
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            }>
+
+            </Card>
         </div>
+
+
+
+
     }
 
 }
