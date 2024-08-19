@@ -20,6 +20,8 @@ body {
     justify-content: space-evenly;
     font-family: "JustSansRegular";
     background-color: #588183;
+    flex-wrap: wrap;
+
 }
 .topbarEntry {
     padding: 1vh;
@@ -68,8 +70,8 @@ body {
     animation-direction: alternate;
     /*transition:--a 0.5s;*/
     /*scale: 200%;*!*/
-    width: 100%;
-    height: 100%;
+    width: 105%;
+    height: 105%;
     overflow: hidden;
     position: fixed;
     left: 0;
@@ -106,21 +108,21 @@ form label {
 @keyframes borderAnimate {
     100% {
         border: 1vw solid #729C9E;
-        scale: 102%;
+        scale: 100%;
     }
     0% {
         border: 1vw solid white;
-        scale: 100%
+        scale: 102%
     }
 }
 @keyframes borderAnimate2 {
     0% {
         border: 1vw solid #729C9E;
-        scale: 102%
+        scale: 100%
     }
     100% {
         border: 1vw solid white;
-        scale: 100%;
+        scale: 102%;
     }
 }
 

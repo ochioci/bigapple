@@ -2,7 +2,7 @@ function initContactAPI(app, db, requireAuth, jsonParser){
     app.post("/contactAPI", requireAuth, jsonParser, (req, res) => {
         res.json({message: "success"});
         let m = req.body.message
-        let e = req.body.email
+        let e = req.session.email
         db.run(`INSERT INTO messages (message, email) VALUES (?, ?)`, [m, e])
     });
 

@@ -23,6 +23,7 @@ function initLoginAPI(app, db, requireAuth, jsonParser) {
                 // console.log("success!")
                 req.session.userID = row.userID;
                 req.session.role = row.role;
+                req.session.email = row.email;
                 // console.log("Session id: " + row.email)
                 res.json({message: "success", loginName: row.firstname})
             }

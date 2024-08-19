@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Card} from "../components/card.jsx";
 
 export function ContactContent({StateHook}) {
     const [reqState, reqHook] = useState("waiting")
@@ -8,13 +9,13 @@ export function ContactContent({StateHook}) {
         height: "100%",
         width: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        fontFamily: "JustSansRegular"
     }
 
     function formSubmit(e) {
         e.preventDefault();
         let message = e.target[0].value
-        let email = e.target[1].value
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -34,7 +35,7 @@ export function ContactContent({StateHook}) {
 
         req.open("POST", "/contactAPI", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({"message": message, "email": email}))
+        req.send(JSON.stringify({"message": message}))
         reqHook("done")
         return false;
     }
@@ -44,24 +45,46 @@ export function ContactContent({StateHook}) {
     }
 
     if (reqState == "done") {
-        return <div>
-            Message sent!
-            <button onClick={reset}>Send another message</button>
+        return <div style={style}>
+            <Card Content={
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}>
+                    <div style={{fontSize: "25pt", fontFamily: "JustSansBold"}}>Message sent!</div>
+
+                    <button onClick={reset}>Send another message</button>
+                </div>
+            }>
+
+            </Card>
         </div>
-    }
-    else if (reqState == "sending") {
+
+
+
+    } else if (reqState == "sending") {
         return <div>
             Waiting
         </div>
     }
     else{
-        return <div  onSubmit={formSubmit} style={style}><form id ="contactForm"  action="/contactAPI" method="POST">
-            <label>Send us a message</label>
-            <input type={"text"}/>
-            <label>Email address</label>
-            <input type={"text"}/>
-            <button type="submit">Send</button>
-        </form></div>
+        return <div style={style}>
+            <Card Content={
+                <form onSubmit={formSubmit} id="contactForm" action="/contactAPI" method="POST">
+                    <label style={{
+                        fontSize: "30pt",
+                        fontFamily: "JustSansBold"
+                    }}>Send us a message</label>
+                    <input type={"text"}/>
+                    <button type="submit">Send</button>
+                </form>
+            }>
+
+            </Card>
+
+        </div>
     }
 
 }

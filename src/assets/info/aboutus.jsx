@@ -10,7 +10,8 @@ export function AboutUsContent() {
         height: "100%",
         padding: "4vh",
         overflow: "none",
-        flexDirection: "column"
+        flexDirection: "column",
+        paddingTop: "10vh"
     }
     return <div style={style}>
         <Card animated={false} style={style} Content={

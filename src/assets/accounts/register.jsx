@@ -9,7 +9,7 @@ export function RegisterContent({StateHook}) {
         height: "100%",
         width: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     }
 
     function formSubmit(e) {
@@ -56,7 +56,7 @@ export function RegisterContent({StateHook}) {
     } else {
         const style = {
             display: "grid",
-            gridTemplateRows: "5% 31% 32% 32%",
+            gridTemplateRows: "10vh auto auto auto",
             height: "100%"
         }
         return <div style={style}>
