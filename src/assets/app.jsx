@@ -7,6 +7,7 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
         gridTemplateColumns: "100%",
         width: "100vw",
         height: "100vh",
+        overflowX: "hidden",
         margin: 0
     }
     let [entries, entriesHook] = useState([

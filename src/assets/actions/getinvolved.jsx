@@ -12,6 +12,10 @@ export function GetInvolvedContent ({StateHook}) {
         height: "100%",
         width: "100%",
         justifyContent: "center",
+        alignItems: "center",
+        // padding: "5vh",
+        flexDirection: "column",
+        marginTop: "10vh",
     }
     const [getInvolvedState, getInvolvedHook] = useState("choice");
 
@@ -42,13 +46,13 @@ export function GetInvolvedContent ({StateHook}) {
     }
 
     if (getInvolvedState === "Estate") {
-        return <div><EstateBookings goBack={goBack} StateHook={StateHook}></EstateBookings>
+        return <div style={style}><EstateBookings goBack={goBack} StateHook={StateHook}></EstateBookings>
             <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "Picker") {
-        return <div><TransferBookings goBack={goBack} StateHook={StateHook}></TransferBookings>
+        return <div style={style}><TransferBookings goBack={goBack} StateHook={StateHook}></TransferBookings>
             <button onClick={goBack}>Go Back</button></div>
     } else if (getInvolvedState === "Shelter") {
-        return <div><DropoffBookings goBack={goBack} StateHook={StateHook}></DropoffBookings>
+        return <div style={style}><DropoffBookings goBack={goBack} StateHook={StateHook}></DropoffBookings>
             <button onClick={goBack}>Go Back</button></div>
     } else {
         return <div style={style}>
@@ -62,7 +66,7 @@ function HaveFruit() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     }
     return <div style={style}>
         <Calendar></Calendar>

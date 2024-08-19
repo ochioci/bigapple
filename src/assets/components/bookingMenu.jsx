@@ -11,7 +11,7 @@ export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addB
         border: "0.5vw solid black",
         borderRadius: "0.25vw",
         padding: "1vw",
-        margin: "1vw"
+        margin: "1vw",
     }
 
 
@@ -74,7 +74,8 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
         border: "0.5vw solid black",
         borderRadius: "0.25vw",
         padding: "1vw",
-        margin: "1vw"
+        margin: "1vw",
+        // marginTop: "15vh",
     }
     let [dates, datesHook] = useState(bookingInfo.availability.split(",").map((d, index) => {return [d, index]}))
     const datesToAdd = useRef([])
