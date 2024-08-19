@@ -146,6 +146,8 @@ form label {
     animation-name: borderAnimate;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
+    width: fit-content;
+    height:fit-content;
     /*animation-direction: ;*/
 }
 

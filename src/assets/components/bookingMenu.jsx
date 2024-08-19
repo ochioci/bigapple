@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import {Calendar} from "./calendar.jsx";
 import {Collapsible} from "./collapsible.jsx";
 import {LocationSelection} from "./map.jsx";
+import {Card} from "./card.jsx";
 
 
 export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addBooking, deleteBooking, bookings, setBookings}) {
@@ -16,36 +17,41 @@ export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addB
 
 
 
-    return <div style={style}>
-        <Collapsible initState={true} Content={<>
-            <AddBooking title={title} id={id} bookings={bookings} setBookings={setBookings} refresh={refresh} doAdd={addBooking}></AddBooking>
-        </>} title={"Add " + title}>
+    return <div style={{marginTop: "10vh"}}>
+        <Card Content={
+            <div style={style}>
+                <Collapsible initState={true} Content={<>
+                    <AddBooking title={title} id={id} bookings={bookings} setBookings={setBookings} refresh={refresh}
+                                doAdd={addBooking}></AddBooking>
+                </>} title={"Add " + title}>
 
-        </Collapsible>
-        <br/>
-        <button onClick={refresh}>Refresh</button>
+                </Collapsible>
+                <br/>
+                <button onClick={refresh}>Refresh</button>
 
-        {bookings.map((item) => {
-            return <Collapsible initState={true} key={item[id]} title={item.name + " " + title} Content={
-                <BookingView title={title} id={id} key={item[id]} doDelete={deleteBooking} bookingInfo={item} setBookings={setBookings}
-                             refresh={refresh}
-                             doUpdate={updateBooking}></BookingView>
-            }></Collapsible>
-        })}
-
-
-
+                {bookings.map((item) => {
+                    return <Collapsible initState={true} key={item[id]} title={item.name + " " + title} Content={
+                        <BookingView title={title} id={id} key={item[id]} doDelete={deleteBooking} bookingInfo={item}
+                                     setBookings={setBookings}
+                                     refresh={refresh}
+                                     doUpdate={updateBooking}></BookingView>
+                    }></Collapsible>
+                })}
 
 
-
+            </div>
+        }></Card>
     </div>
+
+
 }
+
 export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
     const dates = useRef([])
     const name = useRef("")
     const startTime = useRef("08:00")
     const endTime = useRef("20:00")
-    const style= {
+    const style = {
         border: "0.5vw solid black",
         borderRadius: "0.25vw",
         padding: "1vw",

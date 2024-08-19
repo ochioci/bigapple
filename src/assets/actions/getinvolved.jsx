@@ -8,14 +8,14 @@ export function GetInvolvedContent ({StateHook}) {
 
     const style = {
         gridRow: 2,
-        display: "flex",
+        // display: "flex",
         height: "100%",
         width: "100%",
-        justifyContent: "center",
         alignItems: "center",
         // padding: "5vh",
         flexDirection: "column",
-        marginTop: "10vh",
+        display: "grid",
+        justifyContent: "center"
     }
     const [getInvolvedState, getInvolvedHook] = useState("choice");
 
