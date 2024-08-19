@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Calendar} from "../components/calendar.jsx"
 import {EstateBookings} from "./getInvolvedChoices/estates.jsx";
 import {DropoffBookings} from "./getInvolvedChoices/dropoffs.jsx";
@@ -13,20 +13,41 @@ export function GetInvolvedContent ({StateHook}) {
         width: "100%",
         justifyContent: "center",
     }
-
     const [getInvolvedState, getInvolvedHook] = useState("choice");
+
+    useEffect( () => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response)
+                if (response.message === "success") {
+                    console.log(response)
+                    getInvolvedHook(response.role)
+
+                } else {
+                    StateHook("login")
+                    console.log("not logged in")
+                }
+            }
+        };
+        req.open("GET", "/checkLogin", true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send()
+    }, [])
+
+
 
     function goBack() {
         getInvolvedHook("choice");
     }
 
-    if (getInvolvedState === "have") {
+    if (getInvolvedState === "Estate") {
         return <div><EstateBookings goBack={goBack} StateHook={StateHook}></EstateBookings>
             <button onClick={goBack}>Go Back</button></div>
-    } else if (getInvolvedState === "pick") {
+    } else if (getInvolvedState === "Picker") {
         return <div><TransferBookings goBack={goBack} StateHook={StateHook}></TransferBookings>
             <button onClick={goBack}>Go Back</button></div>
-    } else if (getInvolvedState === "get") {
+    } else if (getInvolvedState === "Shelter") {
         return <div><DropoffBookings goBack={goBack} StateHook={StateHook}></DropoffBookings>
             <button onClick={goBack}>Go Back</button></div>
     } else {

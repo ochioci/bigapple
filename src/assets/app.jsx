@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const [loginState, loginHook] = useState("Log in");
+    const [role, roleHook] = useState("");
     const style = {
         gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
@@ -11,7 +12,6 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     let [entries, entriesHook] = useState([
         ["Home", "home"],
         ["About us", "aboutus"],
-        ["Get involved", "getinvolved"],
         ["Contact", "contact"],
         [loginState, "login"],
         ["Register", "register"]
@@ -33,6 +33,7 @@ function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries,
                 if (response.message === "success") {
                     console.log(response)
                     AuthHook(response.name)
+                    // roleHook(response.role)
                     LoginHook("Log out");
                     entriesHook([["Home", "home"],
                         ["About us", "aboutus"],

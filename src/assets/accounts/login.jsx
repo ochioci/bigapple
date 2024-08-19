@@ -63,7 +63,6 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                     LoginHook("Log in")
                     entriesHook([["Home", "home"],
                         ["About us", "aboutus"],
-                        ["Get involved", "getinvolved"],
                         ["Contact", "contact"],
                         ["Log in", "login"],
                         ["Register", "register"],])
