@@ -82,7 +82,9 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
 
     if (LoginState === "Log out") {
         return <div style={style}>
-            <Card Content={"Log out"} onClick={logout}>
+            <Card Content={
+                <div style={{fontSize: "25pt", fontFamily: "JustSansBold"}}>Log Out</div>
+            } onClick={logout}>
 
             </Card>
         </div>

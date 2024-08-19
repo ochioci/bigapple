@@ -56,7 +56,7 @@ export function RegisterContent({StateHook}) {
     } else {
         const style = {
             display: "grid",
-            gridTemplateRows: "10vh auto auto auto",
+            gridTemplateRows: "10vh auto auto auto 10vh",
             height: "100%"
         }
         return <div style={style}>
@@ -73,9 +73,16 @@ export function RegisterContent({StateHook}) {
 function RoleTitle ({reqHook, title, val}) {
     const style = {
         fontFamily: "Geometos",
-        fontSize: "30pt"
+        fontSize: "30pt",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+        width: "100%"
     }
-    return <Card onClick={() => {reqHook(val)}} Content={<div style={style}>{title}</div>}></Card>
+    return <Card onClick={() => {reqHook(val)}} Content={<div style={style}>
+        <div>{title}</div>
+        </div>}></Card>
 
 }
 
