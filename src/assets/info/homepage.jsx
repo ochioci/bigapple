@@ -6,7 +6,7 @@ export function HomepageContent () {
     }
     return <>
 
-    <div style={style} className={"homepage"}> <Card Content={[<Heading key={1}></Heading>]}></Card></div></>
+    <div style={style} className={"homepage"}> <Card animated={false} Content={[<Heading key={1}></Heading>]}></Card></div></>
 
 }
 

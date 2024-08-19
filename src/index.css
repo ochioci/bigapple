@@ -102,3 +102,100 @@ form input {
 form label {
     font-size: 20pt;
 }
+
+@keyframes borderAnimate {
+    100% {
+        border: 1vw solid #729C9E;
+        scale: 102%;
+    }
+    0% {
+        border: 1vw solid white;
+        scale: 100%
+    }
+}
+@keyframes borderAnimate2 {
+    0% {
+        border: 1vw solid #729C9E;
+        scale: 102%
+    }
+    100% {
+        border: 1vw solid white;
+        scale: 100%;
+    }
+}
+
+
+.card:hover {
+    animation-name: borderAnimate2;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.card {
+    transition-delay: 0.25s;
+    border: 1vw solid #729C9E;
+    border-radius: 1vw;
+    padding: 2vw;
+    display: flex;
+    overflow: hidden;
+    margin: 1vw;
+    background-color: #DAE6EB;
+    color: #0d2c38;
+    animation-name: borderAnimate;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    /*animation-direction: ;*/
+}
+
+.cardNoAnimate {
+    border: 1vw solid #729C9E;
+    border-radius: 1vw;
+    padding: 2vw;
+    display: flex;
+    overflow: hidden;
+    margin: 1vw;
+    background-color: #DAE6EB;
+    color: #0d2c38;
+}
+
+.c button {
+    font-size: 20pt;
+    margin-top: 1vw;
+    background-color: #3d555f;
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+    color: #DAE6EB;
+    /*background-color: inherit;*/
+    border: 0.5vw solid #729C9E;
+    animation-name: buttonAnimate;
+    animation-duration: 0.5s;
+    transition-delay: 0.25s;
+    animation-fill-mode: forwards;
+}
+
+.c button:hover {
+    animation-name: buttonAnimate2;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes buttonAnimate {
+    100% {
+        border: 0.5vw solid #3d555f;
+        scale: 102%;
+    }
+    0% {
+        border: 0.5vw solid white;
+        scale: 100%
+    }
+}
+@keyframes buttonAnimate2 {
+    0% {
+        border: 0.5vw solid #3d555f;
+        scale: 102%
+    }
+    100% {
+        border: 0.5vw solid white;
+        scale: 100%;
+    }
+}

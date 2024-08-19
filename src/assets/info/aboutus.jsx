@@ -13,7 +13,7 @@ export function AboutUsContent() {
         flexDirection: "column"
     }
     return <div style={style}>
-        <Card style={style} Content={
+        <Card animated={false} style={style} Content={
             <AboutUs></AboutUs>
         }></Card>
 
