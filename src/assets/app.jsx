@@ -55,7 +55,6 @@ function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries,
     }
 
     const entryStyle = {
-        color: "White",
         marginRight: "5%"
     }
     return <div className={"topbar"} style={style}>

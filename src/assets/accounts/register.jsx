@@ -57,7 +57,9 @@ export function RegisterContent({StateHook}) {
         const style = {
             display: "grid",
             gridTemplateRows: "10vh auto auto auto 10vh",
-            height: "100%"
+            height: "100%",
+            justifyItems: "center",
+            alignItems: "center"
         }
         return <div style={style}>
             <div></div>

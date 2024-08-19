@@ -19,13 +19,17 @@ body {
     position: absolute;
     justify-content: space-evenly;
     font-family: "JustSansRegular";
-    background-color: #588183;
+    background-color: #d4d4d4;
     flex-wrap: wrap;
+    color: #0d2c38;
 
 }
 .topbarEntry {
     padding: 1vh;
-    /*animation: buttonHover 1s;*/
+    text-decoration: none;
+    color: #0d2c38;
+
+    /*animation: b`u`ttonHover 1s;*/
     /*animation-direction: reverse;*/
     /*animation-fill-mode: forwards;*/
 }
@@ -46,10 +50,10 @@ body {
 
 @keyframes backgroundGradient{
     0% {
-        transform: scale(1000%) rotate(0deg);
+        transform: scale(500%) rotate(0deg);
     }
     100% {
-        transform: rotate(360deg) scale(200%);
+        transform: rotate(360deg) scale(100%);
 
     }
 }
@@ -61,8 +65,8 @@ body {
     justify-content: center;
 }
 .homepageBG {
-    background: rgb(134,69,201);
-    background: linear-gradient(#DAE6EB 10%, #0d2c38 20%, #729C9E 30%, #DAE6EB 40%, #0d2c38 50%, #729C9E 60%, #DAE6EB 70%, #0d2c38 80%, #729C9E 90%, #DAE6EB 100%);
+    background: rgb(244,167,255);
+    background: radial-gradient(circle, rgba(244,167,255,1) 5%, rgba(166,147,237,1) 18%, rgba(255,255,255,1) 38%, rgba(221,161,216,1) 62%, rgba(235,162,60,1) 100%);
     animation-name: backgroundGradient;
     animation-iteration-count: infinite;
     animation-fill-mode: forwards;
@@ -107,7 +111,7 @@ form label {
 
 @keyframes borderAnimate {
     100% {
-        border: 1vw solid #729C9E;
+        border: 1vw solid #d4d4d4;
         scale: 100%;
     }
     0% {
@@ -117,7 +121,7 @@ form label {
 }
 @keyframes borderAnimate2 {
     0% {
-        border: 1vw solid #729C9E;
+        border: 1vw solid #d4d4d4;
         scale: 100%
     }
     100% {
@@ -135,13 +139,13 @@ form label {
 
 .card {
     transition-delay: 0.25s;
-    border: 1vw solid #729C9E;
+    border: 1vw solid #d4d4d4;
     border-radius: 1vw;
     padding: 2vw;
     display: flex;
     overflow: hidden;
     margin: 1vw;
-    background-color: #DAE6EB;
+    background-color: rgba(137, 255, 160, 0.33);
     color: #0d2c38;
     animation-name: borderAnimate;
     animation-duration: 0.5s;
@@ -149,17 +153,19 @@ form label {
     width: fit-content;
     height:fit-content;
     min-width: min(90vh, 90vw);
+    position: relative;
+
     /*animation-direction: ;*/
 }
 
 .cardNoAnimate {
-    border: 1vw solid #729C9E;
+    border: 1vw solid #d4d4d4;
     border-radius: 1vw;
     padding: 2vw;
     display: flex;
     overflow: hidden;
     margin: 1vw;
-    background-color: #DAE6EB;
+    background-color: rgba(137, 255, 160, 0.33);
     color: #0d2c38;
 }
 
@@ -203,4 +209,21 @@ form label {
         border: 0.5vw solid white;
         scale: 100%;
     }
+}
+
+.calendarColumn:nth-of-type(1) {
+
+}
+
+.calendarCell {
+    font-family: "JustSansRegular";
+    cursor: pointer;
+}
+
+.dayOfWeek {
+    font-family: "JustSansBold";
+}
+
+.ccSelected {
+    color: green;
 }

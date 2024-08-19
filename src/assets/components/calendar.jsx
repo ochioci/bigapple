@@ -1,4 +1,5 @@
 import {useReducer, useRef, useState} from "react";
+import {Card} from "./card.jsx";
 
 export function Calendar({selected}) {
     let datesByDayOfWeek = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
@@ -20,9 +21,9 @@ export function Calendar({selected}) {
 
 
 
-    return <>
-        <div style={style}>
-
+    return <Card Content={
+        <>
+        <div className={"calendar"} style={style}>
             {Object.keys(datesByDayOfWeek).map(day => {
                 {
                     return <CalendarColumn selected={selected}  key={day}
@@ -31,9 +32,13 @@ export function Calendar({selected}) {
             })}
         </div>
         <button onClick={() => {
-            selected.current = []
-        }}>Reset</button>
+        selected.current = []
+    }}>Reset</button>
     </>
+    }>
+
+
+    </Card>
 
 }
 
@@ -43,8 +48,8 @@ function CalendarColumn({dates, selected}) {
         borderRight: "1px solid grey",
         padding: "3px"
     }
-    return <div style={style}>
-        {dates[0].toDateString().slice(0, 3)}
+    return <div style={style} className={"calendarColumn"}>
+        <div className={"dayOfWeek"}>{dates[0].toDateString().slice(0, 3)}</div>
         {dates.map(d => {
             return <CalendarCell selected={selected} key={d.toDateString()} key2={d.toDateString()} date={d}></CalendarCell>
         })}
@@ -54,15 +59,14 @@ function CalendarColumn({dates, selected}) {
 function CalendarCell({date, key2, selected}) {
 
     const [isSelected, setSelected] = useState(false)
-
+    let cn = "calendarCell"
     let d  = new Date(Date.now())
-    let style = {color: "black", backgroundColor: "white", cursor: "pointer"}
+    // let style = {color: "black", backgroundColor: "white", cursor: "pointer"}
     if (date.getTime() < d.getTime()) {
-        style.color = "grey"
+        cn += " ccInactive"
     }
     if (isSelected) {
-        style.backgroundColor = "blue"
-        style.color = "white"
+        cn += " ccSelected"
     }
 
     const toggleSelect = () => {
@@ -77,5 +81,5 @@ function CalendarCell({date, key2, selected}) {
         setSelected(!isSelected)
     }
 
-    return <div onClick={toggleSelect} style={style}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
+    return <div className={cn} onClick={toggleSelect}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
 }

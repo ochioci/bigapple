@@ -47,16 +47,16 @@ export function GetInvolvedContent ({StateHook}) {
 
     if (getInvolvedState === "Estate") {
         return <div style={style}><EstateBookings goBack={goBack} StateHook={StateHook}></EstateBookings>
-            <button onClick={goBack}>Go Back</button></div>
+            </div>
     } else if (getInvolvedState === "Picker") {
         return <div style={style}><TransferBookings goBack={goBack} StateHook={StateHook}></TransferBookings>
-            <button onClick={goBack}>Go Back</button></div>
+           </div>
     } else if (getInvolvedState === "Shelter") {
         return <div style={style}><DropoffBookings goBack={goBack} StateHook={StateHook}></DropoffBookings>
-            <button onClick={goBack}>Go Back</button></div>
+            </div>
     } else {
         return <div style={style}>
-            <GetInvolvedChoices getInvolvedHook={getInvolvedHook}></GetInvolvedChoices>
+            {"Loading..."}
         </div>
     }
 }
