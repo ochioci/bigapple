@@ -56,31 +56,61 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
     }
     const [selectedPlace, setSelectedPlace] = useState(null)
     return <div style={style}>
-        <Calendar selected={dates}></Calendar>
-        <input type={"text"} placeholder={"name"} onChange={(e) => (name.current = e.target.value)}/>
-        {/*<input type={"text"} placeholder={"location"} onChange={(e) => (location.current = e.target.value)}/>*/}
-        <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
-        <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
-        <LocationSelection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace}></LocationSelection>
-        <button onClick={() => {
-            doAdd(name.current, (selectedPlace !== null) ? (
-                selectedPlace.geometry.location.lat() + "," + selectedPlace.geometry.location.lng()
-            ) : "0,0", dates.current.map((d) => {return d + "(" + startTime.current + "-" + endTime.current + ")"})).onreadystatechange = refresh
-        }}>Add days</button>
+        <Card Content={
+            <div className={"addEstate"}>
+                <div style={{gridColumn: 1}}>
+                    <div>Add {title}</div>
+                </div>
+                <div style={{gridColumn: 2}}>
+                    <div>Name</div>
+                    <input type={"text"} placeholder={"name"} onChange={(e) => (name.current = e.target.value)}/>
+                </div>
+                <div style={{gridColumn: 3}}>
+                    <div>Hours</div>
+                    <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
+                    <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
+
+                </div>
+
+            </div>
+        }>
+
+        </Card>
+        <Calendar selected={dates} include={
+            <div>Select days of availability</div>
+        }></Calendar>
+
+        <Card Content={
+            <>
+                <LocationSelection selectedPlace={selectedPlace}
+                                   setSelectedPlace={setSelectedPlace}></LocationSelection>
+                <button onClick={() => {
+                    doAdd(name.current, (selectedPlace !== null) ? (
+                        selectedPlace.geometry.location.lat() + "," + selectedPlace.geometry.location.lng()
+                    ) : "0,0", dates.current.map((d) => {
+                        return d + "(" + startTime.current + "-" + endTime.current + ")"
+                    })).onreadystatechange = refresh
+                }}>Add days
+                </button>
+            </>
+        }></Card>
+
     </div>
 }
 
 
 function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doDelete, id, title}) {
     // console.log(bookingInfo)
-    const style= {
+    const style = {
         border: "0.5vw solid black",
         borderRadius: "0.25vw",
         padding: "1vw",
         margin: "1vw",
         // marginTop: "15vh",
     }
-    let [dates, datesHook] = useState(bookingInfo.availability.split(",").map((d, index) => {return [d, index]}))
+    let [dates, datesHook] = useState(bookingInfo.availability.split(",").map((d, index) => {
+        return [d, index]
+    }))
     const datesToAdd = useRef([])
     const startTime = useRef("08:00");
     const endTime = useRef("20:00");

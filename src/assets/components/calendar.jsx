@@ -1,7 +1,7 @@
 import {useReducer, useRef, useState} from "react";
 import {Card} from "./card.jsx";
 
-export function Calendar({selected}) {
+export function Calendar({selected, include=<></>}) {
     let datesByDayOfWeek = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
     let cd = new Date(Date.now())
     cd.setDate(cd.getDate()-cd.getDay())
@@ -22,19 +22,23 @@ export function Calendar({selected}) {
 
 
     return <Card Content={
-        <>
-        <div className={"calendar"} style={style}>
-            {Object.keys(datesByDayOfWeek).map(day => {
-                {
-                    return <CalendarColumn selected={selected}  key={day}
-                                           dates={datesByDayOfWeek[day]}></CalendarColumn>
-                }
-            })}
+        <div className={"calendarContainer"}>
+            {include}
+
+            <button onClick={() => {
+                selected.current = []
+            }}>Clear
+            </button>
+            <div className={"calendar"} style={style}>
+                {Object.keys(datesByDayOfWeek).map(day => {
+                    {
+                        return <CalendarColumn selected={selected} key={day}
+                                               dates={datesByDayOfWeek[day]}></CalendarColumn>
+                    }
+                })}
+            </div>
+
         </div>
-        <button onClick={() => {
-        selected.current = []
-    }}>Reset</button>
-    </>
     }>
 
 

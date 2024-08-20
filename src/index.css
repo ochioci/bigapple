@@ -150,10 +150,11 @@ form label {
     animation-name: borderAnimate;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
-    width: fit-content;
+    /*width: fit-content;*/
     height:fit-content;
-    min-width: min(90vh, 90vw);
+    width: min(90vh, 90vw);
     position: relative;
+    justify-content: center;
 
     /*animation-direction: ;*/
 }
@@ -226,4 +227,25 @@ form label {
 
 .ccSelected {
     color: green;
+}
+
+.addEstate {
+    font-family: "JustSansBold";
+    font-size: 20pt;
+    color: #0d2c38;
+    display: grid;
+    grid-template-columns: 33% 34% 33%;
+    width: 100%;
+}
+
+.addEstate div {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendarContainer {
+    display: flex;
 }

@@ -28,6 +28,9 @@ Checklist:
     -(Only happens sometimes) Clicking "Go back" on transfer menu then re-entering menu can cause crash (Maybe fixed?)
     - Entering estate menu as picker crashes program (Maybe fixed)
     - Estates with no timeslots still have option to book (Maybe fixed)
+    - Test more on low-end mobile. When requests take a while sometimes animations seemingly play for no reason
+    - This means components are being rerendered more frequently than they need to.
+    - Consider using useMemo() to fix this.
 
 -Latent client demands (Client description):
     - Nothing too big yet? Just make it look nice
