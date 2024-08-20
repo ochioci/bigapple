@@ -59,7 +59,10 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
         <Card Content={
             <div className={"addEstate"}>
                 <div style={{gridColumn: 1}}>
-                    <div>Add {title}</div>
+                    <div>Add Property</div>
+                    <div style={{fontSize: "min(2vw, 2vh)", fontFamily: "JustSansRegular"}}>
+                        Use this menu to volunteer a property for fruit pickups
+                    </div>
                 </div>
                 <div style={{gridColumn: 2}}>
                     <div>Name</div>
@@ -90,7 +93,7 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
                     ) : "0,0", dates.current.map((d) => {
                         return d + "(" + startTime.current + "-" + endTime.current + ")"
                     })).onreadystatechange = refresh
-                }}>Submit
+                }}>Finalize
                 </button>
 
             </div>

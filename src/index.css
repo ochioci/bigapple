@@ -2,13 +2,13 @@ body {
     margin: 0
 }
 
-.pac-target-input {
-    width: 20vw;
-    height: 3vh;
-    align-self: center;
-    left: 0;
-    top: 0;
-}
+/*.pac-target-input {*/
+/*    width: 20vw;*/
+/*    height: 3vh;*/
+/*    align-self: center;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*}*/
 
 .topbar {
     width: 100vw;
@@ -103,7 +103,7 @@ body {
 form input {
     display: block;
     margin: 0.5vh;
-    font-size: 20pt;
+    font-size: 4vh;
 }
 
 
@@ -155,10 +155,32 @@ form input {
     justify-content: center;
     z-index: 2;
     max-height: 90%;
-    font-family: "JustSansRegular"
+    font-family: "JustSansRegular";
+    margin-bottom: 2vw;
 
     /*animation-direction: ;*/
 }
+
+.card input {
+    background-color: rgba(195 221 254 / 80%);
+    font-size: min(2vw, 2vh);
+    color: #173d4c;
+    font-family: "JustSansRegular";
+    border-radius: 5vh;
+    padding: 1vw;
+    width: fit-content;
+    max-width: 90%;
+}
+
+.pac-target-input {
+    background-color: white;
+    border-radius: 0;
+    width: 90%;
+}
+
+/*.autocomplete-container {*/
+/*    background-color: white;*/
+/*}*/
 
 .cardNoAnimate {
     border: 1vw solid #d4d4d4;
@@ -238,25 +260,28 @@ form input {
 
 .addEstate {
     font-family: "JustSansBold";
-    font-size: 20pt;
+    font-size: min(4vh, 4vw);
     color: #173d4c;
     display: grid;
     grid-template-columns: 33% 34% 33%;
     width: 100%;
+    text-align: center;
 }
 
 .addEstate div {
     display: flex;
     flex-direction: column;
     align-content: center;
-    justify-content: center;
+    /*justify-content: center;*/
     align-items: center;
+    justify-content: flex-start;
 }
 
 .calendarContainer {
     display: grid;
     grid-template-columns: auto 2fr;
     align-items: center;
+    padding: 1vw;
 }
 
 .calendarContainerInner {
