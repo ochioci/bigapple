@@ -12,34 +12,6 @@ export function RegisterContent({StateHook}) {
         alignItems: "center",
     }
 
-    function formSubmit(e) {
-        e.preventDefault();
-        let firstname = e.target[0].value
-        let lastname = e.target[1].value
-        let email = e.target[2].value
-        let password = e.target[3].value
-        let userRole = e.target[4].value
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = () => {
-            if (req.readyState === 4) {
-                let response = JSON.parse(req.response)
-                if (response.message === "success") {
-                    reqHook("done")
-                    reset()
-                } else {
-                    console.log("failure")
-                    reqHook("failure")
-                }
-            }
-        };
-        reqHook("sending")
-
-        req.open("POST", "/register", true);
-        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "userRole": userRole}))
-
-        return false;
-    }
 
 
     if (reqState != "roleSelect") {
@@ -114,12 +86,12 @@ function RegisterForm({reqState, reqHook, StateHook}) {
 
         req.open("POST", "/register", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "userRole": userRole}))
+        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "userRole": reqState}))
 
         return false;
     }
 
-    return <div style={{marginTop: "min(10vh, 3vw)"}}>
+    return <div style={{marginTop: "min(10vh, 3vw)", width: "min(90vh, 90vw, 90%)"}}>
         <Card Content={<div onSubmit={formSubmit} >
             <div style={{fontSize: "5vh", fontFamily: "JustSansBold"}}>Register</div>
             <form style={{fontSize: "3vh"}} action="/register" method="POST">

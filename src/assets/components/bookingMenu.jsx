@@ -5,7 +5,7 @@ import {LocationSelection} from "./map.jsx";
 import {Card} from "./card.jsx";
 
 
-export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addBooking, deleteBooking, bookings, setBookings}) {
+export function BookingsMenu({helpText, StateHook, title, id, refresh, updateBooking, addBooking, deleteBooking, bookings, setBookings}) {
 
     useEffect(() => {refresh()}, [])
     const style= {
@@ -21,7 +21,7 @@ export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addB
             <div style={style}>
 
                 <Card  Content={<>
-                    <AddBooking title={title} id={id} bookings={bookings} setBookings={setBookings} refresh={refresh}
+                    <AddBooking helpText={helpText} title={title} id={id} bookings={bookings} setBookings={setBookings} refresh={refresh}
                                 doAdd={addBooking}></AddBooking>
                 </>}>
 
@@ -45,7 +45,7 @@ export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addB
 
 }
 
-export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
+export function AddBooking({bookings, setBookings, refresh, doAdd, id, title, helpText="Use this menu to volunteer a property for fruit pickups"}) {
     const dates = useRef([])
     const name = useRef("")
     const startTime = useRef("08:00")
@@ -59,19 +59,19 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
         <Card Content={
             <div className={"addEstate"}>
                 <div style={{gridColumn: 1}}>
-                    <div>Add Property</div>
+                    <div>Add {title}</div>
                     <div style={{fontSize: "min(2vw, 2vh)", fontFamily: "JustSansRegular"}}>
-                        Use this menu to volunteer a property for fruit pickups
+                        {helpText}
                     </div>
                 </div>
                 <div style={{gridColumn: 2}}>
                     <div>Name</div>
-                    <input type={"text"} placeholder={"name"} onChange={(e) => (name.current = e.target.value)}/>
+                    <input className={"bookingInput"} type={"text"} placeholder={"name"} onChange={(e) => (name.current = e.target.value)}/>
                 </div>
                 <div style={{gridColumn: 3}}>
                     <div>Hours</div>
-                    <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
-                    <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
+                    <input className={"bookingInput"} type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
+                    <input className={"bookingInput"} type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
 
                 </div>
 
@@ -131,10 +131,18 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
         <div>Location: {bookingInfo.location}</div>
         <div>ID: {bookingInfo[id]}</div>
         <Collapsible onClick={refresh} title={"Availability"} Content={
-            dates.map((date) => {
-                return <div key={Math.random()}><DateView id={id} key={date[1]} bookings={bookings} bookingInfo={bookingInfo} setBookings={setBookings} datesList={dates} datesHook={datesHook} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
-                </div>
-            })}>
+
+            <Card Content={
+                dates.map((date) => {
+                    return <div key={Math.random()}><DateView id={id} key={date[1]} bookings={bookings} bookingInfo={bookingInfo} setBookings={setBookings} datesList={dates} datesHook={datesHook} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
+                    </div>
+                })
+            }>
+
+            </Card>
+
+
+        }>
 
         </Collapsible>
         <Collapsible  title={"Add dates"} Content={<>
@@ -151,8 +159,8 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
                     datesHook(av2)
                 }
             }>Submit</button>
-            <input type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
-            <input type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
+            <input className={"bookingInput"} type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
+            <input className={"bookingInput"} type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
         </>}></Collapsible>
         <button onClick={() => {
             doDelete(bookingInfo[id]).onreadystatechange = refresh
@@ -176,11 +184,11 @@ function DateView({bookings, setBookings, bookingInfo, datesList, refresh, doUpd
         return <div style={{display: "None"}}></div>
     }
     return <div style={style}>
-        <input type={"date"} defaultValue={new Date(day.current).toLocaleDateString("en-CA")}/>
-        <input type={"time"} defaultValue={startTime.current} onChange={(e) => {
+        <input className={"bookingInput"} type={"date"} defaultValue={new Date(day.current).toLocaleDateString("en-CA")}/>
+        <input className={"bookingInput"} type={"time"} defaultValue={startTime.current} onChange={(e) => {
             startTime.current = e.target.value
         }}/>
-        <input type={"time"} defaultValue={endTime.current} onChange={(e) => {
+        <input className={"bookingInput"}  type={"time"} defaultValue={endTime.current} onChange={(e) => {
             endTime.current = e.target.value
         }}/>
         <button onClick={() => {

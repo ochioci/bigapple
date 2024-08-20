@@ -105,13 +105,23 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
     else{
         return <div style={style}>
             <Card Content ={
-                <div onSubmit={formSubmit}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column"
+                }}>
                     <div style={{fontSize: "30pt", fontFamily: "JustSansBold"}}>Login</div>
-                    <form action="/login" method="POST">
+                    <form style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column"
+                    }} onSubmit={formSubmit} action="/login" method="POST">
                         <label>Email</label>
-                        <input type={"text"}/>
+                        <input className={"loginInput"} type={"text"}/>
                         <label>Password</label>
-                        <input type={"text"}/>
+                        <input className={"loginInput"} type={"text"}/>
                         <button type="submit">Send</button>
                     </form>
                 </div>

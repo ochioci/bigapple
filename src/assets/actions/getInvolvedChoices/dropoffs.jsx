@@ -70,5 +70,6 @@ export function DropoffBookings({StateHook, goBack}) {
         deleteBooking={deleteDropoff}
         bookings={dropoffs}
         setBookings={setDropoffs}
+        helpText={"Use this menu to add a property for fruit dropoffs"}
     ></BookingsMenu>
 }

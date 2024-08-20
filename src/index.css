@@ -156,12 +156,12 @@ form input {
     z-index: 2;
     max-height: 90%;
     font-family: "JustSansRegular";
-    margin-bottom: 2vw;
-
+    /*margin-bottom: 2vw;*/
+    flex-wrap: wrap;
     /*animation-direction: ;*/
 }
 
-.card input {
+.bookingInput {
     background-color: rgba(195 221 254 / 80%);
     font-size: min(2vw, 2vh);
     color: #173d4c;
@@ -304,4 +304,8 @@ form input {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.loginInput {
+    max-width: 90%;
 }
