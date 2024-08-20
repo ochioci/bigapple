@@ -69,7 +69,8 @@ export function LocationSelection({selectedPlace, setSelectedPlace}) {
                 <AdvancedMarker ref={markerRef} position={null} />
             </Map>
             <MapHandler place={selectedPlace} marker={marker} />
-            <MapControl position={ControlPosition.TOP}>
+
+            <MapControl position={ControlPosition.TOP_LEFT}>
                 <div className="autocomplete-control">
                     <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
                 </div>
@@ -116,7 +117,7 @@ const PlaceAutocomplete = ({ onPlaceSelect }) => {
         });
     }, [onPlaceSelect, placeAutocomplete]);
     return (
-        <div className="autocomplete-container">
+        <div style={{width: "100%"}} className="autocomplete-container">
             <input ref={inputRef} />
         </div>
     );

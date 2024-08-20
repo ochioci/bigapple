@@ -51,7 +51,7 @@ export function RegisterContent({StateHook}) {
             fontFamily: "JustSansRegular"
         }
         return <div style={style}>
-            <RegisterForm reqState={reqState} reqHook={reqHook} StateHook={StateHook}></RegisterForm>;
+            <RegisterForm reqState={reqState} reqHook={reqHook} StateHook={StateHook}></RegisterForm>
         </div>
     } else {
         const style = {

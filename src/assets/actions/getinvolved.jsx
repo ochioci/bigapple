@@ -11,7 +11,7 @@ export function GetInvolvedContent ({StateHook}) {
         // display: "flex",
         height: "100%",
         width: "100%",
-        alignItems: "center",
+        alignItems: "start",
         // padding: "5vh",
         flexDirection: "column",
         display: "grid",
