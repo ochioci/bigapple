@@ -21,14 +21,14 @@ body {
     font-family: "JustSansRegular";
     background-color: #d4d4d4;
     flex-wrap: wrap;
-    color: #0d2c38;
+    color: #173d4c;
     z-index: 3;
 
 }
 .topbarEntry {
     padding: 1vh;
     text-decoration: none;
-    color: #0d2c38;
+    color: #173d4c;
 
     /*animation: b`u`ttonHover 1s;*/
     /*animation-direction: reverse;*/
@@ -144,7 +144,7 @@ form input {
     overflow: hidden;
     margin: auto;
     background-color: rgba(137, 255, 160, 0.33);
-    color: #0d2c38;
+    color: #173d4c;
     animation-name: borderAnimate;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
@@ -168,17 +168,17 @@ form input {
     overflow: hidden;
     margin: 1vw;
     background-color: rgba(137, 255, 160, 0.33);
-    color: #0d2c38;
+    color: #173d4c;
 }
 
 .c button {
-    font-size: 3vh;
-    background-color: #3d555f;
+    font-size: min(3vh, 3vw);
+    background-color: rgba(255, 235, 82, 0.33);
     border-radius: 0.5vw;
     padding: 0.5vw;
-    color: #DAE6EB;
+    color: #173d4c;
     /*background-color: inherit;*/
-    border: 0.5vw solid #729C9E;
+    border: 0.5vw solid #d4d4d4;;
     animation-name: buttonAnimate;
     animation-duration: 0.5s;
     transition-delay: 0.25s;
@@ -195,7 +195,7 @@ form input {
 
 @keyframes buttonAnimate {
     100% {
-        border: 0.5vw solid #3d555f;
+        border: 0.5vw solid #d4d4d4;;
         scale: 102%;
     }
     0% {
@@ -205,7 +205,7 @@ form input {
 }
 @keyframes buttonAnimate2 {
     0% {
-        border: 0.5vw solid #3d555f;
+        border: 0.5vw solid #d4d4d4;;
         scale: 102%
     }
     100% {
@@ -239,7 +239,7 @@ form input {
 .addEstate {
     font-family: "JustSansBold";
     font-size: 20pt;
-    color: #0d2c38;
+    color: #173d4c;
     display: grid;
     grid-template-columns: 33% 34% 33%;
     width: 100%;
@@ -254,7 +254,8 @@ form input {
 }
 
 .calendarContainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 2fr;
     align-items: center;
 }
 

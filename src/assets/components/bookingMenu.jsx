@@ -16,7 +16,7 @@ export function BookingsMenu({StateHook, title, id, refresh, updateBooking, addB
 
 
 
-    return <div style={{marginTop: "10vh"}}>
+    return <div style={{marginTop: "9vh"}}>
 
             <div style={style}>
 
@@ -77,21 +77,30 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
 
         </Card>
         <Calendar selected={dates} include={
-            <div className={"calendarInclude"}>Select dates of availability</div>
-        }></Calendar>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+            }}>
 
-        <Card Content={
-            <>
-                <LocationSelection selectedPlace={selectedPlace}
-                                   setSelectedPlace={setSelectedPlace}></LocationSelection>
+                <div className={"calendarInclude"}>Select dates of availability</div>
                 <button onClick={() => {
                     doAdd(name.current, (selectedPlace !== null) ? (
                         selectedPlace.geometry.location.lat() + "," + selectedPlace.geometry.location.lng()
                     ) : "0,0", dates.current.map((d) => {
                         return d + "(" + startTime.current + "-" + endTime.current + ")"
                     })).onreadystatechange = refresh
-                }}>Add days
+                }}>Submit
                 </button>
+
+            </div>
+
+        }></Calendar>
+
+        <Card Content={
+            <>
+                <LocationSelection selectedPlace={selectedPlace}
+                                   setSelectedPlace={setSelectedPlace}></LocationSelection>
             </>
         }></Card>
 

@@ -5,17 +5,15 @@ import {
 } from "@vis.gl/react-google-maps";
 const API_KEY = globalThis.GOOGLE_MAPS_API_KEY ?? "AIzaSyA7_v5dWYunLhct5AUUHHlHIJ92Py3CpKc"
 const style={
-    width: "40vh",
-    height: "40vh",
+    width: "100%",
+    height: "20vh",
     zIndex: 100,
-    border: "3px solid black",
+    // border: "3px solid black",
     // borderRadius: "50%",
     // overflow: "hidden"
 }
 export function LocationView ({location}) {
     const style={
-        width: "20vh",
-        height: "20vh",
         zIndex: 100,
         border: "3px solid black",
         borderRadius: "50%",
