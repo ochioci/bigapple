@@ -22,6 +22,7 @@ body {
     background-color: #d4d4d4;
     flex-wrap: wrap;
     color: #0d2c38;
+    z-index: 3;
 
 }
 .topbarEntry {
@@ -105,9 +106,6 @@ form input {
     font-size: 20pt;
 }
 
-form label {
-    font-size: 20pt;
-}
 
 @keyframes borderAnimate {
     100% {
@@ -144,7 +142,7 @@ form label {
     padding: 2vw;
     display: flex;
     overflow: hidden;
-    margin: 1vw;
+    margin: auto;
     background-color: rgba(137, 255, 160, 0.33);
     color: #0d2c38;
     animation-name: borderAnimate;
@@ -152,9 +150,11 @@ form label {
     animation-fill-mode: forwards;
     /*width: fit-content;*/
     height:fit-content;
-    width: min(90vh, 90vw);
+    width: min(90vh, 90vw, 90%);
     position: relative;
     justify-content: center;
+    z-index: 2;
+    max-height: 90%;
 
     /*animation-direction: ;*/
 }
@@ -171,7 +171,7 @@ form label {
 }
 
 .c button {
-    font-size: 20pt;
+    font-size: 3vh;
     margin-top: 1vw;
     background-color: #3d555f;
     border-radius: 0.5vw;
@@ -248,4 +248,8 @@ form label {
 
 .calendarContainer {
     display: flex;
+}
+
+.card .card {
+    margin-bottom: 2vw;
 }

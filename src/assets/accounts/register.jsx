@@ -75,12 +75,13 @@ export function RegisterContent({StateHook}) {
 function RoleTitle ({reqHook, title, val}) {
     const style = {
         fontFamily: "Geometos",
-        fontSize: "30pt",
+        fontSize: "5vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        textAlign: "center"
     }
     return <Card onClick={() => {reqHook(val)}} Content={<div style={style}>
         <div>{title}</div>
@@ -118,23 +119,25 @@ function RegisterForm({reqState, reqHook, StateHook}) {
         return false;
     }
 
-    return <Card Content={<div onSubmit={formSubmit} >
-        <div style={{fontSize: "30pt", fontFamily: "JustSansBold"}}>Register</div>
-        <form action="/register" method="POST">
-            <label>First Name</label>
-            <input type={"text"}/>
-            <label>Last Name</label>
-            <input type={"text"}/>
-            <label>Email</label>
-            <input type={"text"}/>
-            <label>Password</label>
-            <input type={"text"}/>
-            <button type="submit">Send</button>
-        </form>
-        {(reqState == "failure") ? <div>Email already in use</div> : <div></div>}
-    </div>}>
+    return <div style={{marginTop: "min(10vh, 3vw)"}}>
+        <Card Content={<div onSubmit={formSubmit} >
+            <div style={{fontSize: "5vh", fontFamily: "JustSansBold"}}>Register</div>
+            <form style={{fontSize: "3vh"}} action="/register" method="POST">
+                <label>First Name</label>
+                <input type={"text"}/>
+                <label>Last Name</label>
+                <input type={"text"}/>
+                <label>Email</label>
+                <input type={"text"}/>
+                <label>Password</label>
+                <input type={"text"}/>
+                <button type="submit">Send</button>
+            </form>
+            {(reqState == "failure") ? <div>Email already in use</div> : <div></div>}
+        </div>}>
 
-    </Card>
+        </Card>
+    </div>
 
 
 }
