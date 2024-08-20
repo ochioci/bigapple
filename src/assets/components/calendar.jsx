@@ -25,17 +25,23 @@ export function Calendar({selected, include=<></>}) {
         <div className={"calendarContainer"}>
             {include}
 
-            <button onClick={() => {
-                selected.current = []
-            }}>Clear
-            </button>
             <div className={"calendar"} style={style}>
-                {Object.keys(datesByDayOfWeek).map(day => {
-                    {
-                        return <CalendarColumn selected={selected} key={day}
-                                               dates={datesByDayOfWeek[day]}></CalendarColumn>
-                    }
-                })}
+
+                <div
+                    className={"calendarTitle"}>{
+                    ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][new Date(Date.now()).getMonth()]
+                    + " " + new Date(Date.now()).getFullYear()
+                }</div>
+
+                <div className={"calendarContainerInner"}>
+                    {Object.keys(datesByDayOfWeek).map(day => {
+                        {
+                            return <CalendarColumn selected={selected} key={day}
+                                                   dates={datesByDayOfWeek[day]}></CalendarColumn>
+                        }
+                    })}
+                </div>
+
             </div>
 
         </div>
@@ -85,5 +91,7 @@ function CalendarCell({date, key2, selected}) {
         setSelected(!isSelected)
     }
 
-    return <div className={cn} onClick={toggleSelect}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
+    // return <div className={cn} onClick={toggleSelect}>{date.toDateString().slice(3, date.toDateString().length-4)}</div>
+    return <div className={cn} onClick={toggleSelect}>{date.getDate()}</div>
+
 }

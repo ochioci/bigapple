@@ -77,7 +77,7 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title}) {
 
         </Card>
         <Calendar selected={dates} include={
-            <div>Select days of availability</div>
+            <div className={"calendarInclude"}>Select dates of availability</div>
         }></Calendar>
 
         <Card Content={
