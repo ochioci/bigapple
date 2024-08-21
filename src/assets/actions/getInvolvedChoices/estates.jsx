@@ -20,7 +20,7 @@ export function EstateBookings({StateHook, goBack}) {
                 // console.log(response)
             }
         }
-        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/getEstates", true)
+        req.open("GET", "api/getEstates", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({}));
         return req
@@ -32,7 +32,7 @@ export function EstateBookings({StateHook, goBack}) {
                 let response = JSON.parse(req.response);
             }
         }
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/updateEstate", true)
+        req.open("POST", "api/updateEstate", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             name, location, availability, estateID
@@ -42,7 +42,7 @@ export function EstateBookings({StateHook, goBack}) {
 
     const addEstate = (name, location, availability) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/addEstate", true)
+        req.open("POST", "api/addEstate", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             name, location, availability: availability.join(",")
@@ -52,7 +52,7 @@ export function EstateBookings({StateHook, goBack}) {
 
     const deleteEstate = (estateID) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/deleteEstate", true)
+        req.open("POST", "api/deleteEstate", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             estateID

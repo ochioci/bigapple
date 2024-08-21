@@ -20,7 +20,7 @@ export function DropoffBookings({StateHook, goBack}) {
                 // console.log(response)
             }
         }
-        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/getDropoffs", true)
+        req.open("GET", "api/getDropoffs", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({}));
         return req
@@ -32,7 +32,7 @@ export function DropoffBookings({StateHook, goBack}) {
                 let response = JSON.parse(req.response);
             }
         }
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/updateDropoff", true)
+        req.open("POST", "api/updateDropoff", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             name, location, availability, dropoffID
@@ -42,7 +42,7 @@ export function DropoffBookings({StateHook, goBack}) {
 
     const addDropoff = (name, location, availability) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/addDropoff", true)
+        req.open("POST", "api/addDropoff", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             name, location, availability: availability.join(",")
@@ -52,7 +52,7 @@ export function DropoffBookings({StateHook, goBack}) {
 
     const deleteDropoff = (dropoffID) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/deleteDropoff", true)
+        req.open("POST", "api/deleteDropoff", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             dropoffID

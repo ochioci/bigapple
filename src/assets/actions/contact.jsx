@@ -33,7 +33,7 @@ export function ContactContent({StateHook}) {
 
         reqHook("sending")
 
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/contactAPI", true);
+        req.open("POST", "api/contactAPI", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({"message": message}))
         reqHook("done")

@@ -46,7 +46,7 @@ function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries,
                 }
             }
         };
-        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/checkLogin", true);
+        req.open("GET", "api/checkLogin", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send()
     }, [])
