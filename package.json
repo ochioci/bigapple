@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "echo beckett & node src/assets/server/index.cjs & vite build",
+    "build": "npm install",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node src/assets/server/index.cjs"
