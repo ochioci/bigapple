@@ -35,7 +35,7 @@ export function LocationView ({location}) {
                 <Map
                     mapId={"abc123"}
                     style={style}
-                    defaultZoom={3}
+                    defaultZoom={5}
                     defaultCenter={{ lat: lat, lng: lng }}
                     gestureHandling={"greedy"}
                     disableDefaultUI={true}
