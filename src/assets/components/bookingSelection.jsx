@@ -186,11 +186,11 @@ function WindowSelection({refreshTransfers, info, addBooking, bookingInfo}) {
 
 function DropoffSelection({dropoffs, setDropoffs, refreshDropoffs, updateTransfer, transferInfo, refreshTransfers}) {
     // console.log(dropoffs)
-    return <div>
+    return <div >
         {
 
             dropoffs.map((d, index) => {
-                return <div key={index}>
+                return <div style={{display: "flex"}} key={index}>
                     <DropoffView refreshTransfers={refreshTransfers} refreshDropoffs={refreshDropoffs} transferInfo={transferInfo} updateTransfer={updateTransfer} dropoffInfo={d}></DropoffView>
                 </div>
             })
@@ -200,20 +200,36 @@ function DropoffSelection({dropoffs, setDropoffs, refreshDropoffs, updateTransfe
 
 function DropoffView({refreshDropoffs, dropoffInfo, updateTransfer, transferInfo, refreshTransfers}) {
     // console.log(dropoffInfo)
-    return <div>
-        Name: {dropoffInfo.name}
-        <br/>
-        Availability:
+    return <Card Content={
+        <div style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            flexWrap: "wrap"
+        }}>
+            Name: {dropoffInfo.name}
+            <div className={"soloDropoffLocationView"}>
+                <LocationView location={dropoffInfo.location}></LocationView>
+            </div>
+            <br/>
+            Availability:
 
-        {/*using the window selection for this is very hacky
+            {/*using the window selection for this is very hacky
            we will need to replace these anonymous functions that do nothing
         */}
-        <Collapsible style={{display: "inline"}} title={""} Content={dropoffInfo.availability.split(",").map((window, index) => {
-        return (
-            <WindowSelection refreshTransfers={() => {}} bookingInfo={dropoffInfo} addBooking={(e) => {
-                updateTransfer(transferInfo.window, transferInfo.transferID, dropoffInfo.dropoffID, transferInfo.estateID, window).onreadystatechange= refreshTransfers
-            }} key={index} info={window}></WindowSelection>
-        )
-    })}></Collapsible>
-    </div>
+            <Collapsible style={{display: "inline"}} title={""}
+                         Content={dropoffInfo.availability.split(",").map((window, index) => {
+                             return (
+                                 <WindowSelection refreshTransfers={() => {
+                                 }} bookingInfo={dropoffInfo} addBooking={(e) => {
+                                     updateTransfer(transferInfo.window, transferInfo.transferID, dropoffInfo.dropoffID, transferInfo.estateID, window).onreadystatechange = refreshTransfers
+                                 }} key={index} info={window}></WindowSelection>
+                             )
+                         })}></Collapsible>
+        </div>
+    }>
+
+    </Card>
+
+
 }
