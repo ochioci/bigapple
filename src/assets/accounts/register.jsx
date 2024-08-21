@@ -84,7 +84,7 @@ function RegisterForm({reqState, reqHook, StateHook}) {
         };
 
 
-        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com//register", true);
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/register", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "userRole": reqState}))
 
