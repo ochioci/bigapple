@@ -132,6 +132,14 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
                 {/*Pick up at:*/}
                 <LocationView location={thisEstate.location}></LocationView>
             </div>
+
+            <div>
+                Drop off at
+            </div>
+
+            <div>
+                Pick up at
+            </div>
         </div>
 
 
@@ -143,7 +151,7 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
 
 function EntrySelection({refreshTransfers, bookingInfo, addBooking}) {
     // console.log(bookingInfo)
-    return <div>
+    return <div className={"dropoffEntrySelection"}>
         Name: {bookingInfo.name}
         <br/>
         <div className={"dropoffLocationView"}> <LocationView location={bookingInfo.location}></LocationView> </div>

@@ -194,7 +194,7 @@ form input {
 }
 
 .c button {
-    font-size: min(3vh, 3vw);
+    font-size: min(2vh, 2vw);
     background-color: rgba(255, 235, 82, 0.33);
     border-radius: 0.5vw;
     padding: 0.5vw;
@@ -366,6 +366,7 @@ form input {
     max-width: min(25vw, 25vh);
     display: flex;
     margin: min(1vh, 1vw);
+    width: 30vh;
 }
 
 .availableEstatesContainer {
@@ -373,6 +374,7 @@ form input {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .myDropoffs {
@@ -381,23 +383,35 @@ form input {
     flex-wrap: wrap;
     align-content: center;
     align-items: center;
+    width: 90%;
 }
 
 .transferView {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    width: 90%;
+    align-items: center;
+    text-align: center;
 }
 
 .dropoffLocationContainer {
     display: grid;
     /*flex-direction: row;*/
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: min(30vh, 30vw);
+    grid-template-rows: min(30vh, 30vw) auto;
     width: 100%;
+    justify-items: center;
 }
 
 .soloDropoffLocationView {
     width: min(90vw, 90vh, 90%);
+    max-width: min(25vw, 25vh);
     aspect-ratio: 1/1;
+}
+
+.dropoffEntrySelection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
