@@ -23,7 +23,7 @@ export function TransferBookings ({StateHook, goBack}) {
                 // console.log(response)
             }
         }
-        req.open("GET", "/selectEstates", true)
+        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/selectEstates", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({}));
         return req
@@ -45,7 +45,7 @@ export function TransferBookings ({StateHook, goBack}) {
                 // console.log(response)
             }
         }
-        req.open("GET", "/getTransfers", true)
+        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/getTransfers", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({}));
         return req
@@ -57,7 +57,7 @@ export function TransferBookings ({StateHook, goBack}) {
                 let response = JSON.parse(req.response);
             }
         }
-        req.open("POST", "/updateTransfer", true)
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/updateTransfer", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             window, transferID, dropoffID, estateID, dropoffWindow
@@ -67,7 +67,7 @@ export function TransferBookings ({StateHook, goBack}) {
 
     const addTransfer = (window, estateID, dropoffID) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "/addTransfer", true)
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/addTransfer", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             window, estateID, dropoffID
@@ -77,7 +77,7 @@ export function TransferBookings ({StateHook, goBack}) {
 
     const deleteTransfer = (transferID) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "/deleteTransfer", true)
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/deleteTransfer", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             transferID
@@ -102,7 +102,7 @@ export function TransferBookings ({StateHook, goBack}) {
                 // console.log(response)
             }
         }
-        req.open("GET", "/selectDropoffs", true)
+        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/selectDropoffs", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({}));
         return req
@@ -110,7 +110,7 @@ export function TransferBookings ({StateHook, goBack}) {
 
     const confirmTransfer = (transferID) => {
         let req = new XMLHttpRequest();
-        req.open("POST", "/confirmTransfer", true)
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/confirmTransfer", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
             transferID

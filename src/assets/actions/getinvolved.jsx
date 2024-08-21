@@ -34,7 +34,7 @@ export function GetInvolvedContent ({StateHook}) {
                 }
             }
         };
-        req.open("GET", "/checkLogin", true);
+        req.open("GET", "https://bigappleserver-a2c91f738c7f.herokuapp.com/checkLogin", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send()
     }, [])

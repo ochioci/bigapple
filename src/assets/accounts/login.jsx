@@ -41,7 +41,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
         };
         reqHook("sending")
 
-        req.open("POST", "/login", true);
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/login", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({"email" : email, "password": password}))
         reqHook("done")
@@ -72,7 +72,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                 }
             }
         };
-        req.open("POST", "/logout", true);
+        req.open("POST", "https://bigappleserver-a2c91f738c7f.herokuapp.com/logout", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send()
 
