@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser')
 const session = require("express-session");
+const cors = require('cors')
 
 const PORT = process.env.PORT || 3001;
 var jsonParser = bodyParser.json()
@@ -15,6 +16,7 @@ const {initTransferAPI} = require("./content/transfers.cjs");
 // import {initLoginAPI} from "./auth/login.cjs";
 // import {initRegisterAPI} from "./auth/register.cjs"
 app.use(jsonParser);
+app.use(cors())
 app.use(session({
     secret: 'my-secret-key',
     resave: false,
