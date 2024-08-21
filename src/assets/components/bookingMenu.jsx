@@ -124,7 +124,7 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
     const startTime = useRef("08:00");
     const endTime = useRef("20:00");
     return <div className={"bookingView"} style={style}>
-        <div>{bookingInfo.name}</div>
+        <div className={"bookingViewTitle"}>{bookingInfo.name}</div>
         {/*<div>Location: {bookingInfo.location}</div>*/}
         <div className={"bookingLocationView"}>
             <LocationView location={bookingInfo.location}>
@@ -185,8 +185,6 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
 
 function DateView({bookings, setBookings, bookingInfo, datesList, refresh, doUpdate, date, lookupKey, datesHook, id}) {
     const style= {
-        border: "0.5vw solid black",
-        borderRadius: "0.25vw",
         padding: "1vw",
         margin: "1vw"
     }

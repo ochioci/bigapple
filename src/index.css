@@ -314,7 +314,7 @@ form input {
     display: grid;
     /*grid-template-columns: auto 1fr auto;*/
     grid-template-columns: min(30vw, 30vh) min(30vw, 30vh) min(30vw, 30vh) ;
-    grid-template-rows: min(30vw, 30vw) auto;
+    grid-template-rows: auto min(30vw, 30vw) auto;
     flex-direction: row;
     flex-wrap: wrap;
     /*height: 100%;*/
@@ -328,6 +328,7 @@ form input {
     max-height: 90%;
     display: flex;
     grid-column: 2;
+    grid-row: 2;
 }
 
 .bookingViewButtonContainer {
@@ -339,4 +340,12 @@ form input {
     flex-wrap: wrap;
     justify-content: space-evenly;
     max-width: 90%;
+}
+
+.bookingViewTitle {
+    grid-row: 1;
+    grid-column: 2;
+    font-family: "JustSansBold";
+    margin: 1vh;
+    font-size: 4vh;
 }
