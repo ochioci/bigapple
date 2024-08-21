@@ -1,7 +1,7 @@
 import {useReducer, useRef, useState} from "react";
 import {Card} from "./card.jsx";
 
-export function Calendar({selected, include=<></>}) {
+export function Calendar({selected, includeAfter=<></>, include=<></>}) {
     let datesByDayOfWeek = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[]}
     let cd = new Date(Date.now())
     cd.setDate(cd.getDate()-cd.getDay())
@@ -43,7 +43,7 @@ export function Calendar({selected, include=<></>}) {
                 </div>
 
             </div>
-
+            {includeAfter}
         </div>
     }>
 

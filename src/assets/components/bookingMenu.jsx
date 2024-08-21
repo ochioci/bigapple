@@ -147,36 +147,42 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
                 </Card>
 
 
-                <Calendar selected={datesToAdd}></Calendar>
-            <button onClick={
-                () => {
-                    let av = dates.map((item) => {
-                        return item[0]
-                    }).concat(datesToAdd.current.map((item) => {
-                        return item + "(" + startTime.current + "-" + endTime.current + ")"
-                    }))
-                    let av2 = av.map((d, index) => {
-                        return [d, index]
-                    })
-                    console.log(av)
-                    console.log(av2)
-                    doUpdate(bookingInfo.name, bookingInfo.location, av.join(","), bookingInfo[id])
-                    datesHook(av2)
-                }
-            }>Add Days
-            </button>
-            <input className={"bookingInput"} type={"time"} defaultValue={"08:00"}
-                   onChange={e => (startTime.current = e.target.value)}/>
-            <input className={"bookingInput"} type={"time"} defaultValue={"20:00"}
-                   onChange={e => (endTime.current = e.target.value)}/>
-        </>
+                <Calendar selected={datesToAdd} includeAfter={
+                    <div style={{
+                        display: "flex",
+                    }}>
+                        <button onClick={
+                            () => {
+                                let av = dates.map((item) => {
+                                    return item[0]
+                                }).concat(datesToAdd.current.map((item) => {
+                                    return item + "(" + startTime.current + "-" + endTime.current + ")"
+                                }))
+                                let av2 = av.map((d, index) => {
+                                    return [d, index]
+                                })
+                                console.log(av)
+                                console.log(av2)
+                                doUpdate(bookingInfo.name, bookingInfo.location, av.join(","), bookingInfo[id])
+                                datesHook(av2)
+                            }
+                        }>Add Days
+                        </button>
+                        <input className={"bookingInput"} type={"time"} defaultValue={"08:00"}
+                               onChange={e => (startTime.current = e.target.value)}/>
+                        <input className={"bookingInput"} type={"time"} defaultValue={"20:00"}
+                               onChange={e => (endTime.current = e.target.value)}/>
+                        <button onClick={() => {
+                            doDelete(bookingInfo[id]).onreadystatechange = refresh
+                        }}>Delete
+                        </button>
+                    </div>
+
+                }></Calendar>
+
+                </>
 
 
-
-            <button onClick={() => {
-                doDelete(bookingInfo[id]).onreadystatechange = refresh
-            }}>Delete
-            </button>
         </div>
 
 
@@ -184,20 +190,21 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
 }
 
 function DateView({bookings, setBookings, bookingInfo, datesList, refresh, doUpdate, date, lookupKey, datesHook, id}) {
-    const style= {
+    const style = {
         padding: "1vw",
         margin: "1vw"
     }
 
     let p = date.indexOf("(")
     const day = useRef(date.slice(0, p) || "")
-    const startTime = useRef(date.slice(p+1, p+6) || "")
-    const endTime = useRef(date.slice(p+7, p+12) || "")
-    if ((day.current.length == 0) || (startTime.current.length < 5) || (endTime.current.length < 5) || datesList.length==0) {
+    const startTime = useRef(date.slice(p + 1, p + 6) || "")
+    const endTime = useRef(date.slice(p + 7, p + 12) || "")
+    if ((day.current.length == 0) || (startTime.current.length < 5) || (endTime.current.length < 5) || datesList.length == 0) {
         return <div style={{display: "None"}}></div>
     }
     return <div style={style}>
-        <input className={"bookingInput"} type={"date"} defaultValue={new Date(day.current).toLocaleDateString("en-CA")}/>
+        <input className={"bookingInput"} type={"date"}
+               defaultValue={new Date(day.current).toLocaleDateString("en-CA")}/>
         <input className={"bookingInput"} type={"time"} defaultValue={startTime.current} onChange={(e) => {
             startTime.current = e.target.value
         }}/>

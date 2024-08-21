@@ -279,7 +279,7 @@ form input {
 
 .calendarContainer {
     display: grid;
-    grid-template-columns: auto 2fr;
+    grid-template-rows: auto 2fr;
     align-items: center;
     padding: 1vw;
 }
