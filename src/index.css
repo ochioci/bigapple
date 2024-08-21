@@ -349,3 +349,55 @@ form input {
     margin: 1vh;
     font-size: 4vh;
 }
+
+.bookingSelectionContainer {
+    margin-top: 9vh;
+    width: min(90vw, 90vh);
+}
+
+.bookingSelectionContainer .card {
+    width: 100%;
+    margin-bottom: min(1vh, 1vw);
+}
+
+.dropoffLocationView {
+    aspect-ratio: 1/1;
+    max-height: 90%;
+    max-width: min(25vw, 25vh);
+    display: flex;
+    margin: min(1vh, 1vw);
+}
+
+.availableEstatesContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.myDropoffs {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+}
+
+.transferView {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.dropoffLocationContainer {
+    display: grid;
+    /*flex-direction: row;*/
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min(30vh, 30vw);
+    width: 100%;
+}
+
+.soloDropoffLocationView {
+    width: min(90vw, 90vh, 90%);
+    aspect-ratio: 1/1;
+}
