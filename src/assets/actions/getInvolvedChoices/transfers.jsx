@@ -50,7 +50,7 @@ export function TransferBookings ({StateHook, goBack}) {
         req.send(JSON.stringify({}));
         return req
     }
-    const updateTransfer = (window, transferID, dropoffID, estateID) => {
+    const updateTransfer = (window, transferID, dropoffID, estateID, dropoffWindow) => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -60,7 +60,7 @@ export function TransferBookings ({StateHook, goBack}) {
         req.open("POST", "/updateTransfer", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
-            window, transferID, dropoffID, estateID
+            window, transferID, dropoffID, estateID, dropoffWindow
         }));
         return req
     }

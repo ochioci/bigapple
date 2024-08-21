@@ -109,7 +109,6 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
     // console.log(transferInfo)
     // console.log(thisDropoff)
     return <div className={"transferView"}>
-    {transferInfo.window}
         <button onClick={() => {
             deleteTransfer(transferInfo.transferID).onreadystatechange = refreshTransfers
         }}>Delete</button>
@@ -124,7 +123,7 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
             <div style={
                 {gridColumn: 1}
             } className={"dropoffLocationView"}>
-                <LocationView location={thisEstate.location}></LocationView>
+                <LocationView location={thisDropoff.location}></LocationView>
             </div>
 
             <div style={
@@ -135,11 +134,14 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
             </div>
 
             <div>
-                Drop off at
+                Drop off at <br/>
+                {transferInfo.dropoffWindow}
             </div>
 
             <div>
-                Pick up at
+                Pick up at <br/>
+                {transferInfo.window}
+
             </div>
         </div>
 
@@ -209,7 +211,7 @@ function DropoffView({refreshDropoffs, dropoffInfo, updateTransfer, transferInfo
         <Collapsible style={{display: "inline"}} title={""} Content={dropoffInfo.availability.split(",").map((window, index) => {
         return (
             <WindowSelection refreshTransfers={() => {}} bookingInfo={dropoffInfo} addBooking={(e) => {
-                updateTransfer(transferInfo.window, transferInfo.transferID, dropoffInfo.dropoffID, transferInfo.estateID).onreadystatechange= refreshTransfers
+                updateTransfer(transferInfo.window, transferInfo.transferID, dropoffInfo.dropoffID, transferInfo.estateID, window).onreadystatechange= refreshTransfers
             }} key={index} info={window}></WindowSelection>
         )
     })}></Collapsible>
