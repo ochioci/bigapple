@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "echo beckett & node src/assets/server/index.cjs & vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node src/assets/server/index.cjs"
   },
   "dependencies": {
     "@vis.gl/react-google-maps": "^1.1.0",
@@ -34,6 +35,5 @@
   "main": "eslint.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "proxy": "http://localhost:3001"
+  "license": "ISC"
 }
