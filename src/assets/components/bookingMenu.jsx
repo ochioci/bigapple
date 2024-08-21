@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {Calendar} from "./calendar.jsx";
 import {Collapsible} from "./collapsible.jsx";
-import {LocationSelection} from "./map.jsx";
+import {LocationSelection, LocationView} from "./map.jsx";
 import {Card} from "./card.jsx";
 
 
@@ -79,6 +79,15 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title, he
         }>
 
         </Card>
+
+
+        <Card Content={
+            <>
+                <LocationSelection selectedPlace={selectedPlace}
+                                   setSelectedPlace={setSelectedPlace}></LocationSelection>
+            </>
+        }></Card>
+
         <Calendar selected={dates} include={
             <div style={{
                 display: "flex",
@@ -100,13 +109,6 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title, he
 
         }></Calendar>
 
-        <Card Content={
-            <>
-                <LocationSelection selectedPlace={selectedPlace}
-                                   setSelectedPlace={setSelectedPlace}></LocationSelection>
-            </>
-        }></Card>
-
     </div>
 }
 
@@ -114,11 +116,6 @@ export function AddBooking({bookings, setBookings, refresh, doAdd, id, title, he
 function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doDelete, id, title}) {
     // console.log(bookingInfo)
     const style = {
-        border: "0.5vw solid black",
-        borderRadius: "0.25vw",
-        padding: "1vw",
-        margin: "1vw",
-        // marginTop: "15vh",
     }
     let [dates, datesHook] = useState(bookingInfo.availability.split(",").map((d, index) => {
         return [d, index]
@@ -126,45 +123,63 @@ function BookingView({bookings, setBookings, bookingInfo, refresh, doUpdate, doD
     const datesToAdd = useRef([])
     const startTime = useRef("08:00");
     const endTime = useRef("20:00");
-    return <div style={style}>
-        <div>Name: {bookingInfo.name}</div>
-        <div>Location: {bookingInfo.location}</div>
-        <div>ID: {bookingInfo[id]}</div>
-        <Collapsible onClick={refresh} title={"Availability"} Content={
+    return <div className={"bookingView"} style={style}>
+        <div>{bookingInfo.name}</div>
+        {/*<div>Location: {bookingInfo.location}</div>*/}
+        <div className={"bookingLocationView"}>
+            <LocationView location={bookingInfo.location}>
 
-            <Card Content={
-                dates.map((date) => {
-                    return <div key={Math.random()}><DateView id={id} key={date[1]} bookings={bookings} bookingInfo={bookingInfo} setBookings={setBookings} datesList={dates} datesHook={datesHook} refresh={refresh} doUpdate={doUpdate} date={date[0]} lookupKey={date[1]}></DateView>
-                    </div>
-                })
-            }>
+            </LocationView>
+        </div>
+        <div className={"bookingViewButtonContainer"}>
+                <>
 
-            </Card>
+                <Card Content={
+                    dates.map((date) => {
+                        return <div key={Math.random()}><DateView id={id} key={date[1]} bookings={bookings}
+                                                                  bookingInfo={bookingInfo} setBookings={setBookings}
+                                                                  datesList={dates} datesHook={datesHook}
+                                                                  refresh={refresh} doUpdate={doUpdate} date={date[0]}
+                                                                  lookupKey={date[1]}></DateView>
+                        </div>
+                    })
+                }>
+                </Card>
 
 
-        }>
-
-        </Collapsible>
-        <Collapsible  title={"Add dates"} Content={<>
-            <Calendar selected={datesToAdd}></Calendar>
+                <Calendar selected={datesToAdd}></Calendar>
             <button onClick={
                 () => {
-                    let av = dates.map((item) => {return item[0]}).concat(datesToAdd.current.map((item) => {
+                    let av = dates.map((item) => {
+                        return item[0]
+                    }).concat(datesToAdd.current.map((item) => {
                         return item + "(" + startTime.current + "-" + endTime.current + ")"
                     }))
-                    let av2 = av.map((d, index) => {return [d, index]})
+                    let av2 = av.map((d, index) => {
+                        return [d, index]
+                    })
                     console.log(av)
                     console.log(av2)
                     doUpdate(bookingInfo.name, bookingInfo.location, av.join(","), bookingInfo[id])
                     datesHook(av2)
                 }
-            }>Submit</button>
-            <input className={"bookingInput"} type={"time"} defaultValue={"08:00"} onChange={e => (startTime.current = e.target.value)}/>
-            <input className={"bookingInput"} type={"time"} defaultValue={"20:00"} onChange={e => (endTime.current = e.target.value)}/>
-        </>}></Collapsible>
-        <button onClick={() => {
-            doDelete(bookingInfo[id]).onreadystatechange = refresh
-        }}>Delete</button>
+            }>Add Days
+            </button>
+            <input className={"bookingInput"} type={"time"} defaultValue={"08:00"}
+                   onChange={e => (startTime.current = e.target.value)}/>
+            <input className={"bookingInput"} type={"time"} defaultValue={"20:00"}
+                   onChange={e => (endTime.current = e.target.value)}/>
+        </>
+
+
+
+            <button onClick={() => {
+                doDelete(bookingInfo[id]).onreadystatechange = refresh
+            }}>Delete
+            </button>
+        </div>
+
+
     </div>
 }
 
