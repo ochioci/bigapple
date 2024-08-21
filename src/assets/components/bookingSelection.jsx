@@ -79,7 +79,8 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
     // console.log(transferInfo)
     let thisDropoff = dropoffs.filter((d) => {return d.dropoffID === transferInfo.dropoffID})[0]
     let thisEstate = estates.filter((d) => {return d.estateID === transferInfo.estateID})[0]
-    if (transferInfo.dropoffID == -1 || thisDropoff === undefined) {
+    console.log(thisDropoff)
+    if (transferInfo.dropoffID == -1 || thisDropoff === undefined || thisEstate === undefined) {
         return <div className={"transferView"}>
             {/*<LocationView location={transfer}></LocationView>*/}
 
@@ -130,7 +131,7 @@ function TransferView({estates, confirmTransfer, updateTransfer, transferInfo, d
                 {gridColumn: 2}
             } className={"dropoffLocationView"}>
                 {/*Pick up at:*/}
-                <LocationView location={thisEstate.location}></LocationView>
+                <LocationView location={thisEstate.location || "0,0"}></LocationView>
             </div>
 
             <div>

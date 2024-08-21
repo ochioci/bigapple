@@ -66,8 +66,10 @@ body {
     justify-content: center;
 }
 .homepageBG {
-    background: rgb(244,167,255);
-    background: radial-gradient(circle, rgba(244,167,255,1) 5%, rgba(166,147,237,1) 18%, rgba(255,255,255,1) 38%, rgba(221,161,216,1) 62%, rgba(235,162,60,1) 100%);
+
+    background: rgb(238,140,140);
+    background: radial-gradient(circle, rgba(238,140,140,1) 3%, rgba(245,186,158,1) 15%, rgba(253,242,180,1) 42%, rgba(241,255,186,1) 55%, rgba(255,217,168,1) 82%, rgba(238,140,140,1) 100%);
+
     animation-name: backgroundGradient;
     animation-iteration-count: infinite;
     animation-fill-mode: forwards;
@@ -139,7 +141,7 @@ form input {
     transition-delay: 0.25s;
     border: 1vw solid #d4d4d4;
     border-radius: 1vw;
-    /*padding: 1vw;*/
+    padding: min(1vh, 1vw);
     display: flex;
     overflow: hidden;
     margin: auto;
@@ -167,7 +169,7 @@ form input {
     color: #173d4c;
     font-family: "JustSansRegular";
     border-radius: 5vh;
-    padding: 1vw;
+    padding: min(1vh, 1vw);
     width: fit-content;
     max-width: 90%;
 }
@@ -357,6 +359,7 @@ form input {
 
 .bookingSelectionContainer .card {
     width: 100%;
+    margin: 0;
     margin-bottom: min(1vh, 1vw);
 }
 
