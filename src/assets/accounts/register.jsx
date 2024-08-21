@@ -92,7 +92,7 @@ function RegisterForm({reqState, reqHook, StateHook}) {
     }
 
     return <div style={{marginTop: "min(10vh, 3vw)", width: "min(90vh, 90vw, 90%)"}}>
-        <Card Content={<div onSubmit={formSubmit} >
+        <Card Content={<div className={"registerContainer"} onSubmit={formSubmit} >
             <div style={{fontSize: "5vh", fontFamily: "JustSansBold"}}>Register</div>
             <form style={{fontSize: "3vh"}} action="/register" method="POST">
                 <label>First Name</label>
