@@ -1,5 +1,5 @@
 function initRegisterAPI(app, db, requireAuth, jsonParser) {
-    app.post('/register', (req, res) => {
+    app.post('/api/register', (req, res) => {
 
         let firstname = req.body.firstname
         let lastname = req.body.lastname

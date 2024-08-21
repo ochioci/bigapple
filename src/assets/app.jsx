@@ -1,7 +1,10 @@
-import {useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
+import {Card} from "./components/card.jsx";
+const PopupContext = createContext("None");
 export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const [loginState, loginHook] = useState("Log in");
     const [role, roleHook] = useState("");
+    const [popupState, popupHook] = useState("None");
     const style = {
         gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
@@ -18,15 +21,40 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
         ["Register", "register"]
     ])
 
-    return <div style={style}>
-        <div style={style} className={"homepageBG"}></div>
-        <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook} AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
-        <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState} StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
-    </div>
+    return <PopupContext.Provider value={[popupState, popupHook]}>
+        <div style={style}>
+            <PopUp></PopUp>
+            <div style={style} className={"homepageBG"}></div>
+            <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
+                    AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
+            <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState}
+                     StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
+        </div>
+    </PopupContext.Provider>
+
+
+}
+
+function PopUp({}) {
+    const [popupState, popupHook] = useContext(PopupContext)
+    if (popupState !== "None") {
+        return <div className={"popUp"} onClick={() => {
+            popupHook("None")
+        }}>
+            {/*<div style={{backgroundColor: "white", display: "flex"}}>*/}
+                <Card whitebg={true} Content={
+                    <div>{popupState}</div>}>
+                </Card>
+            {/*</div>*/}
+
+        </div>
+    } else {
+        return <></>
+    }
 }
 
 function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries, entriesHook}) {
-    useEffect( () => {
+    useEffect(() => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {

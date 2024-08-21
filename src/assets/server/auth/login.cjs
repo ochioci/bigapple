@@ -1,5 +1,5 @@
 function initLoginAPI(app, db, requireAuth, jsonParser) {
-    app.get('/checkLogin', requireAuth, (req, res) => {
+    app.get('/api/checkLogin', requireAuth, (req, res) => {
         db.get(`SELECT * FROM users WHERE userID = $userID`, {$userID: req.session.userID}, (err, row) => {
             if (row === undefined) {
                 console.log(req.session.userID, row)
@@ -10,7 +10,7 @@ function initLoginAPI(app, db, requireAuth, jsonParser) {
         })
     })
 
-    app.post('/login', jsonParser, (req, res) => {
+    app.post('/api/login', jsonParser, (req, res) => {
 
         let e = req.body.email
         let p = req.body.password
@@ -31,7 +31,7 @@ function initLoginAPI(app, db, requireAuth, jsonParser) {
         })
     })
 
-    app.post('/logout', jsonParser, (req, res) => {
+    app.post('/api/logout', jsonParser, (req, res) => {
         req.session.destroy((err) => {
             if (err) {
                 // console.error(err);
