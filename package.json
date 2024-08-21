@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm install",
+    "build": "echo beckett & node src/assets/server/index.cjs & vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node src/assets/server/index.cjs"
@@ -35,5 +35,6 @@
   "main": "eslint.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "proxy": "http://localhost:3001"
 }
