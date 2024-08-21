@@ -77,7 +77,7 @@ function RegisterForm({reqState, reqHook, StateHook}) {
                 if (response.message === "success") {
                     StateHook("login")
                 } else {
-                    reqHook("failure")
+                    reqHook("roleSelect")
                     console.log("failure")
                 }
             }

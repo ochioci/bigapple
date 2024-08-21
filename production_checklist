@@ -32,6 +32,7 @@ Checklist:
     - This means components are being rerendered more frequently than they need to.
     - Consider using useMemo() to fix this.
     - Making changes to transfer view, clicking off the menu, then going back on causes crash (maybe fixed) (I think?)
+    - if registration fails, role will be set to failure upon success (lmfao)
 
 -Latent client demands (Client description):
     - Nothing too big yet? Just make it look nice
