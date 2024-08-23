@@ -1,0 +1,5 @@
+- Implement popups for actions
+- Rework homepage (flexbox model w images bg and shi maybe (god bless flex wrap) )
+- Fix potential safari google maps bug? LocationViews not working could be flex problem
+- Make logging in take you to get involved page.
+- Have no topbar on homepage

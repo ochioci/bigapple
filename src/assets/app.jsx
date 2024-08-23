@@ -1,7 +1,9 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {Card} from "./components/card.jsx";
-const PopupContext = createContext("None");
+export const PopupContext = createContext(["None", ()=>{}]);
+
 export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
+    const popupFadeID = useRef(Math.random())
     const [loginState, loginHook] = useState("Log in");
     const [role, roleHook] = useState("");
     const [popupState, popupHook] = useState("None");
@@ -23,7 +25,7 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
 
     return <PopupContext.Provider value={[popupState, popupHook]}>
         <div style={style}>
-            <PopUp></PopUp>
+            <PopUp popupFadeID={popupFadeID}></PopUp>
             <div style={style} className={"homepageBG"}></div>
             <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
                     AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
@@ -35,18 +37,24 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
 
 }
 
-function PopUp({}) {
+function PopUp({popupFadeID}) {
     const [popupState, popupHook] = useContext(PopupContext)
+    if (popupState[0] == "!") {
+        let cn = "notif an"
+        let e = <div className={cn} key={Math.random()}>
+            <Card Content={
+                <div>
+                    {popupState.slice(1)}
+                </div>
+            }></Card>
+        </div>
+
+        return e
+    }
     if (popupState !== "None") {
         return <div className={"popUp"} onClick={() => {
             popupHook("None")
         }}>
-            {/*<div style={{backgroundColor: "white", display: "flex"}}>*/}
-                <Card whitebg={true} Content={
-                    <div>{popupState}</div>}>
-                </Card>
-            {/*</div>*/}
-
         </div>
     } else {
         return <></>

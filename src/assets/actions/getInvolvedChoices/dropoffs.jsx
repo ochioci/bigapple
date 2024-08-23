@@ -1,9 +1,10 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
+import {PopupContext} from "../../app.jsx";
 
 export function DropoffBookings({StateHook, goBack}) {
     const [dropoffs, setDropoffs] = useState([])
-
+    const [popupState, popupHook] = useContext(PopupContext)
     const refresh = () => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
@@ -37,6 +38,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability, dropoffID
         }));
+        popupHook("!Update Successful")
         return req
     }
 
@@ -47,6 +49,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability: availability.join(",")
         }))
+        popupHook("!Add Successful")
         return req
     }
 
@@ -57,6 +60,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             dropoffID
         }))
+        popupHook("!Delete Successful")
         return req
     }
 
