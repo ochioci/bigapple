@@ -1,12 +1,12 @@
 import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {Card} from "./components/card.jsx";
-export const PopupContext = createContext(["None", ()=>{}]);
+export const PopupContext = createContext([]);
 
 export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
-    const popupFadeID = useRef(Math.random())
     const [loginState, loginHook] = useState("Log in");
     const [role, roleHook] = useState("");
     const [popupState, popupHook] = useState("None");
+    const [notifState, notifHook] = useState([])
     const style = {
         gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
@@ -23,9 +23,10 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
         ["Register", "register"]
     ])
 
-    return <PopupContext.Provider value={[popupState, popupHook]}>
+    return <PopupContext.Provider value={[popupState, popupHook, notifState, notifHook]}>
         <div style={style}>
-            <PopUp popupFadeID={popupFadeID}></PopUp>
+            <PopUp ></PopUp>
+            <Notif></Notif>
             <div style={style} className={"homepageBG"}></div>
             <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
                     AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
@@ -37,24 +38,46 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
 
 }
 
-function PopUp({popupFadeID}) {
-    const [popupState, popupHook] = useContext(PopupContext)
-    if (popupState[0] == "!") {
-        let cn = "notif an"
-        let e = <div className={cn} key={Math.random()}>
-            <Card Content={
-                <div>
-                    {popupState.slice(1)}
-                </div>
-            }></Card>
-        </div>
-
-        return e
+function Notif () {
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
+    console.log(notifState.length)
+    // useEffect(() => {
+    //     setInterval( () => {
+    //         let a = notifState.filter( (item) => {
+    //             return (item[1] > Date.now())
+    //         })
+    //         notifHook(a)
+    //     }, 1000)
+    // })
+    // setTimeout( () => {
+    //     let a = notifState.filter( (item) => {
+    //         return ((new Date(item[1]).getTime() + 3000) > (new Date (Date.now()).getTime()))
+    //     } )
+    //     notifHook(a)
+    // }, 3000)
+    return <div className={"notif"}>
+    {
+        notifState.map((item, index) => {
+            return <div className={"notifEntry"} key={index}> {item[0]}</div>
+        })
     }
+    </div>
+}
+
+function PopUp({popupFadeID}) {
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     if (popupState !== "None") {
         return <div className={"popUp"} onClick={() => {
             popupHook("None")
         }}>
+
+            <Card whitebg={true} Content={
+                <div>{popupState}</div>
+
+            }>
+
+            </Card>
+
         </div>
     } else {
         return <></>

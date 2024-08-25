@@ -4,7 +4,14 @@ import {PopupContext} from "../../app.jsx";
 
 export function DropoffBookings({StateHook, goBack}) {
     const [dropoffs, setDropoffs] = useState([])
-    const [popupState, popupHook] = useContext(PopupContext)
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
+    const addNotif = (msg) => {
+        let l = notifState.slice() //change does not trigger update without this lmfao
+        l.push([msg, Date.now()+1500])
+        // console.log(l)
+        notifHook(l)
+        // console.log(notifState)
+    }
     const refresh = () => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
@@ -38,7 +45,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability, dropoffID
         }));
-        popupHook("!Update Successful")
+        popupHook("Update Successful")
         return req
     }
 
@@ -49,7 +56,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability: availability.join(",")
         }))
-        popupHook("!Add Successful")
+        addNotif("Add Successful")
         return req
     }
 
@@ -60,7 +67,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             dropoffID
         }))
-        popupHook("!Delete Successful")
+        addNotif("Delete Successful")
         return req
     }
 
