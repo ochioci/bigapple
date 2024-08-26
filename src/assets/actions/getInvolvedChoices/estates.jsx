@@ -1,8 +1,17 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
+import {PopupContext} from "../../app.jsx";
 
 export function EstateBookings({StateHook, goBack}) {
     const [estates, setEstates] = useState([])
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
+    const addNotif = (msg) => {
+        let l = notifState.slice() //change does not trigger update without this lmfao
+        l.push([msg, Date.now()+1500])
+        // console.log(l)
+        notifHook(l)
+        // console.log(notifState)
+    }
 
     const refresh = () => {
         let req = new XMLHttpRequest();
@@ -37,6 +46,7 @@ export function EstateBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability, estateID
         }));
+        addNotif("Update Successful")
         return req
     }
 
@@ -47,6 +57,7 @@ export function EstateBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability: availability.join(",")
         }))
+        addNotif("Add Successful")
         return req
     }
 
@@ -57,6 +68,7 @@ export function EstateBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             estateID
         }))
+        addNotif("Delete Successful")
         return req
     }
 

@@ -1,11 +1,20 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 import {BookingSelection} from "../../components/bookingSelection.jsx";
+import {PopupContext} from "../../app.jsx";
 
 export function TransferBookings ({StateHook, goBack}) {
     const [transfers, setTransfers] = useState([])
     const [estates, setEstates] = useState([])
     const [dropoffs, setDropoffs] = useState([])
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
+    const addNotif = (msg) => {
+        let l = notifState.slice() //change does not trigger update without this lmfao
+        l.push([msg, Date.now()+1500])
+        // console.log(l)
+        notifHook(l)
+        // console.log(notifState)
+    }
 
     const refreshEstates = () => {
         let req = new XMLHttpRequest();
@@ -62,6 +71,7 @@ export function TransferBookings ({StateHook, goBack}) {
         req.send(JSON.stringify({
             window, transferID, dropoffID, estateID, dropoffWindow
         }));
+        addNotif("Update Successful")
         return req
     }
 
@@ -72,6 +82,7 @@ export function TransferBookings ({StateHook, goBack}) {
         req.send(JSON.stringify({
             window, estateID, dropoffID
         }))
+        addNotif("Add Successful")
         return req
     }
 
@@ -82,6 +93,7 @@ export function TransferBookings ({StateHook, goBack}) {
         req.send(JSON.stringify({
             transferID
         }))
+        addNotif("Delete Successful")
         return req
     }
 
@@ -115,7 +127,10 @@ export function TransferBookings ({StateHook, goBack}) {
         req.send(JSON.stringify({
             transferID
         }))
+        addNotif("Update Successful")
+
         return req
+
     }
 
 

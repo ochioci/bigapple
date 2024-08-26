@@ -45,7 +45,7 @@ export function DropoffBookings({StateHook, goBack}) {
         req.send(JSON.stringify({
             name, location, availability, dropoffID
         }));
-        popupHook("Update Successful")
+        addNotif("Update Successful")
         return req
     }
 

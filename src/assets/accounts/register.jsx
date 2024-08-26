@@ -1,8 +1,10 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Card} from "../components/card.jsx";
+import {PopupContext} from "../app.jsx";
 
 export function RegisterContent({StateHook}) {
     const [reqState, reqHook] = useState("roleSelect")
+
     const style = {
         gridRow: 2,
         display: "flex",
@@ -62,6 +64,7 @@ function RoleTitle ({reqHook, title, val}) {
 }
 
 function RegisterForm({reqState, reqHook, StateHook}) {
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
 
     function formSubmit(e) {
         e.preventDefault();
@@ -77,6 +80,7 @@ function RegisterForm({reqState, reqHook, StateHook}) {
                 if (response.message === "success") {
                     StateHook("login")
                 } else {
+                    popupHook("Email is already in use")
                     reqHook("roleSelect")
                     console.log("failure")
                 }

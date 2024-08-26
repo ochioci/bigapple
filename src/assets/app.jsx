@@ -58,7 +58,11 @@ function Notif () {
     return <div className={"notif"}>
     {
         notifState.map((item, index) => {
-            return <div className={"notifEntry"} key={index}> {item[0]}</div>
+            return <div className={"notifEntry"} key={index}>
+
+                    <div>{item[0]}</div>
+                
+            </div>
         })
     }
     </div>

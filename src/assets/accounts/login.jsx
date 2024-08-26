@@ -1,9 +1,11 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Card} from "../components/card.jsx";
+import {PopupContext} from "../app.jsx";
 
 export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthHook, entries, entriesHook}) {
     // console.log(AuthHook)
     const [reqState, reqHook] = useState("waiting")
+    const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     const style = {
         gridRow: 2,
         display: "flex",
@@ -32,9 +34,10 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                         ["Log out", "login"],])
 
                     console.log("success!")
-                    StateHook("home")
+                    StateHook("getinvolved")
                 } else {
                     console.log("failure")
+                    popupHook("Invalid login")
                     reqHook("waiting")
                 }
             }
