@@ -2,7 +2,7 @@ import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {Card} from "./components/card.jsx";
 export const PopupContext = createContext([]);
 
-export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
+export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
     const [loginState, loginHook] = useState("Log in");
     const [role, roleHook] = useState("");
     const [popupState, popupHook] = useState("None");
@@ -28,8 +28,11 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
             <PopUp ></PopUp>
             <Notif></Notif>
             <div style={style} className={"homepageBG"}></div>
-            <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
-                    AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
+            {GlobalState != "home" ?
+                <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
+                        AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar> : <></>
+            }
+
             <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState}
                      StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
         </div>
@@ -40,7 +43,7 @@ export function Main({sd, sdHook, Content, StateHook, AuthHook, AuthState}) {
 
 function Notif () {
     const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
-    console.log(notifState.length)
+    // console.log(notifState.length)
     // useEffect(() => {
     //     setInterval( () => {
     //         let a = notifState.filter( (item) => {
@@ -61,7 +64,7 @@ function Notif () {
             return <div className={"notifEntry"} key={index}>
 
                     <div>{item[0]}</div>
-                
+
             </div>
         })
     }

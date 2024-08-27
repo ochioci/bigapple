@@ -10,9 +10,8 @@ import {RegisterContent} from "./assets/accounts/register.jsx";
 import {LoginContent} from "./assets/accounts/login.jsx";
 //
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
         <App></App>
-  </StrictMode>,
+
 )
 
 
@@ -32,7 +31,7 @@ function App() {
     } else if (State=="login") {
         return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={LoginContent}></Main>
     }else {
-        return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={HomepageContent}></Main>
+        return <Main GlobalState={State} AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={HomepageContent}></Main>
     }
 }
 
