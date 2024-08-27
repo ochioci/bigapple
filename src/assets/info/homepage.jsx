@@ -96,7 +96,7 @@ function Icon() {
         width: "min(15vw, 15vh)",
         height: "min(15vw, 15vh)"
     }
-    return <img style={style} src={"/src/assets/resources/images/icon.png"} alt={"Icon"}/>
+    return <img style={style} src={"/public/icon.png"} alt={"Icon"}/>
 }
 
 function Subheading({text}) {
@@ -122,13 +122,13 @@ function Slideshow({startIndex, endIndex}) {
     // const endIndex = 19;
     const slideshowDelayMS = 2000;
     const [slideshowState, setSlideshowState] = useState(startIndex)
-    const url = "/src/assets/resources/images/slideshow/slideshow-" + slideshowState + ".jpeg"
+    const url = "/public/slideshow-"  + slideshowState + ".jpeg"
     const [inProp, setInProp] = useState(false);
     const nodeRef = useRef(null);
     // setInProp(true)
     useEffect( () => { // preload images
         for (let i = startIndex; i < endIndex; i++) {
-            (new Image()).src = "/src/assets/resources/images/slideshow/slideshow-" + i + ".jpeg";
+            (new Image()).src = "/public/slideshow-" + i + ".jpeg";
         }
     }, [])
     useEffect(() => {setTimeout( () => {
