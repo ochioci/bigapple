@@ -14,25 +14,46 @@ body {
     width: 100vw;
     /*height: 100%;*/
     grid-row: 1;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    justify-content: space-evenly;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*position: absolute;*/
+    /*justify-content: space-evenly;*/
     font-family: "JustSansRegular";
+    grid-template-columns: auto 60%;
     background-color: #d4d4d4;
-    flex-wrap: wrap;
+    display: grid;
+    /*flex-wrap: wrap;*/
     color: #173d4c;
     z-index: 3;
 
 }
+
+.logo {
+    /*max-height: 5vh;*/
+    display: flex;
+    flex-direction: row;
+    /*max-width: 30%;*/
+    align-items: center;
+}
+
 .topbarEntry {
-    padding: 1vh;
+    padding: min(3vh, 3vw);
     text-decoration: none;
     color: #173d4c;
-
+    font-size: min(3vh, 3vw);
+    background-color: #d4d4d4;
     /*animation: b`u`ttonHover 1s;*/
     /*animation-direction: reverse;*/
     /*animation-fill-mode: forwards;*/
+}
+
+.topbarEntries {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+
 }
 
 .topbarEntry:hover {
@@ -74,30 +95,41 @@ body {
     border: min(1vw, 1vh) solid #173d4c;
     border-radius: min(1vh, 1vw);
     padding: min(1vh, 1vw);
-    background-color: rgba(175, 219, 189, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
     margin-top: min(2vh, 2vw)
 }
 
+/*.homepageBG {*/
+
+/*    background: rgb(238,140,140);*/
+/*    background: radial-gradient(circle, rgba(238,140,140,1) 3%, rgba(245,186,158,1) 15%, rgba(253,242,180,1) 42%, rgba(241,255,186,1) 55%, rgba(255,217,168,1) 82%, rgba(238,140,140,1) 100%);*/
+
+/*    animation-name: backgroundGradient;*/
+/*    animation-iteration-count: infinite;*/
+/*    animation-fill-mode: forwards;*/
+/*    animation-duration: 10s;*/
+/*    animation-direction: alternate;*/
+/*    !*transition:--a 0.5s;*!*/
+/*    !*scale: 200%;*!*!*/
+/*    width: 105%;*/
+/*    height: 105%;*/
+/*    overflow: hidden;*/
+/*    position: fixed;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    z-index: -1;*/
+/*    filter: blur(25px);*/
+/*}*/
+
 .homepageBG {
-
-    background: rgb(238,140,140);
-    background: radial-gradient(circle, rgba(238,140,140,1) 3%, rgba(245,186,158,1) 15%, rgba(253,242,180,1) 42%, rgba(241,255,186,1) 55%, rgba(255,217,168,1) 82%, rgba(238,140,140,1) 100%);
-
-    animation-name: backgroundGradient;
-    animation-iteration-count: infinite;
-    animation-fill-mode: forwards;
-    animation-duration: 10s;
-    animation-direction: alternate;
-    /*transition:--a 0.5s;*/
-    /*scale: 200%;*!*/
-    width: 105%;
-    height: 105%;
-    overflow: hidden;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    filter: blur(25px);
+    background-image: url("/src/assets/resources/images/background.jpg");
+        width: 105%;
+        height: 105%;
+        overflow: hidden;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: -1;
 }
 
 @font-face {
@@ -542,6 +574,7 @@ form {
     height: 100vw;
     object-position: center;
     overflow: hidden;
+    will-change: opacity;
     /*animation-name: slideshowFadeIn;*/
     /*animation-duration: 0.25s;*/
     /*opacity: 0;*/

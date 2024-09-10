@@ -7,6 +7,7 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
     const [role, roleHook] = useState("");
     const [popupState, popupHook] = useState("None");
     const [notifState, notifHook] = useState([])
+    const [isAbsolute, setAbsolute] = useState(false)
     const style = {
         gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
@@ -28,8 +29,8 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
             <PopUp ></PopUp>
             <Notif></Notif>
             <div style={style} className={"homepageBG"}></div>
-            {GlobalState != "home" ?
-                <TopBar entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
+            {((GlobalState != "home") || true) ?
+                <TopBar isAbsolute={isAbsolute} setAbsolute={setAbsolute} entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
                         AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar> : <></>
             }
 
@@ -39,6 +40,50 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
     </PopupContext.Provider>
 
 
+}
+
+function Heading({text}) {
+    const style = {
+        fontSize: "min(4vh, 6vw)",
+        fontFamily: 'Geometos',
+
+    }
+    return <div style={style}>{text}
+    </div>
+}
+
+
+function Tagline({text}) {
+    const style = {
+        fontSize: "min(2vh, 2.35vw)",
+        fontFamily: "JustSansRegular",
+        marginLeft: "0.5vw",
+        marginBottom: "min(1vw, 1vh)"
+    }
+    return <div style={style}>{text}</div>
+}
+
+function Logo ({StateHook}) {
+    return <div className={"logo"} style={{flexWrap: "nowrap"}}>
+        <Icon></Icon>
+        <div className={"homepageCol"}>
+            <Heading text={"The Big Wild Apple"}></Heading>
+            {/*<Tagline text={"A New York based nonprofit"}></Tagline>*/}
+            {/*<button onClick={() => {*/}
+            {/*    StateHook("getinvolved")*/}
+            {/*}}>Go to Dashboard*/}
+            {/*</button>*/}
+        </div>
+    </div>
+}
+
+function Icon() {
+    const style = {
+        aspectRatio: "1/1",
+        width: "min(10vh, 10vw)",
+        height: "min(10vh, 10vw)"
+    }
+    return <img style={style} src={"/icon.png"} alt={"Icon"}/>
 }
 
 function Notif () {
@@ -91,8 +136,21 @@ function PopUp({popupFadeID}) {
     }
 }
 
-function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries, entriesHook}) {
+export function TopBar({isAbsolute, setAbsolute, StateHook, AuthState, AuthHook, LoginState, LoginHook, entries, entriesHook}) {
+    // console.log(isAbsolute)
     useEffect(() => {
+        setAbsolute(true)
+        const options = {
+            rootMargin: "0px",
+            threshold: 0.0,
+        };
+        console.log("observer set")
+        const observer = new IntersectionObserver(() => {
+            console.log(isAbsolute)
+            setAbsolute(true)
+        }, options);
+
+        observer.observe(document.querySelector(".topbar"))
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -121,13 +179,17 @@ function TopBar({StateHook, AuthState, AuthHook, LoginState, LoginHook, entries,
     }
 
     const entryStyle = {
-        marginRight: "5%"
+        margin: "0%"
     }
     return <div className={"topbar"} style={style}>
-        {entries.map((text) =>
-            <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text} />
-        )}
-        <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook} style={entryStyle}></TopBarAuthStatus>
+        <Logo StateHook={StateHook}></Logo>
+        <div className={"topbarEntries"}>
+            {entries.map((text) =>
+                <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text} />
+            )}
+            <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook} style={entryStyle}></TopBarAuthStatus>
+        </div>
+
     </div>
 }
 
@@ -145,7 +207,7 @@ function TopBarEntry({StateHook, link ,style, text}) {
 
 function TopBarAuthStatus({StateHook, AuthState, AuthHook, style}) {
     if (AuthState=== "---") {
-        return <div style={style}>Not logged in</div>
+        return <div className={"topbarEntry"} style={style}>Not logged in</div>
     }
-    return <div style={style}>{"Logged in as: " + AuthState}</div>
+    return <div className={"topbarEntry"} style={style}>{"Logged in as: " + AuthState}</div>
 }

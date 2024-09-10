@@ -8,18 +8,8 @@ export function HomepageContent ({StateHook, AuthState}) {
     }
     return <div style={style} className={"homepage"}>
         <div className={"homepageContainer"}>
-            <div className={"homepageRow"} style={{flexWrap: "nowrap"}}>
-                <Icon></Icon>
-                <div className={"homepageCol"}>
-                    <Heading text={"The Big Wild Apple"}></Heading>
-                    <Tagline text={"A New York based nonprofit"}></Tagline>
-                    <button onClick={() => {
-                        StateHook("getinvolved")
-                    }}>Go to Dashboard
-                    </button>
-                </div>
-            </div>
 
+            {/*<Logo StateHook={StateHook}></Logo>*/}
 
             <div className={"homepageDuo"}>
                 <div className={"slideshowContainer hdc"}>
@@ -89,15 +79,10 @@ export function HomepageContent ({StateHook, AuthState}) {
 
 }
 
+
+
 // import "../resources/images/icon.png"
-function Icon() {
-    const style = {
-        aspectRatio: "1/1",
-        width: "min(15vw, 15vh)",
-        height: "min(15vw, 15vh)"
-    }
-    return <img style={style} src={"/icon.png"} alt={"Icon"}/>
-}
+
 
 function Subheading({text}) {
     const style = {
@@ -107,15 +92,7 @@ function Subheading({text}) {
     return <div style={style}>{text}</div>
 }
 
-function Heading({text}) {
-    const style = {
-        fontSize: "min(4vh, 6vw)",
-        fontFamily: 'Geometos',
 
-    }
-    return <div style={style}>{text}
-    </div>
-}
 
 function Slideshow({startIndex, endIndex}) {
     // const startIndex = 1;
@@ -125,12 +102,15 @@ function Slideshow({startIndex, endIndex}) {
     const url = "/slideshow-"  + slideshowState + ".jpeg"
     const [inProp, setInProp] = useState(false);
     const nodeRef = useRef(null);
+    const images = useRef([])
     // setInProp(true)
-    useEffect( () => { // preload images
+    useEffect( () => {
+        let a = []// preload images
         for (let i = startIndex; i < endIndex; i++) {
-            (new Image()).src = "/slideshow-" + i + ".jpeg";
+            a.push(<img ref={nodeRef} src={"/slideshow-"+i+".jpeg"} alt={i}/>)
         }
-    }, [])
+        images.current = a;
+    }, [endIndex, startIndex])
     useEffect(() => {setTimeout( () => {
         setInProp(true)
     }, 100)}, [slideshowState])
@@ -158,7 +138,8 @@ function Slideshow({startIndex, endIndex}) {
 
                 mountOnEnter={true} unmountOnExit={false} nodeRef={nodeRef} in={inProp} timeout={10000} classNames="slideshow-transition">
                 <div className={"slideshow"}>
-                    <img ref={nodeRef} src={url} alt={"ss"}/>
+                    {/*<img ref={nodeRef} src={url} alt={"ss"}/>*/}
+                    {images.current[slideshowState - startIndex]}
                 </div>
 
             </CSSTransition>

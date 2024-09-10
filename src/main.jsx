@@ -10,8 +10,9 @@ import {RegisterContent} from "./assets/accounts/register.jsx";
 import {LoginContent} from "./assets/accounts/login.jsx";
 //
 createRoot(document.getElementById('root')).render(
+  // <StrictMode>
         <App></App>
-
+  // </StrictMode>,
 )
 
 
