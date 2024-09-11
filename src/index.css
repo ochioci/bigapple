@@ -47,6 +47,23 @@ body {
     /*animation-fill-mode: forwards;*/
 }
 
+.tbAnimate {
+    position: absolute;
+    top: 0;
+    animation-name: tb-in;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes tb-in {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 0;
+    }
+}
+
 .topbarEntries {
     display: flex;
     justify-content: center;

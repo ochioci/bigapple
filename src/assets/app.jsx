@@ -7,7 +7,7 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
     const [role, roleHook] = useState("");
     const [popupState, popupHook] = useState("None");
     const [notifState, notifHook] = useState([])
-    const [isAbsolute, setAbsolute] = useState(false)
+    // const [isAbsolute, setAbsolute] = useState(false)
     const style = {
         gridTemplateRows: "5% auto",
         gridTemplateColumns: "100%",
@@ -30,7 +30,7 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
             <Notif></Notif>
             <div style={style} className={"homepageBG"}></div>
             {((GlobalState != "home") || true) ?
-                <TopBar isAbsolute={isAbsolute} setAbsolute={setAbsolute} entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
+                <TopBar  entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
                         AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar> : <></>
             }
 
@@ -136,21 +136,36 @@ function PopUp({popupFadeID}) {
     }
 }
 
-export function TopBar({isAbsolute, setAbsolute, StateHook, AuthState, AuthHook, LoginState, LoginHook, entries, entriesHook}) {
+export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, entries, entriesHook}) {
     // console.log(isAbsolute)
+    const [isOverlay, setOverlay] = useState(false)
+    // console.log(isOverlay)
     useEffect(() => {
-        setAbsolute(true)
+        // setAbsolute(true)
         const options = {
             rootMargin: "0px",
             threshold: 0.0,
         };
-        console.log("observer set")
-        const observer = new IntersectionObserver(() => {
-            console.log(isAbsolute)
-            setAbsolute(true)
+        // console.log("observer set")
+        const exitObserver = new IntersectionObserver((entries) => {
+            console.log(entries[0].isVisible)
+            console.log(entries[0])
+            if (entries[0].isIntersecting == false) {
+                setOverlay(true)
+            } else {
+                setOverlay(false)
+            }
         }, options);
 
-        observer.observe(document.querySelector(".topbar"))
+        const options2 = {
+            rootMargin: "0px",
+            threshold: 1.0
+        }
+
+
+        exitObserver.observe(document.querySelector(".topbar"))
+        // entryObserver.observe(document.querySelector(".tbAnimate"))
+
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -174,29 +189,81 @@ export function TopBar({isAbsolute, setAbsolute, StateHook, AuthState, AuthHook,
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send()
     }, [])
-    const style = {
 
-    }
 
     const entryStyle = {
         margin: "0%"
     }
-    return <div className={"topbar"} style={style}>
-        <Logo StateHook={StateHook}></Logo>
-        <div className={"topbarEntries"}>
-            {entries.map((text) =>
-                <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text} />
-            )}
-            <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook} style={entryStyle}></TopBarAuthStatus>
-        </div>
 
-    </div>
+    if (isOverlay) {
+        return <>
+            <div className={"topbar"}>
+                <Logo StateHook={StateHook}></Logo>
+                <div className={"topbarEntries"}>
+                    {entries.map((text) =>
+                        <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>
+                    )}
+                    <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}
+                                      style={entryStyle}></TopBarAuthStatus>
+                </div>
+            </div>
+            <div className={"topbar tbAnimate"} >
+                <Logo StateHook={StateHook}></Logo>
+                <div className={"topbarEntries"}>
+                    {entries.map((text) =>
+                        <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>
+                    )}
+                    <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}
+                                      style={entryStyle}></TopBarAuthStatus>
+                </div>
+            </div>
+
+        {/*<div style={{display: "none"}} className={"topbar"}>*/}
+        {/*    <Logo StateHook={StateHook}></Logo>*/}
+        {/*    <div className={"topbarEntries"}>*/}
+        {/*        {entries.map((text) =>*/}
+        {/*            <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>*/}
+        {/*        )}*/}
+        {/*        <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}*/}
+        {/*                          style={entryStyle}></TopBarAuthStatus>*/}
+        {/*    </div>*/}
+        {/*</div>*/}
+        </>
+
+    }
+
+    return <>
+        {/*<div className={"topbar tbAnimate"} style={{display: "none"}}>*/}
+        {/*    <Logo StateHook={StateHook}></Logo>*/}
+        {/*    <div className={"topbarEntries"}>*/}
+        {/*        {entries.map((text) =>*/}
+        {/*            <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>*/}
+        {/*        )}*/}
+        {/*        <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}*/}
+        {/*                          style={entryStyle}></TopBarAuthStatus>*/}
+        {/*    </div>*/}
+        {/*</div>*/}
+
+        <div className={"topbar"}>
+            <Logo StateHook={StateHook}></Logo>
+            <div className={"topbarEntries"}>
+                {entries.map((text) =>
+                    <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>
+                )}
+                <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}
+                                  style={entryStyle}></TopBarAuthStatus>
+            </div>
+
+        </div>
+    </>
+
+
 }
 
-function TopBarEntry({StateHook, link ,style, text}) {
+function TopBarEntry({StateHook, link, style, text}) {
     // console.log(StateHook)
 
-    function handleClick (e) {
+    function handleClick(e) {
         // console.log(StateHook)
         e.preventDefault();
         StateHook(link);
@@ -206,7 +273,7 @@ function TopBarEntry({StateHook, link ,style, text}) {
 }
 
 function TopBarAuthStatus({StateHook, AuthState, AuthHook, style}) {
-    if (AuthState=== "---") {
+    if (AuthState === "---") {
         return <div className={"topbarEntry"} style={style}>Not logged in</div>
     }
     return <div className={"topbarEntry"} style={style}>{"Logged in as: " + AuthState}</div>
