@@ -18,7 +18,7 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
     }
     let [entries, entriesHook] = useState([
         ["Home", "home"],
-        ["About us", "aboutus"],
+        ["Our Story", "aboutus"],
         ["Contact", "contact"],
         [loginState, "login"],
         ["Register", "register"]
@@ -176,7 +176,7 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                     // roleHook(response.role)
                     LoginHook("Log out");
                     entriesHook([["Home", "home"],
-                        ["About us", "aboutus"],
+                        ["Our Story", "aboutus"],
                         ["Get involved", "getinvolved"],
                         ["Contact", "contact"],
                         ["Log out", "login"],])

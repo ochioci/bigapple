@@ -19,7 +19,7 @@ body {
     /*position: absolute;*/
     /*justify-content: space-evenly;*/
     font-family: "JustSansRegular";
-    grid-template-columns: auto 60%;
+    grid-template-columns: auto 70%;
     background-color: #d4d4d4;
     display: grid;
     /*flex-wrap: wrap;*/
@@ -174,21 +174,25 @@ form input {
 
 @keyframes borderAnimate {
     100% {
-        border: 1vw solid #d4d4d4;
+        background-color: rgba(255, 255, 255, 0.9);;
+        border: 1vw solid rgba(255, 255, 255, 0.9);
         scale: 100%;
     }
     0% {
-        border: 1vw solid white;
+        border: 1vw solid rgba(255, 255, 255, 1.0);;
+        background-color: rgba(255, 255, 255, 1.0);;
         scale: 102%
     }
 }
 @keyframes borderAnimate2 {
     0% {
-        border: 1vw solid #d4d4d4;
+        border: 1vw solid rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 0.9);;
         scale: 100%
     }
     100% {
-        border: 1vw solid white;
+        border: 1vw solid rgba(255, 255, 255, 1.0);
+        background-color: rgba(255, 255, 255, 1.0);;
         scale: 102%;
     }
 }
@@ -202,13 +206,13 @@ form input {
 
 .card {
     transition-delay: 0.25s;
-    border: 1vw solid #d4d4d4;
+    border: 1vw solid rgba(255, 255, 255, 0.9);;
     border-radius: 1vw;
     padding: min(1vh, 1vw);
     display: flex;
     overflow: hidden;
     margin: auto;
-    background-color: rgba(137, 255, 160, 0.2);
+    background-color: rgba(255, 255, 255, 0.9);
     color: #173d4c;
     animation-name: borderAnimate;
     animation-duration: 0.5s;
@@ -248,13 +252,13 @@ form input {
 /*}*/
 
 .cardNoAnimate {
-    border: 1vw solid #d4d4d4;
+    /*border: 1vw solid #d4d4d4;*/
     border-radius: 1vw;
     padding: 2vw;
     display: flex;
     overflow: hidden;
     margin: 1vw;
-    background-color: rgba(137, 255, 160, 0.33);
+    background-color: rgba(255, 255, 255, 0.9);
     color: #173d4c;
 }
 

@@ -16,9 +16,12 @@ export function HomepageContent ({StateHook, AuthState}) {
                     <Slideshow startIndex={4} endIndex={7}></Slideshow>
                 </div>
                 <div className={"homepageCol hdc"}>
-                    <Subheading text={"Mission Statement"}></Subheading>
+                    <Subheading text={<div>
+                        {"Feeding the NYC hungry, one wild apple at a time through our student volunteers."}
+                        <a style={{color: "blue", cursor: "grab"}} onClick={() => {StateHook("register")}}>{" Sign up now."}</a>
+                    </div>}></Subheading>
                     <Tagline text={
-                        "At The Big Wild Apple, our mission is to bridge the gap between abundance and need by connecting generous homeowners with volunteer apple pickers. We harness the surplus of fresh fruit from private gardens and channel it directly to local food shelters, ensuring that every apple contributes to nourishing our community. Through collaboration, compassion, and sustainability, we strive to reduce food waste and provide healthy, fresh produce to those in need throughout the New York City area."
+                        "At The Big Wild Apple, our mission is to bridge the gap between abundance and need by connecting generous homeowners with volunteer apple pickers. We harness the surplus of fresh fruit from private gardens and channel it directly to local food shelters, ensuring that every apple contributes to nourishing our community. Through collaboration, compassion, and sustainability, we strive to reduce food waste and provide healthy, fresh produce to those in need throughout the New York City area"
                     }></Tagline>
                 </div>
             </div>
@@ -86,7 +89,7 @@ export function HomepageContent ({StateHook, AuthState}) {
 
 function Subheading({text}) {
     const style = {
-        fontSize: "min(3vh, 4vw)",
+        fontSize: "min(2.5vh, 2.5vw)",
         fontFamily: "JustSansBold"
     }
     return <div style={style}>{text}</div>
@@ -156,7 +159,7 @@ function Slideshow({startIndex, endIndex}) {
 
 function Tagline({text}) {
     const style = {
-        fontSize: "min(2vh, 2.35vw)",
+        fontSize: "min(3vh, 1.75vw)",
         fontFamily: "JustSansRegular",
         marginLeft: "0.5vw",
         marginBottom: "min(1vw, 1vh)"

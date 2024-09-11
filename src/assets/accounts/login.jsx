@@ -28,7 +28,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                     AuthHook(response.loginName)
                     LoginHook("Log out");
                     entriesHook([["Home", "home"],
-                        ["About us", "aboutus"],
+                        ["Our Story", "aboutus"],
                         ["Get involved", "getinvolved"],
                         ["Contact", "contact"],
                         ["Log out", "login"],])
@@ -65,7 +65,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                     AuthHook("---")
                     LoginHook("Log in")
                     entriesHook([["Home", "home"],
-                        ["About us", "aboutus"],
+                        ["Our Story", "aboutus"],
                         ["Contact", "contact"],
                         ["Log in", "login"],
                         ["Register", "register"],])
