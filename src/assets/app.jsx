@@ -29,13 +29,20 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
             <PopUp ></PopUp>
             <Notif></Notif>
             <div style={style} className={"homepageBG"}></div>
-            {((GlobalState != "home") || true) ?
-                <TopBar  entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
-                        AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar> : <></>
-            }
 
-            <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState}
-                     StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
+            <div style={{
+                display: "grid",
+                gridTemplateRows: "min-content 80%",
+                height: "100%"
+            }}>
+                <TopBar  entries={entries} entriesHook={entriesHook} LoginState={loginState} LoginHook={loginHook}
+                         AuthHook={AuthHook} AuthState={AuthState} StateHook={StateHook}></TopBar>
+
+
+                <Content entries={entries} entriesHook={entriesHook} LoginHook={loginHook} LoginState={loginState}
+                         StateHook={StateHook} AuthHook={AuthHook} AuthState={AuthState}></Content>
+            </div>
+
         </div>
     </PopupContext.Provider>
 
@@ -148,8 +155,8 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
         };
         // console.log("observer set")
         const exitObserver = new IntersectionObserver((entries) => {
-            console.log(entries[0].isVisible)
-            console.log(entries[0])
+            // console.log(entries[0].isVisible)
+            // console.log(entries[0])
             if (entries[0].isIntersecting == false) {
                 setOverlay(true)
             } else {

@@ -12,10 +12,12 @@ body {
 
 .topbar {
     width: 100vw;
+    /*height: min(10vh, 10vw);*/
+    height: min-content;
     /*height: 100%;*/
     grid-row: 1;
     /*display: flex;*/
-    /*align-items: center;*/
+    align-items: center;
     /*position: absolute;*/
     /*justify-content: space-evenly;*/
     font-family: "JustSansRegular";
@@ -32,15 +34,16 @@ body {
     /*max-height: 5vh;*/
     display: flex;
     flex-direction: row;
+    height: fit-content;
     /*max-width: 30%;*/
     align-items: center;
 }
 
 .topbarEntry {
-    padding: min(3vh, 3vw);
+    padding: min(2vh, 2vw);
     text-decoration: none;
     color: #173d4c;
-    font-size: min(3vh, 3vw);
+    font-size: min(2.5vh, 2.5vw);
     background-color: #d4d4d4;
     /*animation: b`u`ttonHover 1s;*/
     /*animation-direction: reverse;*/
@@ -102,6 +105,7 @@ body {
     /*align-items: center;*/
     align-content: center;
     justify-content: center;
+    height: fit-content;
 }
 
 .homepageContainer {
@@ -139,7 +143,7 @@ body {
 /*}*/
 
 .homepageBG {
-    background-image: url("/src/assets/resources/images/background.jpg");
+    background-image: url("/slideshow-6.jpeg");
         width: 105%;
         height: 105%;
         overflow: hidden;

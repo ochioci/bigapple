@@ -20,8 +20,6 @@ export function AboutUsContent() {
             <Card animated={false} style={style} Content={
                 <OurStory></OurStory>
             }></Card>
-        </div>
-        <div style={style}>
             <Card animated={false} style={style} Content={
                 <CadenBio></CadenBio>
             }></Card>
