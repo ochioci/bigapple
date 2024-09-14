@@ -39,11 +39,30 @@ body {
     align-items: center;
 }
 
+.subheading {
+    font-size: min(3vh, 3vw);
+    font-family: "JustSansBold"
+}
+
+.tagline {
+
+    /*fontSize: "min(3vh, 1.75vw)",*/
+    /*fontFamily: "JustSansRegular",*/
+    /*marginLeft: "0.5vw",*/
+    /*marginBottom: "min(1vw, 1vh)"*/
+
+    font-size: min(3vh, 3vw);
+    font-family: "JustSansRegular";
+    margin-left: 0.5vw;
+    margin-bottom: min(1vh, 1vw);
+
+}
+
 .topbarEntry {
     padding: min(2vh, 2vw);
     text-decoration: none;
     color: #173d4c;
-    font-size: min(2.5vh, 2.5vw);
+    font-size: min(2.5vh, 3.5vw);
     background-color: #d4d4d4;
     /*animation: b`u`ttonHover 1s;*/
     /*animation-direction: reverse;*/
@@ -260,7 +279,7 @@ form input {
     border-radius: 1vw;
     padding: 2vw;
     display: flex;
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin: 1vw;
     background-color: rgba(255, 255, 255, 0.9);
     color: #173d4c;
@@ -647,26 +666,35 @@ form {
     .homepageDuo {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        height: 50%;
+        height: min-content;
         overflow: hidden;
         grid-gap: min(2vh, 2vw);
         margin: min(1vh, 1vw);
         padding: min(1vh, 1vw);
-        max-height: 50vw;
+        max-height: fit-content;
     }
     .hdc {
         border: min(0.5vh, 0.5vw) solid #173d4c;
         height: 90%;
-        max-height: 40vw;
+        /*max-height: 40vw;*/
         min-height: fit-content;
         border-radius: min(0.5vh, 0.5vw);
+    }
+
+    .slideshowContainer.hdc {
+        height: 0;
+        min-height: 100%;
+    }
+
+    .homepageCol.hdc {
+        height: min-content ;
     }
 }
 @media (orientation: portrait) {
     .homepageDuo {
         display: grid;
         grid-gap: min(2vh, 2vw);
-        grid-template-rows: 30vh 30vh;
+        grid-template-rows: auto 30vh;
         /*height: 50%;*/
         /*overflow: hidden;*/
         margin: min(1vh, 1vw);
@@ -679,6 +707,10 @@ form {
         /*max-height: 40vw;*/
         /*min-height: fit-content;*/
         border-radius: min(0.5vh, 0.5vw);
+    }
+
+    .homepageCol.hdc {
+        height: min-content;
     }
     .homepageCol:nth-child(2){
         grid-row: 1;

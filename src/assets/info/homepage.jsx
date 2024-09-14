@@ -88,11 +88,7 @@ export function HomepageContent ({StateHook, AuthState}) {
 
 
 function Subheading({text}) {
-    const style = {
-        fontSize: "min(2.5vh, 2.5vw)",
-        fontFamily: "JustSansBold"
-    }
-    return <div style={style}>{text}</div>
+    return <div className={"subheading"} >{text}</div>
 }
 
 
@@ -158,11 +154,5 @@ function Slideshow({startIndex, endIndex}) {
 
 
 function Tagline({text}) {
-    const style = {
-        fontSize: "min(3vh, 1.75vw)",
-        fontFamily: "JustSansRegular",
-        marginLeft: "0.5vw",
-        marginBottom: "min(1vw, 1vh)"
-    }
-    return <div style={style}>{text}</div>
+    return <div className={"tagline"}>{text}</div>
 }
