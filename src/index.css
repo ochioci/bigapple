@@ -718,3 +718,15 @@ form {
     }
 }
 
+.estateContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.estateHeading {
+    text-align: center;
+    font-size: min(4vw, 3vh);
+    font-family: "JustSansBold";
+}

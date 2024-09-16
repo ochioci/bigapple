@@ -107,6 +107,5 @@ function GetInvolvedChoices({getInvolvedHook}) {
     return <div style={style}>
     <button onClick={haveFruit} >I have fruit trees on my property</button>
     <button onClick={pickFruit}>I wish to volunteer to pick fruit</button>
-    <button onClick={getFruit}>I wish to receive fruits</button>
         </div>
 }

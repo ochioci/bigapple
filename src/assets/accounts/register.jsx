@@ -29,17 +29,19 @@ export function RegisterContent({StateHook}) {
         </div>
     } else {
         const style = {
-            display: "grid",
-            gridTemplateRows: "10vh auto auto auto 10vh",
+            display: "flex",
+            // gridTemplateRows: "10vh auto auto auto 10vh",
             height: "100%",
             justifyItems: "center",
+            flexDirection: "row",
+            flexWrap: "wrap",
             alignItems: "center"
         }
         return <div style={style}>
             <div></div>
-                <RoleTitle reqHook={reqHook} val={"Estate"} title={"I have fruit trees on my property"}></RoleTitle>
-                <RoleTitle reqHook={reqHook} val={"Shelter"} title={"I operate a food bank"}></RoleTitle>
-                <RoleTitle reqHook={reqHook} val={"Picker"} title={"Im interested in picking and delivering fruits"}></RoleTitle>
+                <RoleTitle reqHook={reqHook} val={"Estate"} title={"Share Fruit"}></RoleTitle>
+                {/*<RoleTitle reqHook={reqHook} val={"Shelter"} title={"I operate a food bank"}></RoleTitle>*/}
+                <RoleTitle reqHook={reqHook} val={"Picker"} title={"Pick Fruit"}></RoleTitle>
         </div>
     }
 
@@ -71,8 +73,9 @@ function RegisterForm({reqState, reqHook, StateHook}) {
         let firstname = e.target[0].value
         let lastname = e.target[1].value
         let email = e.target[2].value
-        let password = e.target[3].value
-        let userRole = e.target[4].value
+        let phoneNumber = e.target[3].value
+        let password = e.target[4].value
+        // let userRole = e.target[4].value
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -90,20 +93,22 @@ function RegisterForm({reqState, reqHook, StateHook}) {
 
         req.open("POST", "api/register", true);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "userRole": reqState}))
+        req.send(JSON.stringify({"firstname": firstname, "lastname": lastname, "email": email, "password": password, "phoneNumber": phoneNumber, "userRole": reqState}))
 
         return false;
     }
 
     return <div style={{marginTop: "min(10vh, 3vw)", width: "min(90vh, 90vw, 90%)"}}>
         <Card Content={<div className={"registerContainer"} onSubmit={formSubmit} >
-            <div style={{fontSize: "5vh", fontFamily: "JustSansBold"}}>Register</div>
+            <div style={{fontSize: "5vh", fontFamily: "JustSansBold"}}>Register {reqState == "Estate" ? "to share fruits" : "to pick fruits"}</div>
             <form style={{fontSize: "3vh"}} action="/register" method="POST">
                 <label>First Name</label>
                 <input type={"text"}/>
                 <label>Last Name</label>
                 <input type={"text"}/>
                 <label>Email</label>
+                <input type={"text"}/>
+                <label>Phone Number</label>
                 <input type={"text"}/>
                 <label>Password</label>
                 <input type={"text"}/>

@@ -1,13 +1,14 @@
 import {useContext, useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 import {PopupContext} from "../../app.jsx";
+import {Card} from "../../components/card.jsx";
 
 export function EstateBookings({StateHook, goBack}) {
     const [estates, setEstates] = useState([])
     const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     const addNotif = (msg) => {
         let l = notifState.slice() //change does not trigger update without this lmfao
-        l.push([msg, Date.now()+1500])
+        l.push([msg, Date.now() + 1500])
         // console.log(l)
         notifHook(l)
         // console.log(notifState)
@@ -72,17 +73,16 @@ export function EstateBookings({StateHook, goBack}) {
         return req
     }
 
+    return <div className={"estateContainer"}>
+        <Card animated={false} Content={
+            <div className={"estateHeading"}>
+                Do you have fruit trees on your property that you’d love to share with those in need? Include information
+                here about your home and the location of the trees and when they are available for harvesting by our
+                volunteers. The Big Wild Apple will do the rest and ensure that your fruit makes it to food shelters.
+            </div>
+        }></Card>
+    </div>
 
 
-    return <BookingsMenu
-        StateHook={StateHook}
-        title={"Estate"}
-        id = {"estateID"}
-        refresh={refresh}
-        updateBooking={updateEstate}
-        addBooking={addEstate}
-        deleteBooking={deleteEstate}
-        bookings={estates}
-        setBookings={setEstates}
-    ></BookingsMenu>
+
 }

@@ -73,11 +73,11 @@ const requireShelter = (req, res, next) => {
 
 const db = new sqlite3.Database('./app.db');
 db.run("CREATE TABLE IF NOT EXISTS messages([message] TEXT, [email] TEXT)")
-db.run("CREATE TABLE IF NOT EXISTS estates([name] TEXT, [location] TEXT, [availability] TEXT, [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
+db.run("CREATE TABLE IF NOT EXISTS estates([name] TEXT, [location] TEXT, [availabilityDetails] TEXT, [treeDetails] TEXT, [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
 db.run("CREATE TABLE IF NOT EXISTS dropoffs([name] TEXT, [location] TEXT, [availability] TEXT, [ownerID] INTEGER NOT NULL, [dropoffID] INTEGER PRIMARY KEY NOT NULL)")
-db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [role] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
+db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [role] TEXT, [phoneNumber] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
 db.run("CREATE TABLE IF NOT EXISTS transfers([window] TEXT, [dropoffWindow] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [isConfirmed] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
-
+// db.run("CREATE TABLE IF NOT EXISTS estateAvailability()")
 
 initLoginAPI(app, db, requireAuth, jsonParser)
 initRegisterAPI(app, db, requireAuth, jsonParser)

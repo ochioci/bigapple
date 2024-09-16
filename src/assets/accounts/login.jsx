@@ -30,7 +30,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                     entriesHook([["Home", "home"],
                         ["Our Story", "aboutus"],
                         ["Get involved", "getinvolved"],
-                        ["Contact", "contact"],
+                        ["Donate", "contact"],
                         ["Log out", "login"],])
 
                     console.log("success!")
@@ -66,7 +66,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                     LoginHook("Log in")
                     entriesHook([["Home", "home"],
                         ["Our Story", "aboutus"],
-                        ["Contact", "contact"],
+                        ["Donate", "contact"],
                         ["Log in", "login"],
                         ["Register", "register"],])
                 } else {
