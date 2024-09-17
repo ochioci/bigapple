@@ -14,7 +14,8 @@ export function Calendar({selected, includeAfter=<></>, include=<></>}) {
     }
     // console.log(dates)
     const style = {
-        display: "flex"
+        display: "flex",
+        fontSize: "min(2.5vh, 5vw)"
     }
 
 

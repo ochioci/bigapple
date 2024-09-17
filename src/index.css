@@ -286,7 +286,8 @@ form input {
 }
 
 .c button {
-    font-size: min(2vh, 3vw);
+    font-size: min(2vh, 4vw);
+    margin: min(0.5vh, 1vw);
     background-color: rgba(255, 235, 82, 0.33);
     border-radius: 0.5vw;
     padding: 0.5vw;
@@ -735,7 +736,7 @@ form {
 
 .estateHeading {
     text-align: center;
-    font-size: min(4vw, 3vh);
+    font-size: min(6vw, 3vh);
     font-family: "JustSansBold";
     display: block;
 }
@@ -774,12 +775,19 @@ form {
 
 .addEstateMenu label {
     font-family: "JustSansRegular";
-    font-size: min(3vh, 2vw);
+    font-size: min(3vh, 6vw);
 }
 
 .addEstateMenu input {
     font-family: "JustSansRegular";
-    font-size: min(2vh, 1.5vw);
+    font-size: min(2vh, 4vw);
+}
+
+.addEstateMenu textarea {
+    font-family: "JustSansRegular";
+    font-size: min(2vh, 4vw);
+    width: 90%;
+    height: 90%;
 }
 
 .manageEstateMenu {
@@ -794,6 +802,7 @@ form {
     border: 0.1vh solid grey;
     padding: min(0.5vh, 0.5vw);
     margin: min(0.5vh, 0.5vw);
+    font-size: min(3vh, 4.5vw);
 }
 
 .expandedEstateView {
@@ -832,4 +841,28 @@ form {
     background-color: white;
     width: 90%;
     height: 80%;
+}
+
+/*.expandedAvailViewContent * {*/
+/*    font-size: min(2.5vh, 5vw);*/
+/*    margin: min(0.5vh, 1vw);*/
+/*}*/
+
+.estateViewItem {
+    font-size: min(2.5vh, 5vw);
+    margin: min(0.5vh, 1vw);
+
+
+}
+
+input[type=time] {
+    font-size: min(2.5vh, 5vw);
+}
+
+.estateCaption {
+    font-size: min(3vh, 4.5vw);
+    text-align: center;
+    font-family: "JustSansRegular";
+    padding-left: 10vw;
+    padding-right: 10vw;
 }

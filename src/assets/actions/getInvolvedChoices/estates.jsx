@@ -66,16 +66,7 @@ export function EstateBookings({StateHook, goBack}) {
         return req
     }
 
-    const deleteEstate = (estateID) => {
-        let req = new XMLHttpRequest();
-        req.open("POST", "api/deleteEstate", true)
-        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        req.send(JSON.stringify({
-            estateID
-        }))
-        addNotif("Delete Successful")
-        return req
-    }
+
 
     useEffect(() => {
         refresh()
@@ -88,7 +79,7 @@ export function EstateBookings({StateHook, goBack}) {
 
     return <div className={"estateContainer"}>
         <Card animated={false} Content={
-            <div className={"estateHeading"}>
+            <div className={"estateCaption"}>
                 Do you have fruit trees on your property that you’d love to share with those in need? Include information
                 here about your home and the location of the trees and when they are available for harvesting by our
                 volunteers. The Big Wild Apple will do the rest and ensure that your fruit makes it to food shelters.
@@ -101,7 +92,7 @@ export function EstateBookings({StateHook, goBack}) {
                     {"Properties"}
                 </div>
                 <div className={"estateSubheading"}>
-                    {estates.length == 0 ? "You have no registered properties." : <ManageProperties estates={estates}></ManageProperties>}
+                    {estates.length == 0 ? "You have no registered properties." : <ManageProperties refresh={refresh} estates={estates}></ManageProperties>}
                 </div>
                 <button className={"estateButton"} onClick={addProperty}>Add a property</button>
             </div>
@@ -120,21 +111,31 @@ export function EstateBookings({StateHook, goBack}) {
 //     "estates([name] TEXT, [location] TEXT, [availabilityDetails] TEXT, [treeDetails] TEXT," +
 //     " [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
 
-function ManageProperties({estates}) {
+function ManageProperties({estates, refresh}) {
     return <div className={"manageEstateMenu"}>
         {estates.map((estate) => {
-            return <PropertyView key={estate.estateID} info={estate}></PropertyView>
+            return <PropertyView refresh={refresh} key={estate.estateID} info={estate}></PropertyView>
         })}
     </div>
 }
 
-function PropertyView({info}) {
+function PropertyView({info, refresh}) {
     const [expanded, setExpanded] = useState(false);
     const [availExpanded, setAvailExpanded] = useState(false);
     const [availability, setAvailability] = useState([]);
     const calendarSelected = useRef([])
     const startTime = useRef("08:00");
     const endTime = useRef("20:00");
+
+    const deleteEstate = (estateID) => {
+        let req = new XMLHttpRequest();
+        req.open("POST", "api/deleteEstate", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({
+            estateID
+        }))
+        return req
+    }
 
     function addEstateAvailability(startTime, endTime, dates, estateID) {
         let req = new XMLHttpRequest();
@@ -179,10 +180,10 @@ function PropertyView({info}) {
         // console.log(availability)
         return <div className={"expandedEstateView"}>
             <div className={"expandedEstateViewContent"}>
-                <div>{"Name: " + info.name}</div>
-                <div>{"Location: " + info.location}</div>
-                <div>{(availability.length == 0 ? "No availability" : <AvailabilityView refreshAvailability={refreshAvailability} availability={availability}></AvailabilityView>)}</div>
-                <div>
+                <div className={"estateViewItem"}>{"Name: " + info.name}</div>
+                <div className={"estateViewItem"}>{"Location: " + info.location}</div>
+                <div className={"estateViewItem"}>{(availability.length == 0 ? "No availability" : <AvailabilityView refreshAvailability={refreshAvailability} availability={availability}></AvailabilityView>)}</div>
+                <div className={"estateViewItem"}>
                     <button onClick={() => {
                         setExpanded(false)
                     }}>Close menu
@@ -192,6 +193,10 @@ function PropertyView({info}) {
                     }}>
                         Add Availability
                     </button>
+                    <button onClick={() => {
+                        deleteEstate(info.estateID).onreadystatechange=refresh
+                    }}>Delete Property
+                    </button>
                 </div>
 
             </div>
@@ -199,14 +204,14 @@ function PropertyView({info}) {
             {availExpanded ? <div className={"expandedAvailView"}>
                 <div className={"expandedAvailViewContent"}>
                     <Calendar selected={calendarSelected}></Calendar>
-                    <div>Start time: <input defaultValue="08:00" onChange={(e) => {startTime.current = e.target.value}} type={"time"}/></div>
-                    <div>End time: <input defaultValue="20:00" onChange={(e) => {endTime.current = e.target.value}} type={"time"}/></div>
-                    <button onClick={() => {
+                    <div className={"estateViewItem"}>Start time: <input defaultValue="08:00" onChange={(e) => {startTime.current = e.target.value}} type={"time"}/></div>
+                    <div className={"estateViewItem"}>End time: <input defaultValue="20:00" onChange={(e) => {endTime.current = e.target.value}} type={"time"}/></div>
+                    <button className={"estateViewItem"} onClick={() => {
                         setAvailExpanded(false)
                     }}>Go back
 
                     </button>
-                    <button onClick={() => {
+                    <button className={"estateViewItem"} onClick={() => {
                         addEstateAvailability(startTime.current, endTime.current, calendarSelected.current, info.estateID).onreadystatechange = refreshAvailability;
                         startTime.current = "08:00"
                         endTime.current= "20:00"
@@ -214,6 +219,7 @@ function PropertyView({info}) {
                         setAvailExpanded(false)
                     }}>Add dates
                     </button>
+
                 </div>
             </div> : <></>}
         </div>
@@ -318,10 +324,11 @@ function AddPropertyMenu({propertyMenuHook, addEstate, refresh}) {
             <input type={"text"}/>
             <label>Zip Code</label>
             <input type={"number"}/>
-            <label>Availability</label>
-            <input type={"text"}/>
-            <label>Tree Details</label>
-            <input type={"text"}/>
+            <label hidden>Availability</label>
+            <input style={{display: "None"}} type={"text"}/>
+            <label>Tree Details
+            </label>
+            <textarea placeholder={"                Please use this space to tell us about the location of the trees on the property, how many trees there are and what types and if you plan to be home when the volunteers come or are ok with the volunteers being on the property without you home.\n"}></textarea>
             <div>
                 <button className={"estateButton"} type={"submit"}>Add</button>
                 <button onClick={() => {propertyMenuHook(false)}} className={"estateButton"}>Cancel</button>
