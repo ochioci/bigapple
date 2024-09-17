@@ -1,8 +1,9 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 import {PopupContext} from "../../app.jsx";
 import {Card} from "../../components/card.jsx";
 import {Collapsible} from "../../components/collapsible.jsx";
+import {Calendar} from "../../components/calendar.jsx";
 
 export function EstateBookings({StateHook, goBack}) {
     const [estates, setEstates] = useState([])
@@ -29,7 +30,7 @@ export function EstateBookings({StateHook, goBack}) {
                 }
                 // console.log(response.rows)
                 setEstates(response.rows)
-                console.log(estates)
+                // console.log(estates)
                 // console.log(response)
             }
         }
@@ -129,8 +130,13 @@ function ManageProperties({estates}) {
 
 function PropertyView({info}) {
     const [expanded, setExpanded] = useState(false);
+    const [availExpanded, setAvailExpanded] = useState(false);
     const [availability, setAvailability] = useState([]);
-    useEffect(() => {
+    const calendarSelected = useRef([])
+    const startTime = useRef("08:00");
+    const endTime = useRef("20:00");
+
+    function addEstateAvailability(startTime, endTime, dates, estateID) {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
@@ -138,7 +144,26 @@ function PropertyView({info}) {
                 if (response.message !== "success") {
                     console.log("failure")
                 }
-                console.log(response)
+            }
+        }
+        req.open("POST", "api/addEstateAvailability", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({
+            startTime, endTime, dates, estateID
+        }))
+        return req
+    }
+    const refreshAvailability = () => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response);
+                if (response.message !== "success") {
+                    console.log("failure")
+                }
+                else {
+                    setAvailability(response.rows);
+                }
             }
         }
         req.open("POST", "api/getEstateAvailability", true)
@@ -146,15 +171,51 @@ function PropertyView({info}) {
         req.send(JSON.stringify({
             estateID: info.estateID
         }))
+    }
+    useEffect(() => {
+        refreshAvailability();
     }, [])
     if (expanded) {
+        // console.log(availability)
         return <div className={"expandedEstateView"}>
             <div className={"expandedEstateViewContent"}>
                 <div>{"Name: " + info.name}</div>
                 <div>{"Location: " + info.location}</div>
-                <div>{"Availability: "}</div>
-                <button onClick={() => {setExpanded(false)}}>Close menu</button>
+                <div>{(availability.length == 0 ? "No availability" : <AvailabilityView availability={availability}></AvailabilityView>)}</div>
+                <div>
+                    <button onClick={() => {
+                        setExpanded(false)
+                    }}>Close menu
+                    </button>
+                    <button onClick={() => {
+                        setAvailExpanded(true)
+                    }}>
+                        Add Availability
+                    </button>
+                </div>
+
             </div>
+
+            {availExpanded ? <div className={"expandedAvailView"}>
+                <div className={"expandedAvailViewContent"}>
+                    <Calendar selected={calendarSelected}></Calendar>
+                    <div>Start time: <input defaultValue="08:00" onChange={(e) => {startTime.current = e.target.value}} type={"time"}/></div>
+                    <div>End time: <input defaultValue="20:00" onChange={(e) => {endTime.current = e.target.value}} type={"time"}/></div>
+                    <button onClick={() => {
+                        setAvailExpanded(false)
+                    }}>Go back
+
+                    </button>
+                    <button onClick={() => {
+                        addEstateAvailability(startTime.current, endTime.current, calendarSelected.current, info.estateID).onreadystatechange = refreshAvailability;
+                        startTime.current = "08:00"
+                        endTime.current= "20:00"
+                        calendarSelected.current=[]
+                        setAvailExpanded(false)
+                    }}>Add dates
+                    </button>
+                </div>
+            </div> : <></>}
         </div>
     }
     return <div className={"estateView"}>
@@ -163,6 +224,15 @@ function PropertyView({info}) {
         <button onClick={() => {setExpanded(true)}}>Manage property</button>
 
     </div>
+}
+
+function AvailabilityView({availability}) {
+    // console.log(availability);
+    return <div>{
+        availability.map((av) => {
+            return <div key={av.windowID}>{av.date}</div>
+        })
+    }</div>
 }
 
 function AddPropertyMenu({propertyMenuHook, addEstate, refresh}) {

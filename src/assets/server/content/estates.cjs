@@ -59,6 +59,17 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
             res.json({"message": "success", "rows": rows})
         })
     })
+    app.post("/api/addEstateAvailability", requireAuth, jsonParser, (req, res) => {
+        let dates = req.body.dates;
+        for (let i = 0; i < dates.length; i++) {
+            db.get("INSERT INTO estateWindows (timeStart, timeEnd, date, estateID) VALUES ($st, $et, $d, $id)",
+                {$st: req.body.startTime, $et: req.body.endTime, $d: dates[i], $id: req.body.estateID},
+                (err, row) => {})
+        }
+        res.json({message: "success"})
+    })
+
 }
+
 
 module.exports = {initEstatesAPI}
