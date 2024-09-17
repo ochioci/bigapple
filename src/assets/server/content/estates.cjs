@@ -33,7 +33,8 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
 // db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword) VALUES (?, ?, ?, ?)`
     app.post("/api/addEstate", requireEstate, jsonParser, (req, res) => {
         // console.log(req.body)
-        db.get(`INSERT INTO estates (name, location, availability, ownerID) VALUES ($n, $l, $a, $o)`, {$n: req.body.name, $l: req.body.location, $a: req.body.availability, $o: req.session.userID }, (err, row) => {
+        db.get(`INSERT INTO estates (name, location, availability, treeDetails, ownerID) VALUES ($n, $l, $a, $t, $o)`, {$t: req.body.treeDetails, $n: req.body.name, $l: req.body.location, $a: req.body.availability, $o: req.session.userID }, (err, row) => {
+            // console.log(err, row)
         })
         res.json({message: "success"})
     })
@@ -41,6 +42,17 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
     app.get("/api/selectEstates", requireAuth, jsonParser, (req, res) => {
         let rows = []
         db.all("SELECT * FROM estates", (err, row) => {
+            row.forEach((r) => {
+                rows.push(r)
+            })
+            res.json({"message": "success", "rows": rows})
+        })
+    })
+
+    app.post("/api/getEstateAvailability", requireAuth, jsonParser, (req, res) => {
+        let rows = []
+        db.all("SELECT * FROM estateWindows WHERE estateID = $estateID", {$estateID: req.body.estateID},
+            (err, row) => {
             row.forEach((r) => {
                 rows.push(r)
             })
