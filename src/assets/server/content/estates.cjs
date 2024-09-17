@@ -49,6 +49,8 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         })
     })
 
+
+    // todo: BELOW HAVE NOT BEEN ADDED TO VERCEL PROXY!!!!!
     app.post("/api/getEstateAvailability", requireAuth, jsonParser, (req, res) => {
         let rows = []
         db.all("SELECT * FROM estateWindows WHERE estateID = $estateID", {$estateID: req.body.estateID},
@@ -66,6 +68,20 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
                 {$st: req.body.startTime, $et: req.body.endTime, $d: dates[i], $id: req.body.estateID},
                 (err, row) => {})
         }
+        res.json({message: "success"})
+    })
+
+    app.post("/api/updateEstateAvailability", requireAuth, jsonParser, (req, res) => {
+        db.get("UPDATE estateWindows SET timeStart=$st, timeEnd=$et WHERE windowID=$id", {
+            $st: req.body.startTime,
+            $et: req.body.endTime,
+            $id: req.body.windowID,
+        })
+        res.json({message: "success"})
+    })
+
+    app.post("/api/deleteEstateAvailability", requireAuth, jsonParser, (req, res) => {
+        db.get("DELETE FROM estateWindows WHERE windowID = $id", {$id: req.body.windowID})
         res.json({message: "success"})
     })
 

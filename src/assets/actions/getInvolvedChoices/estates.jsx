@@ -181,7 +181,7 @@ function PropertyView({info}) {
             <div className={"expandedEstateViewContent"}>
                 <div>{"Name: " + info.name}</div>
                 <div>{"Location: " + info.location}</div>
-                <div>{(availability.length == 0 ? "No availability" : <AvailabilityView availability={availability}></AvailabilityView>)}</div>
+                <div>{(availability.length == 0 ? "No availability" : <AvailabilityView refreshAvailability={refreshAvailability} availability={availability}></AvailabilityView>)}</div>
                 <div>
                     <button onClick={() => {
                         setExpanded(false)
@@ -226,14 +226,71 @@ function PropertyView({info}) {
     </div>
 }
 
-function AvailabilityView({availability}) {
+function AvailabilityEntry({av, refresh}) {
+    const stRef = useRef(av.timeStart)
+    const etRef = useRef(av.timeEnd)
+    const [hasChanged, setHasChanged] = useState(false)
+
+    function deleteEntry() {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response);
+                if (response.message !== "success") {
+                    console.log("failure")
+                }
+            }
+        }
+        req.open("POST", "api/deleteEstateAvailability", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({
+            windowID: av.windowID
+        }))
+        return req
+    }
+
+
+    function updateEntry() {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response);
+                if (response.message !== "success") {
+                    console.log("failure")
+                }
+            }
+        }
+        req.open("POST", "api/updateEstateAvailability", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({
+            startTime: stRef.current,
+            endTime: etRef.current,
+            windowID: av.windowID
+        }))
+        setHasChanged(false)
+        return req
+    }
+
+    return <div>
+        {av.date}
+        <input onChange = {(e) => { setHasChanged(true); stRef.current = e.target.value}} type={"time"} defaultValue={av.timeStart}/>
+        <input onChange = {(e) => { setHasChanged(true); etRef.current = e.target.value}} type={"time"} defaultValue={av.timeEnd}/>
+        <button onClick={() => {deleteEntry().onreadystatechange = refresh}}>Delete</button>
+        {hasChanged ? <button onClick={() => {updateEntry().onreadystatechange = refresh}}>Update</button> : <></>}
+    </div>
+}
+
+function AvailabilityView({availability, refreshAvailability}) {
     // console.log(availability);
-    return <div>{
+    return <div>
+        <div>Availability: </div>
+        {
         availability.map((av) => {
-            return <div key={av.windowID}>{av.date}</div>
+            return <AvailabilityEntry refresh={refreshAvailability} key={av.windowID} av={av}></AvailabilityEntry>
         })
     }</div>
 }
+
 
 function AddPropertyMenu({propertyMenuHook, addEstate, refresh}) {
 

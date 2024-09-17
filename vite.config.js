@@ -93,6 +93,14 @@ export default defineConfig({
       "/api/addEstateAvailability": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/updateEstateAvailability": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/api/deleteEstateAvailability": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },
