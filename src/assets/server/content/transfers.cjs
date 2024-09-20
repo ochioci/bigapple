@@ -46,6 +46,10 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
         })
         res.json({message: "success"})
     })
+
+    // app.post("/getAllAvailability", requireTransfer, jsonParser, (req, res) => {
+    //     db.get(`SELECT () FROM estateWindows `)
+    // })
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
 module.exports = {initTransferAPI}

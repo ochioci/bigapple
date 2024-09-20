@@ -227,6 +227,8 @@ function PropertyView({info, refresh}) {
     return <div className={"estateView"}>
         <div>{"Name: " + info.name}</div>
         <div>{"Location: " + info.location}</div>
+        <div>{"Bookings: 0"}</div>
+        {/*//TODO: ADD BOOKING COUNTER*/}
         <button onClick={() => {setExpanded(true)}}>Manage property</button>
 
     </div>
@@ -277,12 +279,29 @@ function AvailabilityEntry({av, refresh}) {
         return req
     }
 
-    return <div>
+    return <div className={"estateAvailabilityEntry"}>
         {av.date}
-        <input onChange = {(e) => { setHasChanged(true); stRef.current = e.target.value}} type={"time"} defaultValue={av.timeStart}/>
-        <input onChange = {(e) => { setHasChanged(true); etRef.current = e.target.value}} type={"time"} defaultValue={av.timeEnd}/>
-        <button onClick={() => {deleteEntry().onreadystatechange = refresh}}>Delete</button>
-        {hasChanged ? <button onClick={() => {updateEntry().onreadystatechange = refresh}}>Update</button> : <></>}
+        <div>
+            Hours Begin:
+            <input onChange={(e) => {
+            setHasChanged(true);
+            stRef.current = e.target.value
+        }} type={"time"} defaultValue={av.timeStart}/>
+        </div>
+        <div>
+            Hours End:
+            <input onChange={(e) => {
+                setHasChanged(true);
+                etRef.current = e.target.value
+            }} type={"time"} defaultValue={av.timeEnd}/>
+        </div>
+
+        <button onClick={() => {
+            deleteEntry().onreadystatechange = refresh
+        }}>Delete
+        </button>
+        {hasChanged ? <button onClick={() => {
+            updateEntry().onreadystatechange = refresh}}>Update</button> : <></>}
     </div>
 }
 

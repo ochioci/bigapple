@@ -13,7 +13,7 @@ body {
 .topbar {
     width: 100vw;
     /*height: min(10vh, 10vw);*/
-    height: min-content;
+    /*height: min-content;*/
     /*height: 100%;*/
     grid-row: 1;
     /*display: flex;*/
@@ -191,7 +191,7 @@ form input {
     display: block;
     margin: 0.5vh;
     font-size: 4vh;
-    width: 90%;
+    width: 60%;
 }
 
 
@@ -822,6 +822,11 @@ form {
     background-color: white;
     width: 95%;
     height: 90%;
+    overflow: scroll;
+    /*height: fit-content;*/
+
+    /*margin-top: 5%;*/
+    /*min-height: 90%;*/
 }
 
 .expandedAvailView {
@@ -851,6 +856,7 @@ form {
 .estateViewItem {
     font-size: min(2.5vh, 5vw);
     margin: min(0.5vh, 1vw);
+    border-bottom: min(0.2vh, 0.2vw) solid black;
 
 
 }
@@ -865,4 +871,23 @@ input[type=time] {
     font-family: "JustSansRegular";
     padding-left: 10vw;
     padding-right: 10vw;
+}
+
+.pickupContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.pickupCaption {
+    font-size: min(3vh, 4.5vw);
+    text-align: center;
+    font-family: "JustSansRegular";
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+.estateAvailabilityEntry {
+    border-top: min(0.2vh, 0.2vw) solid black;
 }
