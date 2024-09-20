@@ -77,17 +77,20 @@ function AppointmentView({estates, appointments, getAppointments, allWindows, ge
         let apts = JSON.parse(appointments).rows
         // console.log("apts", apts)
         return <Card animated={false} Content={
-            <div className={"appointmentView"}>
+
+            <div className={"appointmentView"} >
+                <div className={"appointmentCaption"}>My Appointments</div>
+
                 {
                     apts.map((a, i) => {
                         console.log(a, getEstate(a.estateID))
                         return <AppointmentEntry
                             getEstate={getEstate}
                             window={
-                            allWindows.filter((w) => {
-                                return w.windowID == a.windowID
-                            })[0]
-                        } key={i} AptInfo={a}></AppointmentEntry>
+                                allWindows.filter((w) => {
+                                    return w.windowID == a.windowID
+                                })[0]
+                            } key={i} AptInfo={a}></AppointmentEntry>
                     })
                 }
             </div>
@@ -100,13 +103,14 @@ function AppointmentEntry({AptInfo, window, getEstate}) {
     if (window != undefined) {
         let estate = getEstate(window.estateID)
         console.log(AptInfo, window, estate)
-        return <div className={"AppointmentEntry"}>
-            <div className={"AppointmentEntryLocation"}>{estate[0].approxLocation || ""}</div>
-            <div className={"AppointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
-            <div className={"AppointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
+        return <div className={"appointmentEntry"}>
+            <div className={"appointmentEntryLocation"}>{estate[0].approxLocation || ""}</div>
+            <div className={"appointmentEntryDate"}>{window.date}</div>
+            <div className={"appointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
+            <div className={"appointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
         </div>
     }
-    return <div className={"AppointmentEntry"}>Loading...</div>
+    return <div className={"appointmentEntry"}>Loading...</div>
 
 }
 

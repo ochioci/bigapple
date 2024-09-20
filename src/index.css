@@ -970,3 +970,29 @@ input[type=time] {
     font-size: min(2vh, 4vw);
     font-family: "JustSansRegular";
 }
+
+.appointmentView {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.appointmentEntry {
+    font-size: min(2vh, 4vw);
+    font-family: "JustSansRegular";
+    text-align: center;
+    border: min(0.2vh, 0.4vw) solid black;
+    padding: min(0.5vh, 1vw);
+    margin: min(0.5vh, 1vw);
+}
+
+.appointmentCaption {
+    width: 100%;
+    text-align: center;
+    font-size: min(3vh, 6vw);
+    font-family: "Geometos";
+}
