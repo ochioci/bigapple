@@ -323,7 +323,7 @@ function AddPropertyMenu({propertyMenuHook, addEstate, refresh}) {
         e.preventDefault()
         console.log(e)
         let name = e.target[0].value
-        let location = e.target[1].value + ", " + e.target[2].value + ", " + e.target[3].value + ", " + e.target[4].value
+        let location = [e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
         let availability = e.target[5].value
         let treeDetails = e.target[6].value
         addEstate(name, location, availability, treeDetails).onreadystatechange = refresh
