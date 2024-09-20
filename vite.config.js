@@ -101,6 +101,10 @@ export default defineConfig({
       "/api/deleteEstateAvailability": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/getAllAvailability": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },

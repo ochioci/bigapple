@@ -47,9 +47,42 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
         res.json({message: "success"})
     })
 
-    // app.post("/getAllAvailability", requireTransfer, jsonParser, (req, res) => {
-    //     db.get(`SELECT () FROM estateWindows `)
-    // })
+    app.post("/api/getAllAvailability", requireTransfer, jsonParser, (req, res) => {
+        // db.serialize(() => {
+        // })
+        db.all(`SELECT * FROM estateWindows`, (err, rows) => {
+            if (err != null) {
+                // console.log(err, rows)
+                res.json({"message": "failure"})
+                return;
+            }
+            let r = []
+            let e = {}
+            let l = rows.length;
+            let ct = 0;
+            // console.log(rows.length)
+            rows.forEach((rr) => {
+
+
+                if (!(rr.estateID+"" in e)) {
+                    db.all(`SELECT * FROM estates WHERE estateID= $estateID`, {$estateID: rr.estateID}, (err, row) => {
+                        // console.log(ct, rows.length)
+                        // console.log(e, rr.estateID, row)
+                        r.push(rr)
+                        if (row != null) {
+                            e[rr.estateID+""] = row;
+                        }
+                        if (ct >= ( rows.length-1)) {
+                            res.json({"message": "success", "estates": e, "pickups": r})
+                        }
+                        ct += 1;
+                    })
+                }
+
+            })
+
+        })
+    })
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
 module.exports = {initTransferAPI}
