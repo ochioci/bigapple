@@ -1,10 +1,11 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {BookingsMenu} from "../../components/bookingMenu.jsx";
 import {BookingSelection} from "../../components/bookingSelection.jsx";
 import {PopupContext} from "../../app.jsx";
 import {Card} from "../../components/card.jsx";
 
 export function TransferBookings ({StateHook, goBack}) {
+
     const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     const addNotif = (msg) => {
         let l = notifState.slice() //change does not trigger update without this lmfao
@@ -13,7 +14,7 @@ export function TransferBookings ({StateHook, goBack}) {
         notifHook(l)
         // console.log(notifState)
     }
-    const [pickups, setPickups] = useState([])
+    const [pickups, setPickups] = useState(null)
 
     const getPickups = () => {
         let req = new XMLHttpRequest();
@@ -30,6 +31,10 @@ export function TransferBookings ({StateHook, goBack}) {
         return req
     }
 
+    useEffect(() => {
+        getPickups()
+    }, [])
+
 
 
     return <div className={"pickupContainer"}>
@@ -39,46 +44,94 @@ export function TransferBookings ({StateHook, goBack}) {
             </div>
         }></Card>
 
-        <Card animated={false} Content={
-            <div className={"pickupContainer"}>
-                <WeekView pickups={pickups} getPickups={getPickups}></WeekView>
-            </div>
-        }></Card>
+
+        <WeekView pickups={pickups} getPickups={getPickups}></WeekView>
+
         {/*<Card animated={false} Content={*/}
         {/*    // <div>*/}
         {/*}></Card>*/}
     </div>
 }
 
-function WeekView ({StartDate = new Date(Date.now()), getPickups, pickups}) {
-    let ds = [StartDate]
+function WeekView ({getPickups, pickups}) {
     let nextDay = (day, n) => {
         let d = new Date(day)
         d.setDate(d.getDate() + n);
         return d
     }
+    const StartDate = useRef(new Date(Date.now()))
+    let ds = [StartDate.current]
     for (let i = 1; i < 7; i++) {
-        ds.push(nextDay(StartDate, i))
+        ds.push(nextDay(StartDate.current, i))
     }
     const [days, setDays] = useState(ds)
-    useEffect(() => {
-        getPickups()
-    }, [])
-    console.log(pickups)
-    return <div className={"WeekView"}>
-        <div className={"WeekViewCols"}>
-            {
-                days.map((d, i) => {
-                    return <DayView key={i} d={d}></DayView>
-                })
+    const [selectedDay, setSelectedDay] = useState(-1)
+    // console.log(typeof pickups)
+    // console.log(pickups)
+    let [p,p2,e] = [[], [], []]
+    if (pickups != null) {
+        p = new Array(pickups.pickups)[0]
+        // console.log(p)
+        p2 = []
+        e = pickups.estates;
+        for (let i = 0; i < p.length; i++) {
+            // console.log(i)
+            if ((selectedDay > -1) && (p[i]['date']) === (days[selectedDay].toDateString())) {
+                p2.push(p[i])
             }
-        </div>
+        }
+        // console.log(p2, e)
+    }
+
+    let backAvailable = nextDay(StartDate.current, -1) >= new Date(Date.now())
+
+    return <div>
+        <Card animated={false} Content={
+            <div className={"WeekView"}>
+                <div className={"WeekViewCols"}>
+                    {backAvailable ? <button onClick={() => {
+                        let ds = [nextDay(StartDate.current, -7)]
+                        for (let i = 1; i < 7; i++) {
+                            ds.push(nextDay(ds[0], i))
+                        }
+                        StartDate.current = ds[0]
+                        setDays(ds)
+                    }}>{"<"}</button> : <button disabled>{"<"}</button>}
+                    {
+                        days.map((d, i) => {
+                            return <DayView selectedDay={selectedDay} setSelectedDay={setSelectedDay} index={i} key={i}
+                                            d={d}></DayView>
+                        })
+                    }
+                    <button onClick={() => {
+                        let ds = [nextDay(StartDate.current, +7)]
+                        for (let i = 1; i < 7; i++) {
+                            ds.push(nextDay(ds[0], i))
+                        }
+                        StartDate.current = ds[0]
+                        setDays(ds)
+                    }}>{">"}</button>
+
+                </div>
+            </div>
+        }></Card>
+        <Card animated={false} Content={
+            <div className={"WeekView"}>
+                {(selectedDay == -1) ? "Select a day to view available pickups" : (p2.length == 0) ? "No pickups on this day" : <div>
+                    {p2.map((d, i) => {
+                        return <div key={i}>{d.date}</div>
+                    })}
+                </div>}
+            </div>
+        }></Card>
     </div>
 }
 
-function DayView({d}) {
-    return <div className={"pickupDayContainer"}>
-        <div className={"pickupDayOfWeek"}>{d.toDateString().slice(0,4)}</div>
+function DayView({d, selectedDay, setSelectedDay, index}) {
+    return <div onClick={() => {
+        setSelectedDay(index)
+    }} className={(selectedDay == index) ? "pickupDayContainer selectedDay" : "pickupDayContainer"}>
+        <div className={"pickupDayOfWeek"}>{d.toDateString().slice(0, 4)}</div>
         <div className={"pickupDayOfMonth"}>{d.getDate()}</div>
     </div>
 }

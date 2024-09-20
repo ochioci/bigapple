@@ -891,3 +891,41 @@ input[type=time] {
 .estateAvailabilityEntry {
     border-top: min(0.2vh, 0.2vw) solid black;
 }
+
+.WeekView {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.WeekViewCols {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 100vh;
+    justify-items: center;
+    align-items: center;
+}
+
+.selectedDay {
+    color: white;
+    background-color: #173d4c;
+    border-radius: 50%;
+}
+
+.pickupDayContainer {
+    aspect-ratio: 1/1;
+    height: 100%;
+    padding: min(2vh, 4vw);
+    height: 1em;
+    width: 1em;
+    margin: auto;
+    font-size: min(2vh, 4vw);
+    font-family: "Geometos";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
