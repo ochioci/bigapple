@@ -64,13 +64,48 @@ export function TransferBookings ({StateHook, goBack}) {
 
         <WeekView appointments={appointments} getAppointments={getAppointments} pickups={pickups} getPickups={getPickups}></WeekView>
 
+
         {/*<Card animated={false} Content={*/}
         {/*    // <div>*/}
         {/*}></Card>*/}
     </div>
 }
 
-function WeekView ({getPickups, pickups, appointments, getAppointments}) {
+function AppointmentView({appointments, getAppointments, allWindows, getEstate}) {
+    console.log(allWindows)
+    if (appointments != null) {
+        let apts = JSON.parse(appointments).rows
+        // console.log("apts", apts)
+        return <Card animated={false} Content={
+            <div className={"appointmentView"}>
+                {
+                    apts.map((a, i) => {
+                        return <AppointmentEntry
+                            estate={getEstate(a.estateID)[0]}
+                            window={
+                            allWindows.filter((w) => {
+                                return w.windowID == a.windowID
+                            })[0]
+                        } key={i} AptInfo={a}></AppointmentEntry>
+                    })
+                }
+            </div>
+        }></Card>
+    }
+    return <Card animated={false}></Card>
+}
+
+function AppointmentEntry({AptInfo, window, estate}) {
+    console.log(AptInfo, window, estate)
+    return <div className={"AppointmentEntry"}>
+        <div className={"AppointmentEntryLocation"}>{estate.approxLocation}</div>
+        <div className={"AppointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
+        <div className={"AppointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
+    </div>
+}
+
+
+function WeekView({getPickups, pickups, appointments, getAppointments}) {
     let nextDay = (day, n) => {
         let d = new Date(day)
         d.setDate(d.getDate() + n);
@@ -99,7 +134,7 @@ function WeekView ({getPickups, pickups, appointments, getAppointments}) {
             // console.log(i)
             if (((selectedDay > -1) && (p[i]['date']) === (days[selectedDay].toDateString()) )&& (a.indexOf(p[i].windowID) < 0) ) {
                 p2.push(p[i])
-                console.log(p[i].windowID, a, a.indexOf(p[i].windowID))
+                // console.log(p[i].windowID, a, a.indexOf(p[i].windowID))
             }
         }
         // console.log(p2, e)
@@ -152,6 +187,8 @@ function WeekView ({getPickups, pickups, appointments, getAppointments}) {
                 </div>}
             </div>
         }></Card>
+
+        <AppointmentView getEstate={getEstate} appointments={appointments} getAppointments={getAppointments} allWindows={p}></AppointmentView>
     </div>
 }
 
@@ -174,7 +211,7 @@ function PickupView ({PickupInfo, getEstate, getPickups, getAppointments}) {
     let estateID = PickupInfo.estateID
     let windowID = PickupInfo.windowID;
 
-    console.log(estate, estate['approxLocation'])
+    // console.log(estate, estate['approxLocation'])
     return <div className={"pickupView"}>
         <div className={"pickupViewTime"}>{PickupInfo.timeStart} - {PickupInfo.timeEnd}</div>
         <div className={"pickupViewLocation"}>{estate.approxLocation}</div>
