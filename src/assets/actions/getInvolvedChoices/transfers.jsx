@@ -85,6 +85,7 @@ function AppointmentView({estates, appointments, getAppointments, allWindows, ge
                     apts.map((a, i) => {
                         console.log(a, getEstate(a.estateID))
                         return <AppointmentEntry
+                            getAppointments={getAppointments}
                             getEstate={getEstate}
                             window={
                                 allWindows.filter((w) => {
@@ -99,7 +100,16 @@ function AppointmentView({estates, appointments, getAppointments, allWindows, ge
     return <Card animated={false}>Loading...</Card>
 }
 
-function AppointmentEntry({AptInfo, window, getEstate}) {
+function AppointmentEntry({AptInfo, window, getEstate, getAppointments}) {
+
+    const cancelAppointment = (appointmentID, windowID) => {
+        let req = new XMLHttpRequest();
+        req.open("POST", "api/cancelAppointment", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({appointmentID, windowID}))
+        return req
+    }
+
     if (window != undefined) {
         let estate = getEstate(window.estateID)
         console.log(AptInfo, window, estate)
@@ -108,6 +118,9 @@ function AppointmentEntry({AptInfo, window, getEstate}) {
             <div className={"appointmentEntryDate"}>{window.date}</div>
             <div className={"appointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
             <div className={"appointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
+            <button onClick={() => {
+                cancelAppointment(AptInfo.appointmentID, window.windowID).onreadystatechange = getAppointments
+            }}>Cancel</button>
         </div>
     }
     return <div className={"appointmentEntry"}>Loading...</div>

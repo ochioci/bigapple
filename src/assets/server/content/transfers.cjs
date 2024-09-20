@@ -109,6 +109,12 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
             }
         })
     })
+
+    app.post("/api/cancelAppointment", requireTransfer, jsonParser, (req, res) => {
+        db.run(`DELETE FROM appointments WHERE appointmentID = $ai`, {$ai: req.body.appointmentID})
+        db.run(`UPDATE estateWindows SET bookedBy = bookedBy - 1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
+        res.json({"message": "success"})
+    } )
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
 module.exports = {initTransferAPI}
