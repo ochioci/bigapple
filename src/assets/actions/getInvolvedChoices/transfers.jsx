@@ -5,9 +5,6 @@ import {PopupContext} from "../../app.jsx";
 import {Card} from "../../components/card.jsx";
 
 export function TransferBookings ({StateHook, goBack}) {
-    const [transfers, setTransfers] = useState([])
-    const [estates, setEstates] = useState([])
-    const [dropoffs, setDropoffs] = useState([])
     const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     const addNotif = (msg) => {
         let l = notifState.slice() //change does not trigger update without this lmfao
@@ -16,13 +13,15 @@ export function TransferBookings ({StateHook, goBack}) {
         notifHook(l)
         // console.log(notifState)
     }
+    const [pickups, setPickups] = useState([])
 
     const getPickups = () => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
 
             if (req.readyState === 4) {
-                console.log(req.response)
+                // console.log(req.response)
+                setPickups(JSON.parse(req.response))
             }
         }
         req.open("POST", "api/getAllAvailability", true)
@@ -42,7 +41,7 @@ export function TransferBookings ({StateHook, goBack}) {
 
         <Card animated={false} Content={
             <div className={"pickupContainer"}>
-                <WeekView getPickups={getPickups}></WeekView>
+                <WeekView pickups={pickups} getPickups={getPickups}></WeekView>
             </div>
         }></Card>
         {/*<Card animated={false} Content={*/}
@@ -51,11 +50,35 @@ export function TransferBookings ({StateHook, goBack}) {
     </div>
 }
 
-function WeekView ({StartDate, getPickups}) {
+function WeekView ({StartDate = new Date(Date.now()), getPickups, pickups}) {
+    let ds = [StartDate]
+    let nextDay = (day, n) => {
+        let d = new Date(day)
+        d.setDate(d.getDate() + n);
+        return d
+    }
+    for (let i = 1; i < 7; i++) {
+        ds.push(nextDay(StartDate, i))
+    }
+    const [days, setDays] = useState(ds)
     useEffect(() => {
         getPickups()
     }, [])
-    return <div>
-        WeekView
+    console.log(pickups)
+    return <div className={"WeekView"}>
+        <div className={"WeekViewCols"}>
+            {
+                days.map((d, i) => {
+                    return <DayView key={i} d={d}></DayView>
+                })
+            }
+        </div>
+    </div>
+}
+
+function DayView({d}) {
+    return <div className={"pickupDayContainer"}>
+        <div className={"pickupDayOfWeek"}>{d.toDateString().slice(0,4)}</div>
+        <div className={"pickupDayOfMonth"}>{d.getDate()}</div>
     </div>
 }

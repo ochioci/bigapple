@@ -65,12 +65,12 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
 
 
                 if (!(rr.estateID+"" in e)) {
-                    db.all(`SELECT * FROM estates WHERE estateID= $estateID`, {$estateID: rr.estateID}, (err, row) => {
+                    db.all(`SELECT estateID, approxLocation, treeDetails FROM estates WHERE estateID= $estateID`, {$estateID: rr.estateID}, (err, row) => {
                         // console.log(ct, rows.length)
                         // console.log(e, rr.estateID, row)
                         r.push(rr)
                         if (row != null) {
-                            e[rr.estateID+""] = row;
+                            e[rr.estateID+""] = row
                         }
                         if (ct >= ( rows.length-1)) {
                             res.json({"message": "success", "estates": e, "pickups": r})
