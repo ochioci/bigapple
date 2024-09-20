@@ -109,6 +109,10 @@ export default defineConfig({
       "/api/bookAppointment": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/getAppointments": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },

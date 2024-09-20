@@ -97,6 +97,18 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
         db.run(`UPDATE estateWindows SET bookedBy = bookedBy+1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
         res.json({"message": "success"})
     })
+
+    app.get("/api/getAppointments", requireTransfer, jsonParser, (req, res) => {
+        db.all(`SELECT * FROM appointments WHERE userID = $userID`, {$userID: req.session.userID}, (err, rows) => {
+            if (err != null) {
+                res.json({"message": "failure"})
+            } else {
+                let r= [ ]
+                rows.forEach((rr) => {r.push(rr)})
+                res.json({"message": "success", "rows": r})
+            }
+        })
+    })
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
 module.exports = {initTransferAPI}

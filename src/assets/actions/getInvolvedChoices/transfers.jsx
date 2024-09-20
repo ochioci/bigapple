@@ -15,6 +15,21 @@ export function TransferBookings ({StateHook, goBack}) {
         // console.log(notifState)
     }
     const [pickups, setPickups] = useState(null)
+    const [appointments, setAppointments] = useState(null)
+
+    const getAppointments = () => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                // console.log(req.response)
+                setAppointments(req.response)
+            }
+        }
+        req.open("GET", "api/getAppointments", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({}));
+        return req
+    }
 
     const getPickups = () => {
         let req = new XMLHttpRequest();
@@ -31,8 +46,10 @@ export function TransferBookings ({StateHook, goBack}) {
         return req
     }
 
+
     useEffect(() => {
         getPickups()
+        getAppointments()
     }, [])
 
 
@@ -45,7 +62,7 @@ export function TransferBookings ({StateHook, goBack}) {
         }></Card>
 
 
-        <WeekView pickups={pickups} getPickups={getPickups}></WeekView>
+        <WeekView appointments={appointments} getAppointments={getAppointments} pickups={pickups} getPickups={getPickups}></WeekView>
 
         {/*<Card animated={false} Content={*/}
         {/*    // <div>*/}
@@ -53,7 +70,7 @@ export function TransferBookings ({StateHook, goBack}) {
     </div>
 }
 
-function WeekView ({getPickups, pickups}) {
+function WeekView ({getPickups, pickups, appointments, getAppointments}) {
     let nextDay = (day, n) => {
         let d = new Date(day)
         d.setDate(d.getDate() + n);
@@ -68,16 +85,21 @@ function WeekView ({getPickups, pickups}) {
     const [selectedDay, setSelectedDay] = useState(-1)
     // console.log(typeof pickups)
     // console.log(pickups)
-    let [p,p2,e] = [[], [], []]
-    if (pickups != null) {
+    let [p,p2,e, a] = [[], [], [], []]
+    if (pickups != null && appointments != null) {
+        a = new Array(JSON.parse(appointments).rows)[0]
+        // console.log(a)
+        a = [...new Set(a.map(ap => ap.windowID))];
+        // console.log(a)
         p = new Array(pickups.pickups)[0]
         // console.log(p)
         p2 = []
         e = pickups.estates;
         for (let i = 0; i < p.length; i++) {
             // console.log(i)
-            if ((selectedDay > -1) && (p[i]['date']) === (days[selectedDay].toDateString())) {
+            if (((selectedDay > -1) && (p[i]['date']) === (days[selectedDay].toDateString()) )&& (a.indexOf(p[i].windowID) < 0) ) {
                 p2.push(p[i])
+                console.log(p[i].windowID, a, a.indexOf(p[i].windowID))
             }
         }
         // console.log(p2, e)
@@ -125,7 +147,7 @@ function WeekView ({getPickups, pickups}) {
                 {(selectedDay == -1) ? <div className={"pickupViewMsg"}>{"Select a day to view available pickups"}</div> : (p2.length == 0) ? <div className={"pickupViewMsg"}>{"No pickups on this day"}</div> : <div className={"pickupViewContainer"}>
                     {p2.map((d, i) => {
                         // return <div key={i}>{d.date}</div>
-                        return <PickupView getPickups={getPickups} getEstate={getEstate} key={i} PickupInfo={d}></PickupView>
+                        return <PickupView getAppointments={getAppointments} getPickups={getPickups} getEstate={getEstate} key={i} PickupInfo={d}></PickupView>
                     })}
                 </div>}
             </div>
@@ -133,7 +155,7 @@ function WeekView ({getPickups, pickups}) {
     </div>
 }
 
-function PickupView ({PickupInfo, getEstate, getPickups}) {
+function PickupView ({PickupInfo, getEstate, getPickups, getAppointments}) {
     let estate = getEstate(PickupInfo.estateID)[0];
 
     const bookAppointment = (estateID, windowID) => {
@@ -158,7 +180,9 @@ function PickupView ({PickupInfo, getEstate, getPickups}) {
         <div className={"pickupViewLocation"}>{estate.approxLocation}</div>
         <div className={"pickupViewMsg"}>{"Confirmed volunteers: " + PickupInfo.bookedBy}   </div>
         <button onClick={() => {
-            bookAppointment(estateID, windowID).onreadystatechange = getPickups
+            bookAppointment(estateID, windowID).onreadystatechange = () => {
+                getPickups().onreadystatechange = getAppointments
+            }
         }}>Request</button>
     </div>
 }
