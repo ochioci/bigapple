@@ -47,6 +47,9 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
         res.json({message: "success"})
     })
 
+
+
+    //There is probably an atrocious race condition in here. It is an affront to asynchronous programming that this code works.
     app.post("/api/getAllAvailability", requireTransfer, jsonParser, (req, res) => {
         // db.serialize(() => {
         // })
@@ -65,7 +68,7 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
 
 
                 if (!(rr.estateID+"" in e)) {
-                    db.all(`SELECT estateID, approxLocation, treeDetails FROM estates WHERE estateID= $estateID`, {$estateID: rr.estateID}, (err, row) => {
+                    db.all(`SELECT estateID, approxLocation, treeDetails FROM estates WHERE estateID = $estateID `, {$estateID: rr.estateID}, (err, row) => {
                         // console.log(ct, rows.length)
                         // console.log(e, rr.estateID, row)
                         r.push(rr)
@@ -82,6 +85,17 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
             })
 
         })
+    })
+
+    app.post("/api/bookAppointment", requireTransfer, jsonParser, (req, res) => {
+        // console.log(req)
+        db.run(`INSERT INTO appointments (windowID, userID, estateID) VALUES ($windowID, $userID, $estateID)`, {
+            $userID: req.session.userID,
+            $estateID: req.body.estateID,
+            $windowID: req.body.windowID
+        })
+        db.run(`UPDATE estateWindows SET bookedBy = bookedBy+1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
+        res.json({"message": "success"})
     })
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")

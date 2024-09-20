@@ -60,7 +60,7 @@ export function HomepageContent ({StateHook, AuthState}) {
                     <Tagline text={
                         "- Charities: Schedule delivery of fruits "
                     }></Tagline>
-                    <button onClick={ () => {StateHook("register")}}>Sign up now</button>
+                    {/*<button onClick={ () => {StateHook("register")}}>Sign up now</button>*/}
                 </div>
 
             </div>

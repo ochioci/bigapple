@@ -941,3 +941,32 @@ input[type=time] {
     font-family: "Geometos";
     margin: min(1vh, 2vw);
 }
+
+.pickupViewTime {
+    font-size: min(2vh, 4vw);
+    font-family: "JustSansRegular";
+}
+
+.pickupViewLocation {
+    font-size: min(2vh, 4vw);
+    font-family: "JustSansRegular";
+}
+
+.pickupViewContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.pickupView {
+    text-align: center;
+    width: 100%;
+    border-bottom: min(0.2vh, 0.2vw) solid black;
+}
+
+.pickupViewMsg {
+    font-size: min(2vh, 4vw);
+    font-family: "JustSansRegular";
+}

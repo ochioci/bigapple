@@ -83,6 +83,10 @@ function WeekView ({getPickups, pickups}) {
         // console.log(p2, e)
     }
 
+    const getEstate = (estateID) => {
+        return e[estateID]
+    }
+
     const backAvailable = nextDay(StartDate.current, -1) >= new Date(Date.now())
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return <div>
@@ -118,13 +122,44 @@ function WeekView ({getPickups, pickups}) {
         }></Card>
         <Card animated={false} Content={
             <div className={"WeekView"}>
-                {(selectedDay == -1) ? "Select a day to view available pickups" : (p2.length == 0) ? "No pickups on this day" : <div>
+                {(selectedDay == -1) ? <div className={"pickupViewMsg"}>{"Select a day to view available pickups"}</div> : (p2.length == 0) ? <div className={"pickupViewMsg"}>{"No pickups on this day"}</div> : <div className={"pickupViewContainer"}>
                     {p2.map((d, i) => {
-                        return <div key={i}>{d.date}</div>
+                        // return <div key={i}>{d.date}</div>
+                        return <PickupView getPickups={getPickups} getEstate={getEstate} key={i} PickupInfo={d}></PickupView>
                     })}
                 </div>}
             </div>
         }></Card>
+    </div>
+}
+
+function PickupView ({PickupInfo, getEstate, getPickups}) {
+    let estate = getEstate(PickupInfo.estateID)[0];
+
+    const bookAppointment = (estateID, windowID) => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                let response = JSON.parse(req.response);
+            }
+        }
+
+        req.open("POST", "api/bookAppointment", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({estateID, windowID}));
+        return req;
+    }
+    let estateID = PickupInfo.estateID
+    let windowID = PickupInfo.windowID;
+
+    console.log(estate, estate['approxLocation'])
+    return <div className={"pickupView"}>
+        <div className={"pickupViewTime"}>{PickupInfo.timeStart} - {PickupInfo.timeEnd}</div>
+        <div className={"pickupViewLocation"}>{estate.approxLocation}</div>
+        <div className={"pickupViewMsg"}>{"Confirmed volunteers: " + PickupInfo.bookedBy}   </div>
+        <button onClick={() => {
+            bookAppointment(estateID, windowID).onreadystatechange = getPickups
+        }}>Request</button>
     </div>
 }
 
