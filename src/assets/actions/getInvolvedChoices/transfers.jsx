@@ -71,17 +71,18 @@ export function TransferBookings ({StateHook, goBack}) {
     </div>
 }
 
-function AppointmentView({appointments, getAppointments, allWindows, getEstate}) {
+function AppointmentView({estates, appointments, getAppointments, allWindows, getEstate}) {
     console.log(allWindows)
-    if (appointments != null) {
+    if (appointments != null && allWindows != null)  {
         let apts = JSON.parse(appointments).rows
         // console.log("apts", apts)
         return <Card animated={false} Content={
             <div className={"appointmentView"}>
                 {
                     apts.map((a, i) => {
+                        console.log(a, getEstate(a.estateID))
                         return <AppointmentEntry
-                            estate={getEstate(a.estateID)[0]}
+                            getEstate={getEstate}
                             window={
                             allWindows.filter((w) => {
                                 return w.windowID == a.windowID
@@ -92,16 +93,21 @@ function AppointmentView({appointments, getAppointments, allWindows, getEstate})
             </div>
         }></Card>
     }
-    return <Card animated={false}></Card>
+    return <Card animated={false}>Loading...</Card>
 }
 
-function AppointmentEntry({AptInfo, window, estate}) {
-    console.log(AptInfo, window, estate)
-    return <div className={"AppointmentEntry"}>
-        <div className={"AppointmentEntryLocation"}>{estate.approxLocation}</div>
-        <div className={"AppointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
-        <div className={"AppointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
-    </div>
+function AppointmentEntry({AptInfo, window, getEstate}) {
+    if (window != undefined) {
+        let estate = getEstate(window.estateID)
+        console.log(AptInfo, window, estate)
+        return <div className={"AppointmentEntry"}>
+            <div className={"AppointmentEntryLocation"}>{estate[0].approxLocation || ""}</div>
+            <div className={"AppointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
+            <div className={"AppointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
+        </div>
+    }
+    return <div className={"AppointmentEntry"}>Loading...</div>
+
 }
 
 
@@ -141,6 +147,7 @@ function WeekView({getPickups, pickups, appointments, getAppointments}) {
     }
 
     const getEstate = (estateID) => {
+        console.log(e)
         return e[estateID]
     }
 
@@ -188,7 +195,7 @@ function WeekView({getPickups, pickups, appointments, getAppointments}) {
             </div>
         }></Card>
 
-        <AppointmentView getEstate={getEstate} appointments={appointments} getAppointments={getAppointments} allWindows={p}></AppointmentView>
+        <AppointmentView estates={e} getEstate={getEstate} appointments={appointments} getAppointments={getAppointments} allWindows={p}></AppointmentView>
     </div>
 }
 
