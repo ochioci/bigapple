@@ -59,7 +59,7 @@ function WeekView ({getPickups, pickups}) {
         d.setDate(d.getDate() + n);
         return d
     }
-    const StartDate = useRef(new Date(Date.now()))
+    const StartDate = useRef(nextDay(Date.now(), 0-(new Date(Date.now())).getDay() ))
     let ds = [StartDate.current]
     for (let i = 1; i < 7; i++) {
         ds.push(nextDay(StartDate.current, i))
@@ -83,11 +83,12 @@ function WeekView ({getPickups, pickups}) {
         // console.log(p2, e)
     }
 
-    let backAvailable = nextDay(StartDate.current, -1) >= new Date(Date.now())
-
+    const backAvailable = nextDay(StartDate.current, -1) >= new Date(Date.now())
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return <div>
         <Card animated={false} Content={
             <div className={"WeekView"}>
+                <div className={"WeekViewMonth"}>{months[StartDate.current.getMonth()] + " " + StartDate.current.getFullYear()}</div>
                 <div className={"WeekViewCols"}>
                     {backAvailable ? <button onClick={() => {
                         let ds = [nextDay(StartDate.current, -7)]
@@ -128,9 +129,12 @@ function WeekView ({getPickups, pickups}) {
 }
 
 function DayView({d, selectedDay, setSelectedDay, index}) {
+    let isUnselectable = d < new Date(Date.now())
     return <div onClick={() => {
-        setSelectedDay(index)
-    }} className={(selectedDay == index) ? "pickupDayContainer selectedDay" : "pickupDayContainer"}>
+        if (!isUnselectable) {
+            setSelectedDay(index)
+        }
+    }} className={(isUnselectable) ? "pickupDayContainer unselectable" : (selectedDay == index) ? "pickupDayContainer selectedDay" : "pickupDayContainer"}>
         <div className={"pickupDayOfWeek"}>{d.toDateString().slice(0, 4)}</div>
         <div className={"pickupDayOfMonth"}>{d.getDate()}</div>
     </div>

@@ -896,6 +896,8 @@ input[type=time] {
     display: flex;
     justify-content: center;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
 
 .WeekViewCols {
@@ -909,7 +911,7 @@ input[type=time] {
     align-items: center;
 }
 
-.selectedDay {
+.pickupDayContainer.selectedDay {
     color: white;
     background-color: #173d4c;
     border-radius: 50%;
@@ -928,4 +930,14 @@ input[type=time] {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.pickupDayContainer.unselectable {
+    color: grey;
+}
+
+.WeekViewMonth {
+    font-size: min(3vh, 6vw);
+    font-family: "Geometos";
+    margin: min(1vh, 2vw);
 }
