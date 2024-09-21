@@ -94,7 +94,7 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
             $estateID: req.body.estateID,
             $windowID: req.body.windowID
         })
-        db.run(`UPDATE estateWindows SET bookedBy = bookedBy+1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
+        // db.run(`// UPDATE estateWindows SET bookedBy = bookedBy+1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
         res.json({"message": "success"})
     })
 
@@ -112,7 +112,7 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
 
     app.post("/api/cancelAppointment", requireTransfer, jsonParser, (req, res) => {
         db.run(`DELETE FROM appointments WHERE appointmentID = $ai`, {$ai: req.body.appointmentID})
-        db.run(`UPDATE estateWindows SET bookedBy = bookedBy - 1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
+        // db.run(`// UPDATE estateWindows SET bookedBy = bookedBy - 1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
         res.json({"message": "success"})
     } )
 }

@@ -9,6 +9,7 @@ export function EstateBookings({StateHook, goBack}) {
     const [estates, setEstates] = useState([])
     const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     const [propertyMenuState, propertyMenuHook] = useState(false)
+    const [bookingRequests, setBookingRequests] = useState([])
     const addNotif = (msg) => {
         let l = notifState.slice() //change does not trigger update without this lmfao
         l.push([msg, Date.now() + 1500])
@@ -84,6 +85,10 @@ export function EstateBookings({StateHook, goBack}) {
                 here about your home and the location of the trees and when they are available for harvesting by our
                 volunteers. The Big Wild Apple will do the rest and ensure that your fruit makes it to food shelters.
             </div>
+        }></Card>
+
+        <Card animated={false} Content={
+            <div className={"confirmBookingContainer"}>Confirm your bookings here</div>
         }></Card>
 
         <Card animated={false} Content={

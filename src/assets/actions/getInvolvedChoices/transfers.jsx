@@ -71,7 +71,7 @@ export function TransferBookings ({StateHook, goBack}) {
     </div>
 }
 
-function AppointmentView({estates, appointments, getAppointments, allWindows, getEstate}) {
+function AppointmentView({getPickups, estates, appointments, getAppointments, allWindows, getEstate}) {
     console.log(allWindows)
     if (appointments != null && allWindows != null)  {
         let apts = JSON.parse(appointments).rows
@@ -85,6 +85,7 @@ function AppointmentView({estates, appointments, getAppointments, allWindows, ge
                     apts.map((a, i) => {
                         console.log(a, getEstate(a.estateID))
                         return <AppointmentEntry
+                            getPickups={getPickups}
                             getAppointments={getAppointments}
                             getEstate={getEstate}
                             window={
@@ -100,7 +101,7 @@ function AppointmentView({estates, appointments, getAppointments, allWindows, ge
     return <Card animated={false}>Loading...</Card>
 }
 
-function AppointmentEntry({AptInfo, window, getEstate, getAppointments}) {
+function AppointmentEntry({getPickups, AptInfo, window, getEstate, getAppointments}) {
 
     const cancelAppointment = (appointmentID, windowID) => {
         let req = new XMLHttpRequest();
@@ -117,7 +118,7 @@ function AppointmentEntry({AptInfo, window, getEstate, getAppointments}) {
             <div className={"appointmentEntryLocation"}>{estate[0].approxLocation || ""}</div>
             <div className={"appointmentEntryDate"}>{window.date}</div>
             <div className={"appointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
-            <div className={"appointmentEntryBookingCount"}>{"Confirmed Volunteers: " + window.bookedBy}</div>
+            <div className={"appointmentEntryStatus"}>{"Requested"}</div>
             <button onClick={() => {
                 cancelAppointment(AptInfo.appointmentID, window.windowID).onreadystatechange = getAppointments
             }}>Cancel</button>
@@ -212,7 +213,7 @@ function WeekView({getPickups, pickups, appointments, getAppointments}) {
             </div>
         }></Card>
 
-        <AppointmentView estates={e} getEstate={getEstate} appointments={appointments} getAppointments={getAppointments} allWindows={p}></AppointmentView>
+        <AppointmentView getPickups= {getPickups} estates={e} getEstate={getEstate} appointments={appointments} getAppointments={getAppointments} allWindows={p}></AppointmentView>
     </div>
 }
 
