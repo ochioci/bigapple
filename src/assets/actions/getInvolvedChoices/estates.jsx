@@ -108,7 +108,7 @@ export function EstateBookings({StateHook, goBack}) {
                 {(bookings != null && bookings.rows != null && bookings.rows.length > 0) ?
                     (
                     bookings.rows.map((b, i) => {
-                        return <BookingView estates={estates} key={Math.random()} info={b}></BookingView>
+                        return <BookingView getBookings={getBookings} estates={estates} key={Math.random()} info={b}></BookingView>
                     })
                     ) : <></>
                 }
@@ -141,8 +141,25 @@ export function EstateBookings({StateHook, goBack}) {
 //     " [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
 
 
-function BookingView({info, estates}) {
+function BookingView({getBookings, info, estates}) {
     const [windowInfo, setWindowInfo] = useState(null)
+
+    const accept = (appointmentID) => {
+        let req = new XMLHttpRequest();
+        req.open("POST", "api/acceptBooking", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({appointmentID}))
+        return req
+    }
+
+    const decline = (appointmentID) => {
+        let req = new XMLHttpRequest();
+        req.open("POST", "api/declineBooking", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({appointmentID}))
+        return req
+    }
+
     useEffect(() => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
@@ -168,6 +185,13 @@ function BookingView({info, estates}) {
             <div>{windowInfo.timeStart} - {windowInfo.timeEnd}</div>
             <div>{windowInfo.date}</div>
             <div>{thisEstate.location}</div>
+            <div>{"Status: " + info.status}</div>
+            <button onClick={() => {
+                accept(info.appointmentID).onreadystatechange=getBookings
+            }}>Accept</button>
+            <button onClick={() => {
+                decline(info.appointmentID).onreadystatechange=getBookings
+            }}>Deny</button>
         </div>
     } else {
         return <></>

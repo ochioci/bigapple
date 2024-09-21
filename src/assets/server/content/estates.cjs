@@ -120,6 +120,16 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         })
     })
 
+    app.post("/api/acceptBooking", requireEstate, jsonParser, (req, res) => {
+        db.run(`UPDATE appointments SET status='confirmed' WHERE appointmentID = $id`, {$id: req.body.appointmentID})
+        res.json({"message": "success"})
+    })
+
+    app.post("/api/declineBooking", requireEstate, jsonParser, (req, res) => {
+        db.run(`UPDATE appointments SET status='declined' WHERE appointmentID = $id`, {$id: req.body.appointmentID})
+        res.json({"message": "success"})
+    })
+
 }
 
 

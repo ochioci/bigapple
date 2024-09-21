@@ -125,6 +125,14 @@ export default defineConfig({
       "/api/getWindow": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/acceptBooking": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/api/declineBooking": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },
