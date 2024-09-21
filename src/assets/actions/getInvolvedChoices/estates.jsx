@@ -108,7 +108,7 @@ export function EstateBookings({StateHook, goBack}) {
                 {(bookings != null && bookings.rows != null && bookings.rows.length > 0) ?
                     (
                     bookings.rows.map((b, i) => {
-                        return <BookingView estates={estates} key={i} info={b}></BookingView>
+                        return <BookingView estates={estates} key={Math.random()} info={b}></BookingView>
                     })
                     ) : <></>
                 }
@@ -250,7 +250,7 @@ function PropertyView({info, refresh, getBookings}) {
             <div className={"expandedEstateViewContent"}>
                 <div className={"estateViewItem"}>{"Name: " + info.name}</div>
                 <div className={"estateViewItem"}>{"Location: " + info.location}</div>
-                <div className={"estateViewItem"}>{(availability.length == 0 ? "No availability" : <AvailabilityView refreshAvailability={refreshAvailability} availability={availability}></AvailabilityView>)}</div>
+                <div className={"estateViewItem"}>{(availability.length == 0 ? "No availability" : <AvailabilityView getBookings={getBookings} refreshAvailability={refreshAvailability} availability={availability}></AvailabilityView>)}</div>
                 <div className={"estateViewItem"}>
                     <button onClick={() => {
                         setExpanded(false)
@@ -302,7 +302,7 @@ function PropertyView({info, refresh, getBookings}) {
     </div>
 }
 
-function AvailabilityEntry({av, refresh}) {
+function AvailabilityEntry({getBookings, av, refresh}) {
     const stRef = useRef(av.timeStart)
     const etRef = useRef(av.timeEnd)
     const [hasChanged, setHasChanged] = useState(false)
@@ -316,6 +316,7 @@ function AvailabilityEntry({av, refresh}) {
                     console.log("failure")
                 }
             }
+            getBookings()
         }
         req.open("POST", "api/deleteEstateAvailability", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -373,13 +374,13 @@ function AvailabilityEntry({av, refresh}) {
     </div>
 }
 
-function AvailabilityView({availability, refreshAvailability}) {
+function AvailabilityView({getBookings, availability, refreshAvailability}) {
     // console.log(availability);
     return <div>
         <div>Availability: </div>
         {
         availability.map((av) => {
-            return <AvailabilityEntry refresh={refreshAvailability} key={av.windowID} av={av}></AvailabilityEntry>
+            return <AvailabilityEntry getBookings={getBookings} refresh={refreshAvailability} key={av.windowID} av={av}></AvailabilityEntry>
         })
     }</div>
 }
