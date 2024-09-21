@@ -117,6 +117,14 @@ export default defineConfig({
       "/api/cancelAppointment": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/getBookingRequests": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/api/getWindow": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },

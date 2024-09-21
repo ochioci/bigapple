@@ -9,13 +9,27 @@ export function EstateBookings({StateHook, goBack}) {
     const [estates, setEstates] = useState([])
     const [popupState, popupHook, notifState, notifHook] = useContext(PopupContext)
     const [propertyMenuState, propertyMenuHook] = useState(false)
-    const [bookingRequests, setBookingRequests] = useState([])
+    const [bookings, setBookings] = useState([])
     const addNotif = (msg) => {
         let l = notifState.slice() //change does not trigger update without this lmfao
         l.push([msg, Date.now() + 1500])
         // console.log(l)
         notifHook(l)
         // console.log(notifState)
+    }
+
+    const getBookings = () => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                console.log(JSON.parse(req.response))
+                setBookings(JSON.parse(req.response));
+            }
+        }
+        req.open("POST", "api/getBookingRequests", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({}));
+        return req
     }
 
     const refresh = () => {
@@ -71,6 +85,7 @@ export function EstateBookings({StateHook, goBack}) {
 
     useEffect(() => {
         refresh()
+        getBookings()
         console.log(estates)
     }, [])
 
@@ -88,7 +103,16 @@ export function EstateBookings({StateHook, goBack}) {
         }></Card>
 
         <Card animated={false} Content={
-            <div className={"confirmBookingContainer"}>Confirm your bookings here</div>
+            <div className={"confirmBookingContainer"}>
+                <div className={"confirmBookingCaption"}>Manage bookings of your properties here</div>
+                {(bookings != null && bookings.rows != null && bookings.rows.length > 0) ?
+                    (
+                    bookings.rows.map((b, i) => {
+                        return <BookingView estates={estates} key={i} info={b}></BookingView>
+                    })
+                    ) : <></>
+                }
+            </div>
         }></Card>
 
         <Card animated={false} Content={
@@ -115,6 +139,41 @@ export function EstateBookings({StateHook, goBack}) {
 // db.run("CREATE TABLE IF NOT EXISTS " +
 //     "estates([name] TEXT, [location] TEXT, [availabilityDetails] TEXT, [treeDetails] TEXT," +
 //     " [ownerID] INTEGER NOT NULL, [estateID] INTEGER PRIMARY KEY NOT NULL)")
+
+
+function BookingView({info, estates}) {
+    const [windowInfo, setWindowInfo] = useState(null)
+    useEffect(() => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState === 4) {
+                setWindowInfo(JSON.parse(req.response).rows[0])
+            }
+        }
+        req.open("POST", "api/getWindow", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({windowID: info.windowID}))
+    }, [])
+    console.log(info, windowInfo, estates)
+    if (windowInfo != null && estates != null) {
+        let thisEstate = estates.filter((e) => {
+            return e.estateID == windowInfo.estateID
+        })[0]
+        console.log(thisEstate)
+        return <div className={"manageBooking"}>
+            {/*{info.appointmentID}*/}
+            <div>{windowInfo.timeStart}</div>
+            <div>{windowInfo.timeEnd}</div>
+            <div>{windowInfo.date}</div>
+            <div>{thisEstate.name}</div>
+            <div>{thisEstate.location}</div>
+        </div>
+    } else {
+        return <></>
+    }
+
+}
+
 
 function ManageProperties({estates, refresh}) {
     return <div className={"manageEstateMenu"}>

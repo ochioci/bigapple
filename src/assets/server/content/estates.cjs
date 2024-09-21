@@ -89,6 +89,37 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         res.json({message: "success"})
     })
 
+    app.post("/api/getBookingRequests", requireEstate, jsonParser, (req, res) => {
+        db.all(`SELECT estateID FROM estates WHERE ownerID = $id`, {$id: req.session.userID}, (err, rows) => {
+            let r = []
+            let reqs = []
+            let ct = 0;
+            rows.forEach((rr) => {
+                r.push(rr.estateID)
+                db.all(`SELECT * FROM appointments WHERE estateID = $id`, {$id: rr.estateID}, (err, rows2) => {
+                    // console.log(ct, rows.length)
+                    rows2.forEach((rr2) => {
+                        reqs.push(rr2)
+                    })
+                    ct += 1;
+                    if (ct >= rows.length) {
+                        // console.log(reqs)
+                        res.json({"message": "success", "rows": reqs})
+                    }
+                })
+            })
+            // console.log(r)
+            // res.json({message: "success"})
+
+        })
+    })
+
+    app.post("/api/getWindow", requireEstate, jsonParser, (req, res) => {
+        db.all(`SELECT * FROM estateWindows WHERE windowID = $id`, {$id: req.body.windowID}, (err, rows) => {
+            res.json({"message": "success", rows})
+        })
+    })
+
 }
 
 
