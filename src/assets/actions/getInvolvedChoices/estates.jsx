@@ -165,10 +165,8 @@ function BookingView({info, estates}) {
         console.log(thisEstate)
         return <div className={"manageBooking"}>
             {/*{info.appointmentID}*/}
-            <div>{windowInfo.timeStart}</div>
-            <div>{windowInfo.timeEnd}</div>
+            <div>{windowInfo.timeStart} - {windowInfo.timeEnd}</div>
             <div>{windowInfo.date}</div>
-            <div>{thisEstate.name}</div>
             <div>{thisEstate.location}</div>
         </div>
     } else {
