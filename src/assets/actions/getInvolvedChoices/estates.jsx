@@ -121,7 +121,7 @@ export function EstateBookings({StateHook, goBack}) {
                     {"Properties"}
                 </div>
                 <div className={"estateSubheading"}>
-                    {estates.length == 0 ? "You have no registered properties." : <ManageProperties refresh={refresh} estates={estates}></ManageProperties>}
+                    {estates.length == 0 ? "You have no registered properties." : <ManageProperties getBookings={getBookings} refresh={refresh} estates={estates}></ManageProperties>}
                 </div>
                 <button className={"estateButton"} onClick={addProperty}>Add a property</button>
             </div>
@@ -159,6 +159,9 @@ function BookingView({info, estates}) {
         let thisEstate = estates.filter((e) => {
             return e.estateID == windowInfo.estateID
         })[0]
+        if (thisEstate == null || thisEstate == undefined) {
+            return <></>
+        }
         console.log(thisEstate)
         return <div className={"manageBooking"}>
             {/*{info.appointmentID}*/}
@@ -175,15 +178,15 @@ function BookingView({info, estates}) {
 }
 
 
-function ManageProperties({estates, refresh}) {
+function ManageProperties({estates, refresh, getBookings}) {
     return <div className={"manageEstateMenu"}>
         {estates.map((estate) => {
-            return <PropertyView refresh={refresh} key={estate.estateID} info={estate}></PropertyView>
+            return <PropertyView getBookings={getBookings} refresh={refresh} key={estate.estateID} info={estate}></PropertyView>
         })}
     </div>
 }
 
-function PropertyView({info, refresh}) {
+function PropertyView({info, refresh, getBookings}) {
     const [expanded, setExpanded] = useState(false);
     const [availExpanded, setAvailExpanded] = useState(false);
     const [availability, setAvailability] = useState([]);
@@ -193,6 +196,7 @@ function PropertyView({info, refresh}) {
 
     const deleteEstate = (estateID) => {
         let req = new XMLHttpRequest();
+        req.onreadystatechange = getBookings
         req.open("POST", "api/deleteEstate", true)
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({
