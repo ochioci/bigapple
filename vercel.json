@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://bigappleserver-a2c91f738c7f.herokuapp.com/:path*"
+      "destination": "https://bigappleserver-a2c91f738c7f.herokuapp.com/api/:path*"
     },
     {
       "source": "/api/:path*/",
-      "destination": "https://bigappleserver-a2c91f738c7f.herokuapp.com/:path*/"
+      "destination": "https://bigappleserver-a2c91f738c7f.herokuapp.com/api/:path*/"
     }
   ]
 }

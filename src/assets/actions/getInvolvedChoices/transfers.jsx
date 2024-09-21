@@ -118,10 +118,10 @@ function AppointmentEntry({getPickups, AptInfo, window, getEstate, getAppointmen
             <div className={"appointmentEntryLocation"}>{estate[0].approxLocation || ""}</div>
             <div className={"appointmentEntryDate"}>{window.date}</div>
             <div className={"appointmentEntryTime"}>{window.timeStart + " - " + window.timeEnd}</div>
-            <div className={"appointmentEntryStatus"}>{"Requested"}</div>
+            <div className={"appointmentEntryStatus"}>{"Status: " + AptInfo.status}</div>
             <button onClick={() => {
                 cancelAppointment(AptInfo.appointmentID, window.windowID).onreadystatechange = getAppointments
-            }}>Cancel</button>
+            }}>Delete</button>
         </div>
     }
     return <div className={"appointmentEntry"}>Loading...</div>
