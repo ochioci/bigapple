@@ -17,6 +17,7 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         })
 
         db.run(`DELETE FROM estateWindows WHERE estateID = $estateID`, {$estateID: req.body.estateID})
+        db.run(`DELETE FROM appointments WHERE estateID = $estateID`, {$estateID: req.body.estateID})
         res.json({message: "success"})
     })
 

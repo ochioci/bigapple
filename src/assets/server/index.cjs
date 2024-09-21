@@ -78,7 +78,7 @@ db.run("CREATE TABLE IF NOT EXISTS dropoffs([name] TEXT, [location] TEXT, [avail
 db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [role] TEXT, [phoneNumber] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)")
 db.run("CREATE TABLE IF NOT EXISTS transfers([window] TEXT, [dropoffWindow] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [isConfirmed] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
 db.run("CREATE TABLE IF NOT EXISTS estateWindows([timeStart] TEXT, [timeEnd] TEXT, [date] TEXT, [bookedBy] INTEGER DEFAULT 0 NOT NULL, [estateID] INTEGER NOT NULL, [windowID] INTEGER PRIMARY KEY NOT NULL)")
-db.run("CREATE TABLE IF NOT EXISTS appointments([windowID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [appointmentID] INTEGER PRIMARY KEY NOT NULL)")
+db.run("CREATE TABLE IF NOT EXISTS appointments([windowID] INTEGER NOT NULL, [estateID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [appointmentID] INTEGER PRIMARY KEY NOT NULL)")
 initLoginAPI(app, db, requireAuth, jsonParser)
 initRegisterAPI(app, db, requireAuth, jsonParser)
 initContactAPI(app, db, requireAuth, jsonParser)
