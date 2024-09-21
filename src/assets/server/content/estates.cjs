@@ -85,6 +85,7 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
 
     app.post("/api/deleteEstateAvailability", requireAuth, jsonParser, (req, res) => {
         db.get("DELETE FROM estateWindows WHERE windowID = $id", {$id: req.body.windowID})
+        db.run(`DELETE FROM appointments WHERE windowID = $id`, {$id: req.body.windowID})
         res.json({message: "success"})
     })
 
