@@ -1,3 +1,16 @@
+CRITICAL:
+- make declined requests go away
+- fix topbar nav order
+- redesign homepage
+- tweak button style
+- Option to edit tree details in property view
+- make booking counter accurate in property view
+- make font size normal in inputs for login, especially on mobile
+- animations for page change
+
+
+
+
 Checklist:
 -Security:
     -Update session secret key

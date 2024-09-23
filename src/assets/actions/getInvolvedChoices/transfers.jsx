@@ -102,7 +102,7 @@ function AppointmentView({getPickups, estates, appointments, getAppointments, al
 }
 
 function AppointmentEntry({getPickups, AptInfo, window, getEstate, getAppointments}) {
-
+    const [menuStatus, setMenuStatus] = useState(false)
     const cancelAppointment = (appointmentID, windowID) => {
         let req = new XMLHttpRequest();
         req.open("POST", "api/cancelAppointment", true)
@@ -110,6 +110,7 @@ function AppointmentEntry({getPickups, AptInfo, window, getEstate, getAppointmen
         req.send(JSON.stringify({appointmentID, windowID}))
         return req
     }
+
 
     if (window != undefined) {
         let estate = getEstate(window.estateID)
@@ -122,10 +123,74 @@ function AppointmentEntry({getPickups, AptInfo, window, getEstate, getAppointmen
             <button onClick={() => {
                 cancelAppointment(AptInfo.appointmentID, window.windowID).onreadystatechange = getAppointments
             }}>Delete</button>
+            {(AptInfo.status == "confirmed") ? <button onClick={() => {setMenuStatus(true)}}>View Information</button> : <></>}
+            {
+                (menuStatus) ?
+                    <FullInfoMenu setMenuStatus={setMenuStatus} AptInfo={AptInfo}></FullInfoMenu>
+                : <></>
+            }
         </div>
     }
     return <div className={"appointmentEntry"}>Loading...</div>
 
+}
+
+function FullInfoMenu({AptInfo, setMenuStatus}) {
+    // console.log(AptInfo.appointmentID)
+    const [fullEstateInfo, setFullEstateInfo] = useState(null)
+    const [ownerView, setOwnerView] = useState(false)
+    const getFullEstate = (appointmentID) => {
+        // let a =
+        // console.log(a)
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState == 4) {
+                setFullEstateInfo(JSON.parse(req.response))
+            }
+        }
+        req.open("POST", "api/getFullEstate", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({"appointmentID": appointmentID}))
+        return req
+    }
+
+    useEffect(() => {
+        console.log(AptInfo)
+        getFullEstate(AptInfo.appointmentID)
+    }, [])
+
+    if (fullEstateInfo == null) {
+        return <div className={"infoMenu"}>
+            <div className={"infoMenuContent"}>Loading...</div>
+        </div>
+    }
+
+    console.log(fullEstateInfo)
+
+    let [estate, owner] = [fullEstateInfo.estate, fullEstateInfo.owner]
+
+
+    return <div className={"infoMenu"}>
+        <div className={"infoMenuContent"}>
+            <div>{"Orchard: " + estate.name}</div>
+            <div>{"Location: " + estate.location}</div>
+            <div>{"Tree Details: " + estate.treeDetails}</div>
+            <button onClick = {() => {
+                setOwnerView(true)
+            }}>Owner Info</button>
+            <button onClick={() => {
+                setMenuStatus(false)
+            }}>Close Menu</button>
+            {ownerView ? <div className={"ownerMenuContainer"}>
+                <div className={"ownerMenu"}>
+                    <div>{"Name: " + owner.firstname + "," + owner.lastname}</div>
+                    <div>{"Phone: " + owner.phoneNumber}</div>
+                    <div>{"Email: " + owner.email}</div>
+                    <button onClick={() => {setOwnerView(false)}}>Go back</button>
+                </div>
+            </div> : <></>}
+        </div>
+    </div>
 }
 
 

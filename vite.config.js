@@ -133,6 +133,10 @@ export default defineConfig({
       "/api/declineBooking": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/getFullEstate": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },

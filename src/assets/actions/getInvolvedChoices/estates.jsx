@@ -121,7 +121,7 @@ export function EstateBookings({StateHook, goBack}) {
                     {"Properties"}
                 </div>
                 <div className={"estateSubheading"}>
-                    {estates.length == 0 ? "You have no registered properties." : <ManageProperties getBookings={getBookings} refresh={refresh} estates={estates}></ManageProperties>}
+                    {estates.length == 0 ? "You have no registered properties." : <ManageProperties bookings={bookings} getBookings={getBookings} refresh={refresh} estates={estates}></ManageProperties>}
                 </div>
                 <button className={"estateButton"} onClick={addProperty}>Add a property</button>
             </div>
@@ -200,15 +200,15 @@ function BookingView({getBookings, info, estates}) {
 }
 
 
-function ManageProperties({estates, refresh, getBookings}) {
+function ManageProperties({estates, refresh, getBookings, bookings}) {
     return <div className={"manageEstateMenu"}>
         {estates.map((estate) => {
-            return <PropertyView getBookings={getBookings} refresh={refresh} key={estate.estateID} info={estate}></PropertyView>
+            return <PropertyView bookings={bookings} getBookings={getBookings} refresh={refresh} key={estate.estateID} info={estate}></PropertyView>
         })}
     </div>
 }
 
-function PropertyView({info, refresh, getBookings}) {
+function PropertyView({info, refresh, getBookings, bookings}) {
     const [expanded, setExpanded] = useState(false);
     const [availExpanded, setAvailExpanded] = useState(false);
     const [availability, setAvailability] = useState([]);
@@ -314,11 +314,15 @@ function PropertyView({info, refresh, getBookings}) {
             </div> : <></>}
         </div>
     }
+
+    let bookingsCt = "..."
+    if (bookings.rows != null) {
+        bookingsCt = bookings.rows.filter((r) => {return r.estateID == info.estateID && r.status == "confirmed"}).length
+    }
     return <div className={"estateView"}>
         <div>{"Name: " + info.name}</div>
         <div>{"Location: " + info.location}</div>
-        <div>{"Bookings: 0"}</div>
-        {/*//TODO: ADD BOOKING COUNTER*/}
+        <div>{"Confirmed bookings: " + bookingsCt}</div>
         <button onClick={() => {setExpanded(true)}}>Manage property</button>
 
     </div>

@@ -19,7 +19,7 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
     let [entries, entriesHook] = useState([
         ["Home", "home"],
         ["Our Story", "aboutus"],
-        ["Donate", "contact"],
+        ["Where to donate", "contact"],
         [loginState, "login"],
         ["Register", "register"]
     ])
@@ -185,7 +185,7 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                     entriesHook([["Home", "home"],
                         ["Our Story", "aboutus"],
                         ["Get involved", "getinvolved"],
-                        ["Donate", "contact"],
+                        ["Where to donate", "contact"],
                         ["Log out", "login"],])
                 } else {
                     console.log("not logged in")

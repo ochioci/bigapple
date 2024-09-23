@@ -115,6 +115,39 @@ function initTransferAPI (app, db, requireAuth, requireTransfer, jsonParser) {
         // db.run(`// UPDATE estateWindows SET bookedBy = bookedBy - 1 WHERE windowID = $windowID`, {$windowID: req.body.windowID})
         res.json({"message": "success"})
     } )
+
+    app.post("/api/getFullEstate", requireTransfer, jsonParser, (req, res) => {
+        // console.log(req.body)
+        db.get(`SELECT * FROM appointments WHERE appointmentID = $ai`, {$ai: req.body.appointmentID}, (err, row) => {
+            // console.log(err, row, req.body)
+            if (err != null || row == null) {
+
+                res.json({"message": "failure"})
+            }
+            else if (row.status == "confirmed") {
+                db.get(`SELECT * FROM estates WHERE estateID = $id`, {$id: row.estateID}, (err2, row2) => {
+                    // console.log(err2, row2)
+                    if (err2 != null) {
+                        res.json({"message": "failure"})
+                    } else {
+
+                        db.get(`SELECT firstname, lastname, email, phoneNumber FROM users WHERE userID = $id`, {$id: row2.ownerID}, (err3, row3) => {
+                            if (err3 != null) {
+                                res.json({"message": "failure"})
+                            } else {
+                                res.json({"message": "success", "estate": row2, "owner": row3})
+                            }
+                        })
+
+                        // res.json({"message": "success", "rows": row2})
+                    }
+                })
+            } else {
+                res.json({"message": "failure"})
+            }
+        })
+    })
+
 }
 // [window] TEXT, [estateID] INTEGER NOT NULL, [dropoffID] INTEGER NOT NULL, [userID] INTEGER NOT NULL, [transferID] INTEGER PRIMARY KEY NOT NULL)")
 module.exports = {initTransferAPI}
