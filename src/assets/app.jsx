@@ -19,9 +19,11 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
     let [entries, entriesHook] = useState([
         ["Home", "home"],
         ["Our Story", "aboutus"],
-        ["Where to donate", "contact"],
+        ["Get involved", "register"],
+        ["Donate", "contact"],
         [loginState, "login"],
-        ["Register", "register"]
+
+
     ])
 
     return <PopupContext.Provider value={[popupState, popupHook, notifState, notifHook]}>
@@ -182,11 +184,13 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                     AuthHook(response.name)
                     // roleHook(response.role)
                     LoginHook("Log out");
-                    entriesHook([["Home", "home"],
+                    entriesHook([
+                        ["Home", "home"],
                         ["Our Story", "aboutus"],
-                        ["Get involved", "getinvolved"],
-                        ["Where to donate", "contact"],
-                        ["Log out", "login"],])
+                        ["Get involved", "register"],
+                        ["Donate", "contact"],
+                        [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],]
+                    )
                 } else {
                     console.log("not logged in")
                 }

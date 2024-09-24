@@ -27,11 +27,13 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                 if (response.message === "success") {
                     AuthHook(response.loginName)
                     LoginHook("Log out");
-                    entriesHook([["Home", "home"],
+                    entriesHook([
+                        ["Home", "home"],
                         ["Our Story", "aboutus"],
                         ["Get involved", "getinvolved"],
-                        ["Where to donate", "contact"],
-                        ["Log out", "login"],])
+                        ["Donate", "contact"],
+                        [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],
+                    ])
 
                     console.log("success!")
                     StateHook("getinvolved")
@@ -64,11 +66,13 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                 if (response.message === "success") {
                     AuthHook("---")
                     LoginHook("Log in")
-                    entriesHook([["Home", "home"],
+                    entriesHook([
+                        ["Home", "home"],
                         ["Our Story", "aboutus"],
-                        ["Where to Donate", "contact"],
-                        ["Log in", "login"],
-                        ["Register", "register"],])
+                        ["Get involved", "register"],
+                        ["Donate", "contact"],
+                        [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],
+                    ])
                 } else {
                     console.log("failure")
                     reqHook("waiting")
