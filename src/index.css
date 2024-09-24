@@ -24,6 +24,7 @@ body {
     grid-template-columns: auto 70%;
     background-color: #d4d4d4;
     display: grid;
+    justify-items: end;
     /*flex-wrap: wrap;*/
     color: #173d4c;
     z-index: 3;
@@ -172,7 +173,7 @@ body {
         left: 0;
         top: 0;
         z-index: -1;
-    display: none;
+    /*display: none;*/
 }
 
 @font-face {
@@ -620,7 +621,7 @@ form {
     object-fit: cover;
     width: 100vh;
     height: 100vw;
-    object-position: center;
+    object-position: top;
     overflow: hidden;
     will-change: opacity;
     /*animation-name: slideshowFadeIn;*/
@@ -691,6 +692,7 @@ form {
     }
 
     .homepageCol.hdc {
+        min-height: 40vh;
         height: min-content ;
     }
 }
@@ -1060,7 +1062,7 @@ input[type=time] {
 
 .homepageImage {
     width: 100%;
-    height: 100%;
+    height: 90vh;
     background-image: url("/public/background.jpeg");
     background-position: bottom;
     background-size: cover;
@@ -1068,18 +1070,25 @@ input[type=time] {
 
 .homepage {
     display: grid;
-    grid-template-rows: 100vh auto auto;
+    grid-template-rows: auto auto auto;
     justify-items: center;
-    background-color: black;
+    background-color: #d4d4d4;
 
 }
 
 .homepageTagline {
     display: flex;
     position: relative;
-    top: 40%;
+    /*top: 37%;*/
+    padding-left: min(2vh, 2vw);
+    padding-right: min(2vh, 2vw);
+    margin-left: min(2vh, 2vw);
+    margin-right: min(2vh, 2vw);
+    text-align: center;
     justify-content: center;
-    width: 100%;
+    /*width: 100%;*/
+    text-shadow: 3px 3px black;
+    flex-direction: column;
     height: 100%;
     color: white;
     font-family: "Geometos";
@@ -1089,10 +1098,12 @@ input[type=time] {
 .missionStatement {
     background-color: white;
     width: 100%;
-    height: 20vh;
+    /*height: 20vh;*/
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: min(2vh, 4vw);
+    text-align: center;
 }
 
 .missionStatementArea {
@@ -1100,7 +1111,7 @@ input[type=time] {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "JustSansBold";
+    font-family: "JustSansRegular";
     font-size: min(3vh, 6vw);
 
 }

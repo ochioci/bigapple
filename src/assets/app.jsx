@@ -214,8 +214,8 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                     {entries.map((text) =>
                         <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>
                     )}
-                    <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}
-                                      style={entryStyle}></TopBarAuthStatus>
+                    {/*<TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}*/}
+                    {/*                  style={entryStyle}></TopBarAuthStatus>*/}
                 </div>
             </div>
             <div className={"topbar tbAnimate"} >
@@ -224,8 +224,8 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                     {entries.map((text) =>
                         <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>
                     )}
-                    <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}
-                                      style={entryStyle}></TopBarAuthStatus>
+                    {/*<TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}*/}
+                    {/*                  style={entryStyle}></TopBarAuthStatus>*/}
                 </div>
             </div>
 
@@ -261,8 +261,8 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                 {entries.map((text) =>
                     <TopBarEntry StateHook={StateHook} link={text[1]} style={entryStyle} text={text[0]} key={text}/>
                 )}
-                <TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}
-                                  style={entryStyle}></TopBarAuthStatus>
+                {/*<TopBarAuthStatus StateHook={StateHook} AuthState={AuthState} AuthHook={AuthHook}*/}
+                {/*                  style={entryStyle}></TopBarAuthStatus>*/}
             </div>
 
         </div>

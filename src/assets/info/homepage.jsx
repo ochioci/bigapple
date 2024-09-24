@@ -9,11 +9,19 @@ export function HomepageContent ({StateHook, AuthState}) {
     return <div className={"homepage"}>
 
         <div className={"homepageImage"}>
-            <div className={"homepageTagline"}>TAGLINE</div>
+            <div className={"homepageTagline"}>Feeding the NYC hungry, one wild apple at a time through our student
+                volunteers.
+                <div style={{color: "blue", cursor: "grab"}} onClick={() => {
+                    StateHook("register")
+                }}>{" Sign up now."}</div></div>
+
         </div>
 
         <div className={"missionStatementArea"}>
-            <div className={"missionStatement"}>MISSION STATEMENT</div>
+            <div className={"missionStatement"}>
+
+                At The Big Wild Apple, our mission is to bridge the gap between abundance and need by connecting generous homeowners with volunteer apple pickers. We harness the surplus of fresh fruit from private gardens and channel it directly to local food shelters, ensuring that every apple contributes to nourishing our community. Through collaboration, compassion, and sustainability, we strive to reduce food waste and provide healthy, fresh produce to those in need throughout the New York City area
+            </div>
         </div>
 
 
@@ -25,35 +33,24 @@ export function HomepageContent ({StateHook, AuthState}) {
 
                 <div className={"homepageCol hdc"}>
                     <Subheading text={<div>
-                        {"Feeding the NYC hungry, one wild apple at a time through our student volunteers."}
-                        <a style={{color: "blue", cursor: "grab"}} onClick={() => {
-                            StateHook("register")
-                        }}>{" Sign up now."}</a>
+                        {"Thousands of apples already picked and delivered to local food banks in fall 2024"}
                     </div>}></Subheading>
-                    <Tagline text={
-                        "At The Big Wild Apple, our mission is to bridge the gap between abundance and need by connecting generous homeowners with volunteer apple pickers. We harness the surplus of fresh fruit from private gardens and channel it directly to local food shelters, ensuring that every apple contributes to nourishing our community. Through collaboration, compassion, and sustainability, we strive to reduce food waste and provide healthy, fresh produce to those in need throughout the New York City area"
-                    }></Tagline>
+
                 </div>
 
                 <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={4} endIndex={7}></Slideshow>
+                    <Slideshow startIndex={1} endIndex={9}></Slideshow>
                 </div>
             </div>
 
             <div className={"homepageDuo"}>
                 <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={13} endIndex={19}></Slideshow>
+                    <Slideshow startIndex={10} endIndex={18}></Slideshow>
                 </div>
                 <div className={"homepageCol hdc"}>
                     <Subheading text={"Join us today"}></Subheading>
                     <Tagline text={
-                        " - Volunteers: Pick and drop off fruits"
-                    }></Tagline>
-                    <Tagline text={
-                        "- Landowners: Schedule appointments for volunteers to pick fruits on your property"
-                    }></Tagline>
-                    <Tagline text={
-                        "- Charities: Schedule delivery of fruits "
+                        " Connect food that grows..."
                     }></Tagline>
                     {/*<button onClick={ () => {StateHook("register")}}>Sign up now</button>*/}
                 </div>
