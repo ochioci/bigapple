@@ -45,7 +45,7 @@ export function HomepageContent ({StateHook, AuthState}) {
 
             <div className={"homepageDuo"}>
                 <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={10} endIndex={18}></Slideshow>
+                    <Slideshow startIndex={10} endIndex={17}></Slideshow>
                 </div>
                 <div className={"homepageCol hdc"}>
                     <Subheading text={"Join us today"}></Subheading>
