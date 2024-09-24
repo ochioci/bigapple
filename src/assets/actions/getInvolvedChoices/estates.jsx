@@ -186,12 +186,24 @@ function BookingView({getBookings, info, estates}) {
             <div>{windowInfo.date}</div>
             <div>{thisEstate.location}</div>
             <div>{"Status: " + info.status}</div>
-            <button onClick={() => {
-                accept(info.appointmentID).onreadystatechange=getBookings
-            }}>Accept</button>
-            <button onClick={() => {
-                decline(info.appointmentID).onreadystatechange=getBookings
-            }}>Deny</button>
+            {
+                (info.status == "confirmed")
+                    ? (<>
+                    </>)
+                    : ((info.status == "declined")
+                        ? <>
+                        </>
+                        : <>
+                            <button onClick={() => {
+                                accept(info.appointmentID).onreadystatechange = getBookings
+                            }}>Accept
+                            </button>
+                            <button onClick={() => {
+                                decline(info.appointmentID).onreadystatechange = getBookings
+                            }}>Deny
+                            </button>
+                        </>)
+            }
         </div>
     } else {
         return <></>

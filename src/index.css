@@ -132,7 +132,7 @@ body {
     /*height: fit-content;*/
     display: flex;
     flex-direction: column;
-    border: min(1vw, 1vh) solid #173d4c;
+    /*border: min(1vw, 1vh) solid #173d4c;*/
     border-radius: min(1vh, 1vw);
     padding: min(1vh, 1vw);
     background-color: rgba(255, 255, 255, 0.9);
@@ -162,8 +162,9 @@ body {
 /*}*/
 
 .homepageBG {
-    background-image: url("/slideshow-6.jpeg");
+    background-image: url("/background.jpeg");
         width: 105%;
+        background-size: cover;
         height: 105%;
         overflow: hidden;
         position: fixed;
@@ -675,7 +676,7 @@ form {
         max-height: fit-content;
     }
     .hdc {
-        border: min(0.5vh, 0.5vw) solid #173d4c;
+        /*border: min(0.5vh, 0.5vw) solid #173d4c;*/
         height: 90%;
         /*max-height: 40vw;*/
         min-height: fit-content;
@@ -703,7 +704,7 @@ form {
         /*max-height: 50vw;*/
     }
     .hdc {
-        border: min(0.5vh, 0.5vw) solid #173d4c;
+        /*border: min(0.5vh, 0.5vw) solid #173d4c;*/
         /*height: 90%;*/
         /*max-height: 40vw;*/
         /*min-height: fit-content;*/

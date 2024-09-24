@@ -7,6 +7,9 @@ CRITICAL:
 - make booking counter accurate in property view
 - make font size normal in inputs for login, especially on mobile
 - animations for page change
+- in property menu, show booker information for requests/appointments
+- make notif behavior consistent
+- cull slideshow pool
 
 
 
