@@ -6,42 +6,37 @@ export function HomepageContent ({StateHook, AuthState}) {
     const style = {
         left: 0, right: 0, backgroundColor: null, margin: 0, padding: 0
     }
-    return <div style={style} className={"homepage"}>
+    return <div className={"homepage"}>
+
+        <div className={"homepageImage"}>
+            <div className={"homepageTagline"}>TAGLINE</div>
+        </div>
+
+        <div className={"missionStatementArea"}>
+            <div className={"missionStatement"}>MISSION STATEMENT</div>
+        </div>
+
+
         <div className={"homepageContainer"}>
 
             {/*<Logo StateHook={StateHook}></Logo>*/}
 
             <div className={"homepageDuo"}>
-                <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={4} endIndex={7}></Slideshow>
-                </div>
+
                 <div className={"homepageCol hdc"}>
                     <Subheading text={<div>
                         {"Feeding the NYC hungry, one wild apple at a time through our student volunteers."}
-                        <a style={{color: "blue", cursor: "grab"}} onClick={() => {StateHook("register")}}>{" Sign up now."}</a>
+                        <a style={{color: "blue", cursor: "grab"}} onClick={() => {
+                            StateHook("register")
+                        }}>{" Sign up now."}</a>
                     </div>}></Subheading>
                     <Tagline text={
                         "At The Big Wild Apple, our mission is to bridge the gap between abundance and need by connecting generous homeowners with volunteer apple pickers. We harness the surplus of fresh fruit from private gardens and channel it directly to local food shelters, ensuring that every apple contributes to nourishing our community. Through collaboration, compassion, and sustainability, we strive to reduce food waste and provide healthy, fresh produce to those in need throughout the New York City area"
                     }></Tagline>
                 </div>
-            </div>
 
-            <div className={"homepageDuo"}>
-
-                <div className={"homepageCol hdc"}>
-                    <Subheading text={"Benefits"}></Subheading>
-                    <Tagline text={
-                        " - Tax Breaks"
-                    }></Tagline>
-                    <Tagline text={
-                        "- Certificate of volunteering from a registered 501c3 non-profit "
-                    }></Tagline>
-                    <Tagline text={
-                        "- Operate a food bank or charity? Receive fresh-picked fruits at no cost"
-                    }></Tagline>
-                </div>
                 <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={8} endIndex={12}></Slideshow>
+                    <Slideshow startIndex={4} endIndex={7}></Slideshow>
                 </div>
             </div>
 
