@@ -8,13 +8,13 @@ function initRegisterAPI(app, db, requireAuth, jsonParser) {
         let role = req.body.userRole
         let phoneNumber = req.body.phoneNumber
 
-        db.get(`SELECT * FROM users WHERE email = $email`, {$email: email.toString()}, (err, row) => {
+        db.get(`SELECT * FROM users WHERE email = $email`, {$email: email.toLowerCase()}, (err, row) => {
             console.log(row)
             console.log(req.body.email.toString())
             if (row===undefined) {
                 res.json({ message: "success"});
                 console.log("registration success")
-                db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword, role, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)`, [firstname, lastname, email, password, role, phoneNumber])
+                db.run(`INSERT INTO users (firstname, lastname, email, hashedPassword, role, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)`, [firstname, lastname, email.toLowerCase(), password, role, phoneNumber])
             } else {
                 res.json({message: "failure"})
                 console.log("registration failure")

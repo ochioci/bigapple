@@ -14,7 +14,7 @@ function initLoginAPI(app, db, requireAuth, jsonParser) {
 
         let e = req.body.email
         let p = req.body.password
-        db.get("SELECT * FROM users WHERE (email=$email AND hashedPassword=$password) ", {$email: e, $password: p}, (err, row) => {
+        db.get("SELECT * FROM users WHERE (email=$email AND hashedPassword=$password) ", {$email: e.toLowerCase(), $password: p}, (err, row) => {
             // console.log(row)
             if (row === undefined) {
                 // console.log("login failed")
