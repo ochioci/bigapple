@@ -20,7 +20,7 @@ export function Main({GlobalState, sd, sdHook, Content, StateHook, AuthHook, Aut
         ["Home", "home"],
         ["Our Story", "aboutus"],
         ["Get involved", "register"],
-        ["Donate", "contact"],
+        ["Food Shelters", "contact"],
         [loginState, "login"],
 
 
@@ -188,7 +188,7 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                         ["Home", "home"],
                         ["Our Story", "aboutus"],
                         ["Get involved", "register"],
-                        ["Donate", "contact"],
+                        ["Food Shelters", "contact"],
                         [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],]
                     )
                 } else {

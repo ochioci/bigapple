@@ -621,7 +621,7 @@ form {
     object-fit: cover;
     width: 100vh;
     height: 100vw;
-    object-position: top;
+    object-position: right;
     overflow: hidden;
     will-change: opacity;
     /*animation-name: slideshowFadeIn;*/

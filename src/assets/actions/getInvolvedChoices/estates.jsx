@@ -86,7 +86,7 @@ export function EstateBookings({StateHook, goBack}) {
     useEffect(() => {
         refresh()
         getBookings()
-        console.log(estates)
+        // console.log(estates)
     }, [])
 
     function addProperty() {
@@ -171,7 +171,7 @@ function BookingView({getBookings, info, estates}) {
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.send(JSON.stringify({windowID: info.windowID}))
     }, [])
-    console.log(info, windowInfo, estates)
+    // console.log(info, windowInfo, estates)
     if (windowInfo != null && estates != null) {
         let thisEstate = estates.filter((e) => {
             return e.estateID == windowInfo.estateID
@@ -179,7 +179,7 @@ function BookingView({getBookings, info, estates}) {
         if (thisEstate == null || thisEstate == undefined) {
             return <></>
         }
-        console.log(thisEstate)
+        // console.log(thisEstate)
         return <div className={"manageBooking"}>
             {/*{info.appointmentID}*/}
             <div>{windowInfo.timeStart} - {windowInfo.timeEnd}</div>
@@ -245,7 +245,7 @@ function PropertyView({info, refresh, getBookings, bookings}) {
             if (req.readyState === 4) {
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    console.log("failure")
+                    // console.log("failure")
                 }
             }
         }
@@ -262,7 +262,7 @@ function PropertyView({info, refresh, getBookings, bookings}) {
             if (req.readyState === 4) {
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    console.log("failure")
+                    // console.log("failure")
                 }
                 else {
                     setAvailability(response.rows);
@@ -351,7 +351,7 @@ function AvailabilityEntry({getBookings, av, refresh}) {
             if (req.readyState === 4) {
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    console.log("failure")
+                    // console.log("failure")
                 }
             }
             getBookings()
@@ -371,7 +371,7 @@ function AvailabilityEntry({getBookings, av, refresh}) {
             if (req.readyState === 4) {
                 let response = JSON.parse(req.response);
                 if (response.message !== "success") {
-                    console.log("failure")
+                    // console.log("failure")
                 }
             }
         }
@@ -428,7 +428,7 @@ function AddPropertyMenu({propertyMenuHook, addEstate, refresh}) {
 
     function submitAddProperty(e) {
         e.preventDefault()
-        console.log(e)
+        // console.log(e)
         let name = e.target[0].value
         let location = [e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
         let availability = e.target[5].value

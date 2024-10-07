@@ -8,6 +8,7 @@ import {GetInvolvedContent} from "./assets/actions/getinvolved.jsx";
 import {ContactContent} from "./assets/actions/contact.jsx"
 import {RegisterContent} from "./assets/accounts/register.jsx";
 import {LoginContent} from "./assets/accounts/login.jsx";
+import {DonateContent} from "./assets/info/donate.jsx";
 //
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
@@ -26,7 +27,7 @@ function App() {
     } else if (State=="getinvolved") {
         return <Main AuthHook={AuthHook} AuthState={AuthState} StateHook ={StateHook} Content={GetInvolvedContent}></Main>
     } else if (State=="contact") {
-        return <Main AuthHook={AuthHook} AuthState={AuthState}  StateHook ={StateHook} Content={ContactContent}></Main>
+        return <Main AuthHook={AuthHook} AuthState={AuthState}  StateHook ={StateHook} Content={DonateContent}></Main>
     } else if (State=="register") {
         return <Main AuthHook={AuthHook} AuthState={AuthState}  StateHook ={StateHook} Content={RegisterContent}></Main>
     } else if (State=="login") {

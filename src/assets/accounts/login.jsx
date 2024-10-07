@@ -31,7 +31,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                         ["Home", "home"],
                         ["Our Story", "aboutus"],
                         ["Get involved", "getinvolved"],
-                        ["Donate", "contact"],
+                        ["Food Shelters", "contact"],
                         [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],
                     ])
 
@@ -70,7 +70,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                         ["Home", "home"],
                         ["Our Story", "aboutus"],
                         ["Get involved", "register"],
-                        ["Donate", "contact"],
+                        ["Food Shelters", "contact"],
                         [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],
                     ])
                 } else {
