@@ -52,8 +52,6 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         })
     })
 
-
-    // todo: BELOW HAVE NOT BEEN ADDED TO VERCEL PROXY!!!!!
     app.post("/api/getEstateAvailability", requireAuth, jsonParser, (req, res) => {
         let rows = []
         db.all("SELECT * FROM estateWindows WHERE estateID = $estateID", {$estateID: req.body.estateID},
@@ -114,6 +112,7 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         })
     })
 
+
     app.post("/api/getWindow", requireEstate, jsonParser, (req, res) => {
         db.all(`SELECT * FROM estateWindows WHERE windowID = $id`, {$id: req.body.windowID}, (err, rows) => {
             res.json({"message": "success", rows})
@@ -130,6 +129,17 @@ function initEstatesAPI(app, db, requireAuth, requireEstate, jsonParser) {
         res.json({"message": "success"})
     })
 
+    //TODO: BELOW HAVE NOT BEEN ADDED TO VERCEL PROXY
+
+    app.post("/api/getVolunteerInfo", requireAuth, jsonParser, (req, res) => {
+        db.get(`SELECT firstname, lastname, email, phoneNumber FROM users WHERE userID = $userID`, {$userID: req.body.userID}, (err, rows) => {
+            if (err != null) {
+                res.json({"message": "error"})
+            } else {
+                res.json({"message": "success", rows: rows})
+            }
+        })
+    })
 }
 
 

@@ -192,9 +192,10 @@ function BookingView({getBookings, info, estates}) {
                     <button onClick={() => {setShowContactInfo(true)}}>Volunteer Contact Info</button>
                         {
                             (showContactInfo) ? <div className={"volunteerContactInfoContainer"}>
-                                <div className={"volunteerContactInfo"}>
-                                    Test
-                                </div>
+                                <VolunteerInfo setVisible={setShowContactInfo} userID={info.userID}></VolunteerInfo>
+                                {/*<div className={"volunteerContactInfo"}>*/}
+                                {/*    Test*/}
+                                {/*</div>*/}
                             </div> : <></>
                         }
                     </>)
@@ -217,6 +218,35 @@ function BookingView({getBookings, info, estates}) {
         return <></>
     }
 
+}
+
+function VolunteerInfo({setVisible, userID}) {
+    const [vInfo, setVInfo] = useState(null)
+    useEffect(() => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState == 4) {
+                setVInfo(JSON.parse(req.response).rows)
+            }
+        }
+        req.open("POST", "api/getVolunteerInfo", true)
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify({userID}))
+    }, [])
+    console.log(vInfo)
+    return <div className={"volunteerContactInfo"}>
+        {(vInfo == null) ? <div>{"Loading"}</div> :
+            <>
+                <div>{"First name: " + vInfo.firstname}</div>
+                <div>{"Last name: " + vInfo.lastname}</div>
+                <div>{"Email: " + vInfo.email}</div>
+                <div>{"Phone: " + vInfo.phoneNumber}</div>
+            </>
+        }
+        <button onClick={() => {
+            setVisible(false)
+        }}>Close</button>
+</div>
 }
 
 

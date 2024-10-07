@@ -137,6 +137,10 @@ export default defineConfig({
       "/api/getFullEstate": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/getVolunteerInfo": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },
