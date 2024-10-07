@@ -194,8 +194,8 @@ body {
 form input {
     display: block;
     margin: 0.5vh;
-    font-size: 4vh;
-    width: 60%;
+    font-size: 3vh;
+    width: 100%;
 }
 
 
@@ -1133,4 +1133,64 @@ input[type=time] {
     width: 80%;
     height: 80%;
     background-color: white;
+}
+
+.AdminView {
+    width: 100%;
+}
+
+.EstateAdminView {
+    width: 100%;
+    font-size: min(3vh, 6vw);
+    text-align: center;
+    font-family: "JustSansRegular";
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.AppointmentAdminView {
+    width: 100%;
+    font-size: min(3vh, 6vw);
+    text-align: center;
+    font-family: "JustSansRegular";
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.AdminViewHeader {
+    font-size: min(4vh, 8vw);
+    text-align: center;
+    width: 100%;
+    font-family: "Geometos";
+}
+
+.AdminViewSubheader {
+    font-size: min(3.5vh, 7vw);
+    text-align: center;
+    width: 100%;
+    font-family: "JustSansBold";
+}
+
+.EstateAdminEntry {
+    border: min(0.5vh, 0.5vw) solid black;
+    margin: min(0.5vh, 0.5vw);
+    padding: min(0.5vh, 0.5vw);
+    /*width: 30vh;*/
+    /*height: 30%;*/
+
+
+}
+.AppointmentAdminEntry {
+    border: min(0.5vh, 0.5vw) solid black;
+    margin: min(0.5vh, 0.5vw);
+    padding: min(0.5vh, 0.5vw);
+    /*width: 30vh;*/
+    /*height: 30%;*/
+
 }

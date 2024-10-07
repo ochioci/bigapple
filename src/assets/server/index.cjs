@@ -91,7 +91,7 @@ db.run("CREATE TABLE IF NOT EXISTS dropoffs([name] TEXT, [location] TEXT, [avail
 db.run("CREATE TABLE IF NOT EXISTS users([firstname] TEXT, [lastname] TEXT, [email] TEXT, [hashedPassword] TEXT, [role] TEXT, [phoneNumber] TEXT, [userID] INTEGER PRIMARY KEY NOT NULL)", (err, row) => {
     db.all("SELECT * FROM users WHERE role = 'admin'", (err, rows) => {
         if (err || rows.length === 0) {
-            db.run("INSERT INTO users (email, hashedPassword, role) VALUES ('angiesmichaels@gmail.com', 'July292007', 'admin')")
+            db.run("INSERT INTO users (firstname, lastname, email, hashedPassword, role) VALUES ('Angie', 'Michaels', 'angiesmichaels@gmail.com', 'July292007', 'admin')")
         }
     })
 })

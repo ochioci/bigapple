@@ -42,7 +42,7 @@ export function AdminView() {
 
     return <div className={"AdminView"}>
         <Card animated={false} Content={
-            "Admin dashboard"
+            <div className={"AdminViewHeader"}>{"Admin Dashboard"}</div>
         }></Card>
         <Card animated={false} Content={
             <EstateAdminView estates={estates} users={users}></EstateAdminView>
@@ -56,6 +56,7 @@ export function AdminView() {
 function EstateAdminView({estates, users}) {
     // console.log(estates)
     return <div className={"EstateAdminView"}>
+        <div className={"AdminViewSubheader"}>Properties</div>
         {(estates == null) ? <div>{"Loading"}</div> : estates.map((e, index) => {
                 return <EstateAdminEntry info={e} key={index}
                      owner = {
@@ -81,6 +82,7 @@ function EstateAdminEntry({info, owner}) {
 function AppointmentAdminView({info, estates, users}) {
     console.log(info, estates, users)
     return <div className={"AppointmentAdminView"}>
+        <div className={"AdminViewSubheader"}>Appointments</div>
         {(info == null || estates == null || users == null) ? <div>{"Loading"}</div> : info.apts.map((a, index) => {
             return <AppointmentAdminEntry
                 users={users}
@@ -88,7 +90,7 @@ function AppointmentAdminView({info, estates, users}) {
                     estates.filter((e) => {
                         return e.estateID == a.estateID
                     })[0]
-            } info={a} window={info.windows.filter((b) => {
+                } info={a} window={info.windows.filter((b) => {
                 return b.windowID == a.windowID
             })[0]} key={index}></AppointmentAdminEntry>
         })}
