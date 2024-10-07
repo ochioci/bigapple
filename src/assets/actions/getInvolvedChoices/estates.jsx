@@ -143,7 +143,7 @@ export function EstateBookings({StateHook, goBack}) {
 
 function BookingView({getBookings, info, estates}) {
     const [windowInfo, setWindowInfo] = useState(null)
-
+    const [showContactInfo, setShowContactInfo] = useState(false)
     const accept = (appointmentID) => {
         let req = new XMLHttpRequest();
         req.open("POST", "api/acceptBooking", true)
@@ -189,6 +189,14 @@ function BookingView({getBookings, info, estates}) {
             {
                 (info.status == "confirmed")
                     ? (<>
+                    <button onClick={() => {setShowContactInfo(true)}}>Volunteer Contact Info</button>
+                        {
+                            (showContactInfo) ? <div className={"volunteerContactInfoContainer"}>
+                                <div className={"volunteerContactInfo"}>
+                                    Test
+                                </div>
+                            </div> : <></>
+                        }
                     </>)
                     : ((info.status == "declined")
                         ? <>

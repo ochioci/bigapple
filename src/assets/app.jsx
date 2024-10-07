@@ -179,7 +179,7 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
         req.onreadystatechange = () => {
             if (req.readyState === 4) {
                 let response = JSON.parse(req.response)
-                if (response.message === "success") {
+                if (response.loggedIn) {
                     console.log(response)
                     AuthHook(response.name)
                     // roleHook(response.role)
@@ -187,7 +187,7 @@ export function TopBar({ StateHook, AuthState, AuthHook, LoginState, LoginHook, 
                     entriesHook([
                         ["Home", "home"],
                         ["Our Story", "aboutus"],
-                        ["Get involved", "register"],
+                        ["Get involved", "getinvolved"],
                         ["Food Shelters", "contact"],
                         [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],]
                     )

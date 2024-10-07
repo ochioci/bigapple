@@ -71,7 +71,7 @@ export function LoginContent({LoginHook, LoginState, StateHook, AuthState, AuthH
                         ["Our Story", "aboutus"],
                         ["Get involved", "register"],
                         ["Food Shelters", "contact"],
-                        [(LoginState == "Log out" ? "Log in" : "Log out"), "login"],
+                        [("Log in"), "login"],
                     ])
                 } else {
                     console.log("failure")
