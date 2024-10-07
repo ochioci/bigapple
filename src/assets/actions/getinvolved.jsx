@@ -3,6 +3,7 @@ import {Calendar} from "../components/calendar.jsx"
 import {EstateBookings} from "./getInvolvedChoices/estates.jsx";
 import {DropoffBookings} from "./getInvolvedChoices/dropoffs.jsx";
 import {TransferBookings} from "./getInvolvedChoices/transfers.jsx";
+import {AdminView} from "./getInvolvedChoices/admin.jsx";
 
 export function GetInvolvedContent ({StateHook}) {
 
@@ -54,7 +55,12 @@ export function GetInvolvedContent ({StateHook}) {
     } else if (getInvolvedState === "Shelter") {
         return <div style={style}><DropoffBookings goBack={goBack} StateHook={StateHook}></DropoffBookings>
             </div>
-    } else {
+    } else if (getInvolvedState === "admin") {
+        return <div style={style}>
+            <AdminView goBack={goBack} StateHook={StateHook}></AdminView>
+        </div>
+    }
+    else {
         return <div style={style}>
             {"Loading..."}
         </div>

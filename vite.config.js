@@ -141,6 +141,18 @@ export default defineConfig({
       "/api/getVolunteerInfo": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/api/getAllUsers": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/api/getAllAppointments": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/api/getAllEstates": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     },
   },
