@@ -6,7 +6,6 @@ import {TransferBookings} from "./getInvolvedChoices/transfers.jsx";
 import {AdminView} from "./getInvolvedChoices/admin.jsx";
 
 export function GetInvolvedContent ({StateHook}) {
-
     const style = {
         gridRow: 2,
         // display: "flex",
