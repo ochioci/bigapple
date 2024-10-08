@@ -18,7 +18,7 @@ export function GetInvolvedContent ({StateHook}) {
         justifyContent: "center"
     }
     const [getInvolvedState, getInvolvedHook] = useState("choice");
-
+    console.log("GIS", getInvolvedState)
     useEffect( () => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
