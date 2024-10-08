@@ -195,7 +195,7 @@ form input {
     display: block;
     margin: 0.5vh;
     font-size: 3vh;
-    width: 100%;
+    width: 90%;
 }
 
 
@@ -403,9 +403,9 @@ form input {
     flex-direction: column;
 }
 
-.loginInput {
-    max-width: 90%;
-}
+/*.loginInput {*/
+/*    max-width: 90%;*/
+/*}*/
 
 .bookingView {
     display: grid;
