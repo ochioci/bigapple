@@ -57,7 +57,7 @@ function EstateAdminView({estates, users}) {
     // console.log(estates)
     return <div className={"EstateAdminView"}>
         <div className={"AdminViewSubheader"}>Properties</div>
-        {(estates == null) ? <div>{"Loading"}</div> : estates.map((e, index) => {
+        {(estates == null || users == null) ? <div>{"Loading"}</div> : estates.map((e, index) => {
                 return <EstateAdminEntry info={e} key={index}
                      owner = {
                         users.filter((u) => {
