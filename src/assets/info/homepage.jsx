@@ -11,7 +11,7 @@ export function HomepageContent ({StateHook, AuthState}) {
         <div className={"homepageImage"}>
             <div className={"homepageTagline"}>Feeding the NYC hungry, one wild apple at a time through our student
                 volunteers.
-                <div style={{color: "blue", cursor: "grab"}} onClick={() => {
+                <div style={{color: "red", cursor: "grab"}} onClick={() => {
                     StateHook("register")
                 }}>{" Sign up now."}</div></div>
 
@@ -49,8 +49,9 @@ export function HomepageContent ({StateHook, AuthState}) {
                 </div>
                 <div className={"homepageCol hdc"}>
                     <Subheading text={"Join us today"}></Subheading>
-                    <Tagline text={
-                        " Connect food that grows..."
+                    <Tagline onClick={() => {StateHook("getinvolved")}} text={
+                        "Sign up now to offer fruit trees for picking or to volunteer for the picking of apples"
+
                     }></Tagline>
                     {/*<button onClick={ () => {StateHook("register")}}>Sign up now</button>*/}
                 </div>
@@ -145,6 +146,6 @@ function Slideshow({startIndex, endIndex}) {
 }
 
 
-function Tagline({text}) {
-    return <div className={"tagline"}>{text}</div>
+function Tagline({text, onClick=(() => {})}) {
+    return <div onClick={onClick} className={"tagline"}>{text}</div>
 }
