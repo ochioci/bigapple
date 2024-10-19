@@ -99,7 +99,7 @@ function Slideshow({startIndex, endIndex}) {
     useEffect( () => {
         let a = []// preload images
         for (let i = startIndex; i < endIndex; i++) {
-            a.push(<img ref={nodeRef} src={"/slideshow-"+i+".jpg"} alt={i}/>)
+            a.push(<img width="20vw" height={"auto"} ref={nodeRef} src={"/slideshow-"+i+".jpg"} alt={i}/>)
         }
         images.current = a;
     }, [endIndex, startIndex])

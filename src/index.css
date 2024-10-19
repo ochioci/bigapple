@@ -618,10 +618,11 @@ form {
 }
 
 .slideshow img {
-    object-fit: none;
-    width: 100vh;
-    height: 100vw;
+    object-fit: cover;
+    min-width: 100%;
+    min-height: 100%;
     object-position: center;
+    background-size: contain;
     overflow: hidden;
     will-change: opacity;
     /*animation-name: slideshowFadeIn;*/
