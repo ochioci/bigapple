@@ -39,13 +39,13 @@ export function HomepageContent ({StateHook, AuthState}) {
                 </div>
 
                 <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={1} endIndex={9}></Slideshow>
+                    <Slideshow startIndex={1} endIndex={4}></Slideshow>
                 </div>
             </div>
 
             <div className={"homepageDuo"}>
                 <div className={"slideshowContainer hdc"}>
-                    <Slideshow startIndex={10} endIndex={17}></Slideshow>
+                    <Slideshow startIndex={5} endIndex={8}></Slideshow>
                 </div>
                 <div className={"homepageCol hdc"}>
                     <Subheading text={"Join us today"}></Subheading>
@@ -91,7 +91,7 @@ function Slideshow({startIndex, endIndex}) {
     // const endIndex = 19;
     const slideshowDelayMS = 2000;
     const [slideshowState, setSlideshowState] = useState(startIndex)
-    const url = "/slideshow-"  + slideshowState + ".jpeg"
+    const url = "/slideshow-"  + slideshowState + ".jpg"
     const [inProp, setInProp] = useState(false);
     const nodeRef = useRef(null);
     const images = useRef([])
@@ -99,7 +99,7 @@ function Slideshow({startIndex, endIndex}) {
     useEffect( () => {
         let a = []// preload images
         for (let i = startIndex; i < endIndex; i++) {
-            a.push(<img ref={nodeRef} src={"/slideshow-"+i+".jpeg"} alt={i}/>)
+            a.push(<img ref={nodeRef} src={"/slideshow-"+i+".jpg"} alt={i}/>)
         }
         images.current = a;
     }, [endIndex, startIndex])

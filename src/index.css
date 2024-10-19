@@ -618,7 +618,7 @@ form {
 }
 
 .slideshow img {
-    object-fit: cover;
+    object-fit: none;
     width: 100vh;
     height: 100vw;
     object-position: center;
